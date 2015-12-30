@@ -1,0 +1,30 @@
+{
+  "name": "SalesOrderLine",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "itemQuantity": {
+      "type": "number",
+      "required": true
+    },
+    "updatedItemQuantity": {
+      "type": "number"
+    },
+    "updatedDate": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "salesOrder": {
+      "type": "belongsTo",
+      "model": "SalesOrder",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

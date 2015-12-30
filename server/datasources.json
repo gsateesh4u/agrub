@@ -1,0 +1,22 @@
+{
+  "db": {
+    "host": "localhost",
+    "port": 5984,
+    "name": "agrub_test",
+    "connector": "couch",
+    "db": "agrub_test",
+    "protocol": "http"
+  },
+  "db_local": {
+    "host": "localhost",
+    "port": 5984,
+    "name": "agrub_test",
+    "connector": "couch",
+    "db": "agrub_test",
+    "protocol": "http"
+  },
+  "db_mem": {
+    "name": "db_mem",
+    "connector": "memory"
+  }
+}
