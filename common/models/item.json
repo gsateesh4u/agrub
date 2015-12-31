@@ -16,19 +16,25 @@
       "required": true
     },
     "qualityParam": {
-      "type": "number"
+      "type": "string"
     },
     "qualityVariance": {
       "type": "string"
     },
     "unit": {
       "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "available": {
+      "type": "boolean"
     }
   },
   "validations": [],
   "relations": {
-    "itemCategory": {
-      "type": "belongsTo",
+    "itemCategories": {
+      "type": "hasOne",
       "model": "ItemCategory",
       "foreignKey": ""
     }

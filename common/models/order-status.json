@@ -1,6 +1,6 @@
 {
-  "name": "ItemCategory",
-  "plural": "ItemCategories",
+  "name": "OrderStatus",
+  "plural": "OrderStatuses",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -13,13 +13,7 @@
     }
   },
   "validations": [],
-  "relations": {
-    "items": {
-      "type": "hasMany",
-      "model": "Item",
-      "foreignKey": ""
-    }
-  },
+  "relations": {},
   "acls": [],
   "methods": {}
 }

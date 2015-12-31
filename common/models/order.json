@@ -11,9 +11,6 @@
       "type": "string",
       "required": true
     },
-    "status": {
-      "type": "string"
-    },
     "startDate": {
       "type": "date",
       "required": true
@@ -32,6 +29,11 @@
     "customer": {
       "type": "belongsTo",
       "model": "Customer",
+      "foreignKey": ""
+    },
+    "orderStatuses": {
+      "type": "hasOne",
+      "model": "OrderStatus",
       "foreignKey": ""
     }
   },

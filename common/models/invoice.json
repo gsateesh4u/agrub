@@ -1,0 +1,30 @@
+{
+  "name": "Invoice",
+  "plural": "Invoices",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "created": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "invoiceStatuses": {
+      "type": "hasOne",
+      "model": "InvoiceStatus",
+      "foreignKey": ""
+    },
+    "deliveryChalan": {
+      "type": "belongsTo",
+      "model": "DeliveryChalan",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

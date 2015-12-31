@@ -1,22 +1,22 @@
 {
-  "name": "ItemCategory",
-  "plural": "ItemCategories",
+  "name": "SalesOrderLineAdjustment",
+  "plural": "SalesOrderlineAdjustments",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
-      "type": "string",
+    "itemQuantity": {
+      "type": "number",
       "required": true
     }
   },
   "validations": [],
   "relations": {
-    "items": {
-      "type": "hasMany",
-      "model": "Item",
+    "salesOrderline": {
+      "type": "belongsTo",
+      "model": "SalesOrderline",
       "foreignKey": ""
     }
   },

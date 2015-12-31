@@ -1,30 +1,9 @@
 {
+
   "db": {
     "host": "ade38f1d-182e-4382-bc35-62935dabf42d-bluemix.cloudant.com",
     "port": 443,
-    "name": "agrub",
-    "connector": "couch",
-    "db": "agrub",
-    "protocol": "https",
-    "auth": {
-      "admin": {
-        "username": "ade38f1d-182e-4382-bc35-62935dabf42d-bluemix",
-        "password": "6157ca37e32de2fe7a3bfc0a04712f0dea5d0818914419bb2e769b77246d715e"
-      },
-      "reader": {
-        "username": "ade38f1d-182e-4382-bc35-62935dabf42d-bluemix",
-        "password": "6157ca37e32de2fe7a3bfc0a04712f0dea5d0818914419bb2e769b77246d715e"
-      },
-      "writer": {
-        "username": "ade38f1d-182e-4382-bc35-62935dabf42d-bluemix",
-        "password": "6157ca37e32de2fe7a3bfc0a04712f0dea5d0818914419bb2e769b77246d715e"
-      }
-    }
-  },
-  "db_bluemix": {
-    "host": "ade38f1d-182e-4382-bc35-62935dabf42d-bluemix.cloudant.com",
-    "port": 443,
-    "name": "agrub",
+    "name": "db_bluemix",
     "connector": "couch",
     "db": "agrub",
     "protocol": "https",
@@ -46,7 +25,7 @@
   "db_local": {
     "host": "localhost",
     "port": 5984,
-    "name": "agrub_test",
+    "name": "db_local",
     "connector": "couch",
     "db": "agrub_test",
     "protocol": "http"

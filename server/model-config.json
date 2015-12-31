@@ -50,7 +50,7 @@
   },
   "SalesOrderLine": {
     "dataSource": "db",
-    "public": false
+    "public": true
   },
   "DeliveryChalan": {
     "dataSource": "db",
@@ -61,6 +61,30 @@
     "public": true
   },
   "Hub": {
+    "dataSource": "db",
+    "public": true
+  },
+  "OrderStatus": {
+    "dataSource": "db",
+    "public": true
+  },
+  "SalesOrderLineAdjustment": {
+    "dataSource": "db",
+    "public": true
+  },
+  "SalesOrderStatus": {
+    "dataSource": "db",
+    "public": true
+  },
+  "DeliveryChalanStatus": {
+    "dataSource": "db",
+    "public": true
+  },
+  "InvoiceStatus": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Invoice": {
     "dataSource": "db",
     "public": true
   }

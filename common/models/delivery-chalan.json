@@ -13,6 +13,16 @@
       "type": "belongsTo",
       "model": "SalesOrder",
       "foreignKey": ""
+    },
+    "deliveryChalanStatuses": {
+      "type": "hasOne",
+      "model": "DeliveryChalanStatus",
+      "foreignKey": ""
+    },
+    "invoices": {
+      "type": "hasOne",
+      "model": "Invoice",
+      "foreignKey": ""
     }
   },
   "acls": [],

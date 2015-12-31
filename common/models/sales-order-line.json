@@ -23,6 +23,16 @@
       "type": "belongsTo",
       "model": "SalesOrder",
       "foreignKey": ""
+    },
+    "items": {
+      "type": "hasOne",
+      "model": "Item",
+      "foreignKey": ""
+    },
+    "salesOrderLineAdjustments": {
+      "type": "hasMany",
+      "model": "SalesOrderLineAdjustment",
+      "foreignKey": ""
     }
   },
   "acls": [],

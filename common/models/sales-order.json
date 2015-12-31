@@ -31,6 +31,11 @@
       "type": "hasOne",
       "model": "DeliveryChalan",
       "foreignKey": ""
+    },
+    "salesOrderStatuses": {
+      "type": "hasOne",
+      "model": "SalesOrderStatus",
+      "foreignKey": ""
     }
   },
   "acls": [],
