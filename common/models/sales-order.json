@@ -27,12 +27,17 @@
       "model": "SalesOrderLine",
       "foreignKey": ""
     },
-    "deliveryChalans": {
+    "deliveryChalan": {
       "type": "hasOne",
       "model": "DeliveryChalan",
       "foreignKey": ""
     },
-    "salesOrderStatuses": {
+    "invoice": {
+      "type": "hasOne",
+      "model": "Invoice",
+      "foreignKey": ""
+    },
+    "salesOrderStatus": {
       "type": "hasOne",
       "model": "SalesOrderStatus",
       "foreignKey": ""

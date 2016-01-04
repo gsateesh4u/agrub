@@ -68,10 +68,6 @@
     "dataSource": "db",
     "public": true
   },
-  "SalesOrderLineAdjustment": {
-    "dataSource": "db",
-    "public": true
-  },
   "SalesOrderStatus": {
     "dataSource": "db",
     "public": true
@@ -85,6 +81,14 @@
     "public": true
   },
   "Invoice": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Pricing": {
+    "dataSource": "db",
+    "public": true
+  },
+  "ItemPrice": {
     "dataSource": "db",
     "public": true
   }
