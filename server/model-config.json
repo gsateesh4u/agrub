@@ -84,11 +84,11 @@
     "dataSource": "db",
     "public": true
   },
-  "ItemPrice": {
+  "Pricing": {
     "dataSource": "db",
     "public": true
   },
-  "Pricing": {
+  "ItemPrice": {
     "dataSource": "db",
     "public": true
   }

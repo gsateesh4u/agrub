@@ -40,9 +40,9 @@
       "model": "Hub",
       "foreignKey": ""
     },
-    "itemPricings": {
+    "itemPrices": {
       "type": "hasMany",
-      "model": "ItemPricing",
+      "model": "ItemPrice",
       "foreignKey": ""
     }
   },
