@@ -23,6 +23,16 @@
       "type": "belongsTo",
       "model": "DeliveryChalan",
       "foreignKey": ""
+    },
+    "customer": {
+      "type": "belongsTo",
+      "model": "Customer",
+      "foreignKey": ""
+    },
+    "salesOrder": {
+      "type": "belongsTo",
+      "model": "SalesOrder",
+      "foreignKey": ""
     }
   },
   "acls": [],

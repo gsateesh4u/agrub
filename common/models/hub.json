@@ -18,7 +18,18 @@
       "type": "hasMany",
       "model": "Customer",
       "foreignKey": ""
+    },
+    "itemCategories": {
+      "type": "hasMany",
+      "model": "ItemCategory",
+      "foreignKey": ""
+    },
+    "items": {
+      "type": "hasMany",
+      "model": "Item",
+      "foreignKey": ""
     }
+
   },
   "acls": [],
   "methods": {}

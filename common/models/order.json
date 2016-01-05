@@ -31,7 +31,7 @@
       "model": "Customer",
       "foreignKey": ""
     },
-    "orderStatuses": {
+    "orderStatus": {
       "type": "hasOne",
       "model": "OrderStatus",
       "foreignKey": ""

@@ -33,7 +33,7 @@
   },
   "validations": [],
   "relations": {
-    "itemCategories": {
+    "itemCategory": {
       "type": "hasOne",
       "model": "ItemCategory",
       "foreignKey": ""

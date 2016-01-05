@@ -24,14 +24,9 @@
       "model": "SalesOrder",
       "foreignKey": ""
     },
-    "items": {
+    "item": {
       "type": "hasOne",
       "model": "Item",
-      "foreignKey": ""
-    },
-    "salesOrderLineAdjustments": {
-      "type": "hasMany",
-      "model": "SalesOrderLineAdjustment",
       "foreignKey": ""
     }
   },
