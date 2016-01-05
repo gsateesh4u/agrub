@@ -1,9 +1,8 @@
 {
-
   "db": {
     "host": "ade38f1d-182e-4382-bc35-62935dabf42d-bluemix.cloudant.com",
     "port": 443,
-    "name": "db_bluemix",
+    "name": "db",
     "connector": "couch",
     "db": "agrub",
     "protocol": "https",

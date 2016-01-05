@@ -24,9 +24,6 @@
     "unit": {
       "type": "string"
     },
-    "price": {
-      "type": "number"
-    },
     "available": {
       "type": "boolean"
     }
@@ -41,6 +38,11 @@
     "hub": {
       "type": "belongsTo",
       "model": "Hub",
+      "foreignKey": ""
+    },
+    "itemPricings": {
+      "type": "hasMany",
+      "model": "ItemPricing",
       "foreignKey": ""
     }
   },

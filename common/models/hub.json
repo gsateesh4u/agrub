@@ -29,7 +29,6 @@
       "model": "Item",
       "foreignKey": ""
     }
-
   },
   "acls": [],
   "methods": {}

@@ -35,6 +35,11 @@
       "model": "Hub",
       "foreignKey": ""
     },
+    "pricing": {
+      "type": "hasOne",
+      "model": "Pricing",
+      "foreignKey": ""
+    },
     "orders": {
       "type": "hasMany",
       "model": "Order",

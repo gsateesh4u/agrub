@@ -83,5 +83,13 @@
   "Invoice": {
     "dataSource": "db",
     "public": true
+  },
+  "ItemPrice": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Pricing": {
+    "dataSource": "db",
+    "public": true
   }
 }
