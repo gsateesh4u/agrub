@@ -37,6 +37,11 @@
       "type": "hasOne",
       "model": "ItemCategory",
       "foreignKey": ""
+    },
+    "hub": {
+      "type": "belongsTo",
+      "model": "Hub",
+      "foreignKey": ""
     }
   },
   "acls": [],
