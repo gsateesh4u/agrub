@@ -1,0 +1,51 @@
+{
+  "name": "Item",
+  "plural": "Items",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required": true
+    },
+    "qualityParam": {
+      "type": "string"
+    },
+    "qualityVariance": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "available": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "itemCategory": {
+      "type": "hasOne",
+      "model": "ItemCategory",
+      "foreignKey": ""
+    },
+    "hub": {
+      "type": "belongsTo",
+      "model": "Hub",
+      "foreignKey": ""
+    },
+    "itemPrices": {
+      "type": "hasMany",
+      "model": "ItemPrice",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,48 @@
+{
+  "name": "SalesOrder",
+  "plural": "SalesOrders",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "deliveryDate": {
+      "type": "date",
+      "required": true
+    },
+    "deliveryTime": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "order": {
+      "type": "belongsTo",
+      "model": "Order",
+      "foreignKey": ""
+    },
+    "salesOrderLines": {
+      "type": "hasMany",
+      "model": "SalesOrderLine",
+      "foreignKey": ""
+    },
+    "deliveryChalan": {
+      "type": "hasOne",
+      "model": "DeliveryChalan",
+      "foreignKey": ""
+    },
+    "invoice": {
+      "type": "hasOne",
+      "model": "Invoice",
+      "foreignKey": ""
+    },
+    "salesOrderStatus": {
+      "type": "hasOne",
+      "model": "SalesOrderStatus",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,30 @@
+{
+  "name": "ItemCategory",
+  "plural": "ItemCategories",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "items": {
+      "type": "hasMany",
+      "model": "Item",
+      "foreignKey": ""
+    },
+    "hub": {
+      "type": "belongsTo",
+      "model": "Hub",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,35 @@
+{
+  "name": "DeliveryChalan",
+  "plural": "DeliveryChalans",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "purchaseOrder": {
+      "type": "belongsTo",
+      "model": "SalesOrder",
+      "foreignKey": ""
+    },
+    "deliveryChalanStatus": {
+      "type": "hasOne",
+      "model": "DeliveryChalanStatus",
+      "foreignKey": ""
+    },
+    "invoice": {
+      "type": "hasOne",
+      "model": "Invoice",
+      "foreignKey": ""
+    },
+    "customer": {
+      "type": "belongsTo",
+      "model": "Customer",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

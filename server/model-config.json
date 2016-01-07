@@ -1,0 +1,95 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ItemCategory": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Item": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Order": {
+    "dataSource": "db",
+    "public": true
+  },
+  "SalesOrder": {
+    "dataSource": "db",
+    "public": true
+  },
+  "SalesOrderLine": {
+    "dataSource": "db",
+    "public": true
+  },
+  "DeliveryChalan": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Customer": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Hub": {
+    "dataSource": "db",
+    "public": true
+  },
+  "OrderStatus": {
+    "dataSource": "db",
+    "public": true
+  },
+  "SalesOrderStatus": {
+    "dataSource": "db",
+    "public": true
+  },
+  "DeliveryChalanStatus": {
+    "dataSource": "db",
+    "public": true
+  },
+  "InvoiceStatus": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Invoice": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Pricing": {
+    "dataSource": "db",
+    "public": true
+  },
+  "ItemPrice": {
+    "dataSource": "db",
+    "public": true
+  }
+}

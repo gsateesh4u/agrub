@@ -1,0 +1,22 @@
+<div class="pagination" ng-if="pages.length >= 2">
+  <ul class="pagination" ng-if="numPages<=5">
+    <li ng-repeat="page in pages" ng-class="{active: page==currentPage}"><a ng-click="selectPage(page)">{{page}}</a>
+    </li>
+  </ul>
+  <ul class="pagination" ng-if="numPages>5">
+    <li ng-class="{disabled:currentPage < 4}" title="First">
+      <a ng-click="currentPage > 3 && selectPage(1)">&lt;&lt;</a>
+    </li>
+    <li ng-class="{disabled:currentPage == 1}" title="Previous">
+      <a ng-click="currentPage != 1 && selectPage(currentPage-1)">&lt;</a>
+    </li>
+    <li ng-repeat="page in pages" ng-class="{active: page==currentPage}"><a ng-click="selectPage(page)">{{page}}</a>
+    </li>
+    <li ng-class="{disabled:currentPage == numPages}" title="Next">
+    	<a ng-click="currentPage != numPages && selectPage(currentPage+1)">></a>
+    </li>
+    <li ng-class="{disabled:(currentPage > numPages-3)}" title="Last">
+    	<a ng-click="(currentPage < numPages-2) && selectPage(numPages)">>></a>
+    </li>
+  </ul>
+</div>
