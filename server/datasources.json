@@ -1,5 +1,4 @@
 {
-
   "db_cloudant": {
     "url": "https://ade38f1d-182e-4382-bc35-62935dabf42d-bluemix:6157ca37e32de2fe7a3bfc0a04712f0dea5d0818914419bb2e769b77246d715e@ade38f1d-182e-4382-bc35-62935dabf42d-bluemix.cloudant.com",
     "database": "agrub",

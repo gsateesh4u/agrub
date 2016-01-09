@@ -13,7 +13,10 @@
     "loopback": "^2.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^2.1.0",
+<<<<<<< HEAD
     "loopback-connector-cloudant": "^1.0.3",
+=======
+>>>>>>> f76582cf298f6f369362fdbb5e83759a19a7d9b0
     "loopback-connector-couch": "^0.1.1",
     "loopback-connector-postgresql": "^2.4.0",
     "loopback-datasource-juggler": "^2.39.0",
