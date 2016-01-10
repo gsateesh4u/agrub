@@ -32,7 +32,7 @@
       "foreignKey": ""
     },
     "orderStatus": {
-      "type": "hasOne",
+      "type": "embedsOne",
       "model": "OrderStatus",
       "foreignKey": ""
     }

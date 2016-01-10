@@ -1,9 +1,9 @@
-app.controller('CustomerController', function($scope,Customer){
+app.controller('PriceController', function($scope,Order){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
-	Customer.find({
-		filter: { include: 'hub' }
+	Order.find({
+		filter: { include: ['customer','orderStatus'] }
 	}).$promise
 		.then(function(response) { $scope.rowCollection = [].concat(response);
 		  $scope.rowCollection = [].concat(response);
@@ -13,7 +13,7 @@ app.controller('CustomerController', function($scope,Customer){
 			 }
 			 $scope.isLoading = false;
 	  },function( errorMessage ) {
-		  $scope.error = "Error has occurred while loading customers!";
+		  $scope.error = "Error has occurred while loading orders!";
 		  $scope.isLoading = false;
    });
 });

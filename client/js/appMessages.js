@@ -12,8 +12,8 @@ xlat.factory('xlatService', function() {
   // this dynamically, it's good practice to make a deep copy
   // rather than just refer to it.)
   var tables = {
-		    'en': { 'appLogo':'AGRUB','lbl_toggle_nav':'Toggle Navigation','menu_customers':'Customers','menu_users':'Users','menu_items':'Items','menu_hubs':'Hubs','menu_reports':'Reports',
-		    	'copyright':'Copyright &copy; 1010 Labs, 2016','tbl_head_users':'All Users','tbl_head_customers':'All Customers','tbl_head_hubs':'All Hubs','tbl_head_items':'All Items','tbl_head_reports':'Reports'}
+		    'en': { 'appLogo':'AGRUB','lbl_toggle_nav':'Toggle Navigation','menu_customers':'Customers','menu_users':'Users','menu_items':'Items','menu_hubs':'Hubs','menu_reports':'Reports','menu_orders':'Orders','menu_prices':'Prices',
+		    	'copyright':'Copyright \xA9 1010 Labs, 2016','tbl_head_users':'All Users','tbl_head_customers':'All Customers','tbl_head_hubs':'All Hubs','tbl_head_items':'All Items','tbl_head_reports':'Reports','tbl_head_orders':'All Orders','tbl_head_prices':'Base Prices'}
               };
   // We return the service object that will be injected into
   // both our filter and our application module.

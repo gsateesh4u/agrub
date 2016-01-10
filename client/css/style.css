@@ -2961,7 +2961,7 @@ vertical-align: top;
 .skin-black .sidebar > .sidebar-menu > li > a:hover,
 .skin-black .sidebar > .sidebar-menu > li.active > a {
   color: #f6f6f6;
-  background: #425164;
+  background: dodgerblue;
 }
 .skin-black .sidebar > .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;
@@ -4205,4 +4205,39 @@ padding: 6px 10px;
 }
 .st-blue {
   background-color: #23b7e5;
+}
+.sortable {
+    cursor: pointer;
+}
+.sortable:after {
+    content: url(data:image/gif;base64,R0lGODlhCwALAJEAAAAAAP///xUVFf///yH5BAEAAAMALAAAAAALAAsAAAIUnC2nKLnT4or00PvyrQwrPzUZshQAOw==);
+    padding-left: 1em;
+}
+.st-sort-ascent:after {
+    content: '\25B2';
+}
+.st-sort-descent:after {
+    content: '\25BC';
+}
+.pagination{
+	margin: 0px 0 !important;
+}
+.sprite {
+	background-image: url(images/edit-delete.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+}
+
+.sprite-edit {
+	background-position: 0 0;
+	background-size: 30px auto;
+	height: 15px;
+	width: 14px;
+}
+
+.sprite-delete {
+	background-position: -18px 0;
+	background-size: 30px auto;
+	height: 15px;
+	width: 10px;
 }

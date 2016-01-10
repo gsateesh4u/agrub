@@ -1,6 +1,6 @@
 var app = angular
   .module('app', [
-    'ui.router',
+    'ui.router','lbServices',
     'ui.bootstrap','smart-table','xlat','blockUI'
   ])
   //configure pagination template for smart-table
@@ -15,6 +15,12 @@ var app = angular
         url: '/customers',
         templateUrl: 'views/customers.html',
         controller: 'CustomerController',
+        authenticate: true
+      })
+	  .state('orders', {
+        url: '/orders',
+        templateUrl: 'views/orders.html',
+        controller: 'OrderController',
         authenticate: true
       })
       .state('users', {
@@ -32,6 +38,12 @@ var app = angular
         url: '/items',
 		templateUrl: 'views/items.html',
         controller: 'ItemController',
+        authenticate: true
+      })
+	   .state('prices', {
+        url: '/prices',
+		templateUrl: 'views/prices.html',
+        controller: 'PriceController',
         authenticate: true
       })
       .state('forbidden', {
@@ -95,10 +107,10 @@ var app = angular
     	//alert(angular.toJson(next));
     	//$rootScope.isActive = (angular.toJson(next.url));
       // redirect to login page if not logged in
-      if (next.authenticate && !$rootScope.currentUser) {
-       // event.preventDefault(); //prevent current page from loading
-       // $state.go('forbidden');
-      }
+     /* if (next.authenticate && !$rootScope.currentUser) {
+        event.preventDefault(); //prevent current page from loading
+        $state.go('forbidden');
+      }*/
     });
   }]).controller('MainController',function($scope,$window){
 	 

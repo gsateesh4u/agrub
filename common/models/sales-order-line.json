@@ -25,7 +25,7 @@
       "foreignKey": ""
     },
     "item": {
-      "type": "hasOne",
+      "type": "embedsOne",
       "model": "Item",
       "foreignKey": ""
     }
