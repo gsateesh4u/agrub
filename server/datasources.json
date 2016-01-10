@@ -11,4 +11,5 @@
     "connector": "postgresql",
     "debug": true
   }
+
 }

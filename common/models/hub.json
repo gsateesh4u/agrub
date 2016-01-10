@@ -1,6 +1,5 @@
 {
   "name": "Hub",
-  "plural": "Hubs",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
