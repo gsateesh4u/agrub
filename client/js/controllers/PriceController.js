@@ -1,8 +1,8 @@
-app.controller('PriceController', function($scope,Order){
+app.controller('PriceController', function($scope,Pricing){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
-	Order.find({
+	Pricing.find({
 		filter: { include: ['customer','orderStatus'] }
 	}).$promise
 		.then(function(response) { $scope.rowCollection = [].concat(response);
