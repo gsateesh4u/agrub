@@ -11,6 +11,10 @@
       "type": "date",
       "required": true
     },
+	"cardDate": {
+      "type": "date",
+      "required": true
+    },
     "deliveryTime": {
       "type": "string"
     }
