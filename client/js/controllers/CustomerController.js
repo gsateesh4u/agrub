@@ -72,7 +72,62 @@ app.controller('CustomerController', function($scope,Customer,Hub){
 	   angular.copy($scope.tempCustomer,$scope.addUpdateCust);
 	   $scope.showAddUpdateCustomer = false;
    };
+   $scope.deleteCustomer = function deleteCustomer(row){
+	   var flag = confirm("Do you really want to delete "+row.name+" ?");
+	   if(flag){
+		   Customer.delete({id:row.id}).$promise
+				.then(function(response) { 
+				 Customer.find({
+						filter: { include: 'hub' }
+					}).$promise
+						.then(function(response) { $scope.rowCollection = [].concat(response);
+						  $scope.rowCollection = [].concat(response);
+						   $scope.displayedCollection = [].concat($scope.rowCollection);
+						  if($scope.rowCollection.length==0){
+								 $scope.error = "No data found!!!";
+							 }
+							 $scope.isLoading = false;
+					  },function( errorMessage ) {
+						  $scope.error = "Error has occurred while loading customers!";
+						  $scope.isLoading = false;
+				   });
+			  },function( errorMessage ) {
+				  $scope.subError = "Error has occurred while deleting customer!";
+				  $scope.isLoading = false;
+		   });
+	   }
+   };
    $scope.addOrUpdate = function addOrUpdate(cust,operation){
-	   alert(operation);
+	   if(operation == 'Add'){
+		  cust.hubId = $scope.selectedHub.id;
+		  cust.hub.id = $scope.selectedHub.id;
+		  Customer.create(cust).$promise
+				.then(function(response) { 
+				 Customer.find({
+						filter: { include: 'hub' }
+					}).$promise
+						.then(function(response) { $scope.rowCollection = [].concat(response);
+						  $scope.rowCollection = [].concat(response);
+						   $scope.displayedCollection = [].concat($scope.rowCollection);
+						  if($scope.rowCollection.length==0){
+								 $scope.error = "No data found!!!";
+							 }
+							 $scope.isLoading = false;
+							 $scope.showAddUpdateCustomer = false;
+					  },function( errorMessage ) {
+						  $scope.error = "Error has occurred while loading customers!";
+						  $scope.showAddUpdateCustomer = false;
+						  $scope.isLoading = false;
+				   });
+				   $scope.showAddUpdateCustomer = false;
+					 $scope.isLoading = false;
+			  },function( errorMessage ) {
+				  $scope.subError = "Error has occurred while creating customer!";
+				  $scope.isLoading = false;
+		   });
+	   } 
+	   if(operation == 'Update'){
+		   
+	   }
    };
 });

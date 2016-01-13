@@ -28,7 +28,7 @@
       "foreignKey": ""
     },
     "deliveryChalan": {
-      "type": "embedsOne",
+      "type": "hasOne",
       "model": "DeliveryChalan",
       "foreignKey": ""
     },

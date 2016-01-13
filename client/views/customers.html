@@ -47,7 +47,7 @@
 									<td>{{row.hub.name}}</td>
 									<td align="center">
 										<span class="sprite sprite-edit" title="Edit Customer" style="cursor:pointer" ng-click="showCustomer(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
-										<span class="sprite sprite-delete" title="Delete Customer" style="cursor:pointer"></span>
+										<span class="sprite sprite-delete" title="Delete Customer" style="cursor:pointer" ng-click="deleteCustomer(row)"></span>
 									</td>
 							</tr>
 							<tr ng-if="customerCollection.length == 0">

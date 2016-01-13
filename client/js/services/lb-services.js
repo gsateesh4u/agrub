@@ -2741,31 +2741,6 @@ module.factory(
           method: "GET"
         },
 
-        // INTERNAL. Use SalesOrderLine.item.create() instead.
-        "::create::SalesOrderLine::item": {
-          url: urlBase + "/SalesOrderLines/:id/item",
-          method: "POST"
-        },
-
-        // INTERNAL. Use SalesOrderLine.item.createMany() instead.
-        "::createMany::SalesOrderLine::item": {
-          isArray: true,
-          url: urlBase + "/SalesOrderLines/:id/item",
-          method: "POST"
-        },
-
-        // INTERNAL. Use SalesOrderLine.item.update() instead.
-        "::update::SalesOrderLine::item": {
-          url: urlBase + "/SalesOrderLines/:id/item",
-          method: "PUT"
-        },
-
-        // INTERNAL. Use SalesOrderLine.item.destroy() instead.
-        "::destroy::SalesOrderLine::item": {
-          url: urlBase + "/SalesOrderLines/:id/item",
-          method: "DELETE"
-        },
-
         // INTERNAL. Use Hub.items.findById() instead.
         "::findById::Hub::items": {
           params: {
@@ -3869,6 +3844,45 @@ module.factory(
          */
         "createChangeStream": {
           url: urlBase + "/Orders/change-stream",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Order#placeOrder
+         * @methodOf lbServices.Order
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `orderObj` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `orderObj` – `{object=}` - 
+         */
+        "placeOrder": {
+          url: urlBase + "/Orders/placeOrder",
           method: "POST"
         },
 
@@ -6431,24 +6445,6 @@ module.factory(
           method: "GET"
         },
 
-        // INTERNAL. Use SalesOrderLine.item.create() instead.
-        "prototype$__create__item": {
-          url: urlBase + "/SalesOrderLines/:id/item",
-          method: "POST"
-        },
-
-        // INTERNAL. Use SalesOrderLine.item.update() instead.
-        "prototype$__update__item": {
-          url: urlBase + "/SalesOrderLines/:id/item",
-          method: "PUT"
-        },
-
-        // INTERNAL. Use SalesOrderLine.item.destroy() instead.
-        "prototype$__destroy__item": {
-          url: urlBase + "/SalesOrderLines/:id/item",
-          method: "DELETE"
-        },
-
         /**
          * @ngdoc method
          * @name lbServices.SalesOrderLine#create
@@ -7107,20 +7103,6 @@ module.factory(
           var action = TargetResource["::get::SalesOrderLine::salesOrder"];
           return action.apply(R, arguments);
         };
-    /**
-     * @ngdoc object
-     * @name lbServices.SalesOrderLine.item
-     * @header lbServices.SalesOrderLine.item
-     * @object
-     * @description
-     *
-     * The object `SalesOrderLine.item` groups methods
-     * manipulating `Item` instances related to `SalesOrderLine`.
-     *
-     * Call {@link lbServices.SalesOrderLine#item SalesOrderLine.item()}
-     * to query all related instances.
-     */
-
 
         /**
          * @ngdoc method
@@ -7129,7 +7111,7 @@ module.factory(
          *
          * @description
          *
-         * Fetches hasOne relation item.
+         * Fetches belongsTo relation item.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -7155,151 +7137,6 @@ module.factory(
         R.item = function() {
           var TargetResource = $injector.get("Item");
           var action = TargetResource["::get::SalesOrderLine::item"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.SalesOrderLine.item#create
-         * @methodOf lbServices.SalesOrderLine.item
-         *
-         * @description
-         *
-         * Creates a new instance in item of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Item` object.)
-         * </em>
-         */
-        R.item.create = function() {
-          var TargetResource = $injector.get("Item");
-          var action = TargetResource["::create::SalesOrderLine::item"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.SalesOrderLine.item#createMany
-         * @methodOf lbServices.SalesOrderLine.item
-         *
-         * @description
-         *
-         * Creates a new instance in item of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {function(Array.<Object>,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Item` object.)
-         * </em>
-         */
-        R.item.createMany = function() {
-          var TargetResource = $injector.get("Item");
-          var action = TargetResource["::createMany::SalesOrderLine::item"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.SalesOrderLine.item#destroy
-         * @methodOf lbServices.SalesOrderLine.item
-         *
-         * @description
-         *
-         * Deletes item of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
-        R.item.destroy = function() {
-          var TargetResource = $injector.get("Item");
-          var action = TargetResource["::destroy::SalesOrderLine::item"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.SalesOrderLine.item#update
-         * @methodOf lbServices.SalesOrderLine.item
-         *
-         * @description
-         *
-         * Update item of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `Item` object.)
-         * </em>
-         */
-        R.item.update = function() {
-          var TargetResource = $injector.get("Item");
-          var action = TargetResource["::update::SalesOrderLine::item"];
           return action.apply(R, arguments);
         };
 
