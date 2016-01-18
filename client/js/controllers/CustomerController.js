@@ -10,6 +10,7 @@ app.controller('CustomerController', function($scope,Customer,Hub){
 		email: "",
 		hubId: "",
 		hub:{
+			id:"",
 			name:""
 		}
 	};
@@ -20,6 +21,7 @@ app.controller('CustomerController', function($scope,Customer,Hub){
 		email: "",
 		hubId: "",
 		hub:{
+			id:"",
 			name:""
 		}
 	};

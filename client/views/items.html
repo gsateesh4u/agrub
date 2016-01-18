@@ -39,8 +39,8 @@
 									<td>{{row.unit}}</td>
 									<td>{{row.itemCategory.name}}</td>
 									<td align="center">
-										<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer"></span>&nbsp;&nbsp;&nbsp;
-										<span class="sprite sprite-delete" title="Delete Item" style="cursor:pointer"></span>
+										<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer" ng-click="showItem(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
+										<span class="sprite sprite-delete" title="Delete Item" style="cursor:pointer" ng-click="deleteItem(row)"></span>
 									</td>
 							</tr>
 							<tr ng-if="itemsCollection.length == 0">
@@ -60,6 +60,57 @@
 							</tfoot>
 						</table>
 			</div>
+			<!-- CRUD Item-->
+			<div class="row" ng-show="showAddUpdateItem">
+				<div class="col-md-12">
+					<header class="panel-heading">
+						<b>{{header}} Item</b>
+					</header>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-12" ng-if="isSubLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Hubs&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>
+					<form name="itemForm" class="css-form" novalidate ng-show="!isSubLoading">
+						<div>
+						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="error" ng-bind-html="error"></div>
+							<div class="col-md-12">
+								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Item name<font color="red">*</font> :</label> <input type="text"
+									ng-model="item.name" required class="form-control" name="name"/>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Hub <font color="red">*</font> :</label> 
+								<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-disabled="header=='Update'">
+								</select>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Category <font color="red">*</font> :</label> 
+								<select name="selectedCategory" class="form-control"  ng-model="selectedCategory" required class="form-control" ng-options="category.name for category in categories track by category.id">
+								</select>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Description<font color="red">*</font> :</label> <input type="textarea" ng-model="item.description" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Unit:</label> <input type="text" ng-model="item.units" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Quality Param<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityParam" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Quality Variance<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityVariance" class="form-control"/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="addOrUpdate(item,header)" ng-disabled="itemForm.$invalid">OK</button>
+							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+						</div>
+					</form>
+				</div>
+              </div>
+              <!-- row end -->
 		</section>
 	</div>
 		</div>

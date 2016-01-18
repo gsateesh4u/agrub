@@ -24,8 +24,8 @@
 							<tr st-select-row="row" ng-repeat="row in hubsCollection">
 									<td>{{row.name}}</td>
 									<td align="center">
-										<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer"></span>&nbsp;&nbsp;&nbsp;
-										<span class="sprite sprite-delete" title="Delete Item" style="cursor:pointer"></span>
+										<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer" ng-click="showHub(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
+										<span class="sprite sprite-delete" title="Delete Item" style="cursor:pointer" ng-click="deleteHub(row)"></span>
 									</td>
 							</tr>
 							<tr ng-if="hubsCollection.length == 0">
@@ -45,6 +45,34 @@
 							</tfoot>
 						</table>
 			</div>
+			<!-- CRUD Hub-->
+			<div class="row" ng-show="showAddUpdateHub">
+				<div class="col-md-12">
+					<header class="panel-heading">
+						<b>{{header}} Hub</b>
+					</header>
+				</div>
+				<div class="col-md-12">
+					<form name="hubForm" class="css-form" novalidate>
+						<div>
+						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="error" ng-bind-html="error"></div>
+							<div class="col-md-12">
+								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+							</div>
+							<div class="form-group col-xs-12">
+								<label>Hub name<font color="red">*</font> :</label> <input type="text"
+									ng-model="hub.name" required class="form-control" name="name"/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="addOrUpdate(hub,header)" ng-disabled="hubForm.$invalid">OK</button>
+							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+						</div>
+					</form>
+				</div>
+              </div>
+              <!-- row end -->
 		</section>
 	</div>
 		</div>
