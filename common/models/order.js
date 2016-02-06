@@ -43,11 +43,23 @@ Order.placeOrder= function(orderObj, cb) {
 		return originalOrder;
 	
 }
+Order.fullOrders = function(cb) {
+	Order.find({
+	  include:[{salesOrders:{salesOrderLines:'item'}}],
+	}, cb);
+};
 Order.remoteMethod(
         'placeOrder', 
         {
           accepts: {arg: 'orderObj', type: 'object'},
           returns: {arg: 'orderObj', type: 'object'}
+        }
+    );
+Order.remoteMethod(
+        'fullOrders', 
+        {
+          returns: {arg: 'orders', type: 'array'},
+		  http: {path:'/full', verb: 'get'}
         }
     );
 };
