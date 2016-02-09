@@ -10,6 +10,22 @@
     "name": "db",
     "connector": "postgresql",
     "debug": true
-  }
+  },
+   "emailDataSource": {
+       "connector": "mail",
+       "transports": [{
+         "type": "smtp",
+         "host": "smtp.gmail.com",
+         "secure": false,
+         "port": 587,
+         "tls": {
+           "rejectUnauthorized": false
+         },
+         "auth": {
+           "user": "agrubcare@gmail.com",
+           "pass": "P@$$W0rd"
+         }
+       }]
+    }
 
 }
