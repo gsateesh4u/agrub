@@ -83,20 +83,20 @@
 							<div class="col-md-12">
 								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
 							</div>
-							<div class="form-group col-xs-6">
+							<div class="form-group col-xs-6" ng-class="{ 'has-error': customerForm.name.$invalid }">
 								<label>Customer name<font color="red">*</font> :</label> <input type="text"
-									ng-model="customer.name" required class="form-control" name="name"/>
+									ng-model="customer.name" required ng-class="{'form-control':true, 'has-error': customerForm.name.$invalid }" name="name"/>
 							</div>
 							<!--<div class="form-group col-xs-6">
 								<label>Hub:</label> <input type="text" ng-model="customer.hub.name" class="form-control" ng-disabled="true"/>
 							</div>-->
-							<div class="form-group col-xs-6">
+							<div class="form-group col-xs-6" ng-class="{ 'has-error': customerForm.selectedHub.$invalid }">
 								<label>Hub <font color="red">*</font> :</label> 
-								<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-disabled="header=='Update'">
+								<select name="selectedHub" class="form-control" name="selectedHub" ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-disabled="header=='Update'">
 								</select>
 							</div>
-							<div class="form-group col-xs-4">
-								<label>Email:</label> <input type="email" ng-model="customer.email" class="form-control"/>
+							<div class="form-group col-xs-4" ng-class="{ 'has-error': customerForm.email.$invalid }">
+								<label>Email:</label> <input type="email" name="email" ng-model="customer.email" class="form-control"/>
 							</div>
 							<div class="form-group col-xs-4">
 								<label>Phone:</label> <input type="text" ng-model="customer.phone" class="form-control"/>
@@ -104,8 +104,8 @@
 							<div class="form-group col-xs-4">
 								<label>Fax:</label> <input type="text" ng-model="customer.fax" class="form-control"/>
 							</div>
-							<div class="form-group col-xs-12">
-								<label>Address<font color="red">*</font> :</label> <input type="textarea" ng-model="customer.address" class="form-control" required/>
+							<div class="form-group col-xs-12" ng-class="{ 'has-error': customerForm.address.$invalid }">
+								<label>Address<font color="red">*</font> :</label> <input type="textarea" name="address" ng-model="customer.address" class="form-control" required/>
 							</div>
 						</div>
 						<div class="modal-footer">

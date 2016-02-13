@@ -1,6 +1,6 @@
 <div class="pagination" ng-if="pages.length >= 2">
   <ul class="pagination" ng-if="numPages<=5">
-    <li ng-repeat="page in pages" ng-class="{active: page==currentPage}"><a ng-click="selectPage(page)">{{page}}</a>
+    <li ng-repeat="page in pages" ng-class="{active: page==currentPage}" style="cursor:pointer"><a ng-click="selectPage(page)">{{page}}</a>
     </li>
   </ul>
   <ul class="pagination" ng-if="numPages>5">

@@ -22,13 +22,14 @@
 										<input st-search="customer.name" placeholder="search for custommer" class="input-sm form-control" type="search"/>
 									</th>
 									<th>
-										<input st-search="name" placeholder="search for name" class="input-sm form-control" type="search"/>
+										<input st-search="name" placeholder="search for order" class="input-sm form-control" type="search"/>
 									</th>
 									<th></th><th></th><th></th><th></th>
 								</tr>
 							</thead>
 							<tbody ng-show="!isLoading">
 							<tr st-select-row="row" ng-repeat="row in ordersCollection">
+									<td>{{row.customer.name}}</td>
 									<td>{{row.name}}</td>
 									<td>{{row.startDate}}</td>
 									<td>{{row.endDate}}</td>
