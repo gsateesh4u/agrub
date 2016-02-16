@@ -1,7 +1,7 @@
 var app = angular
   .module('app', [
     'ui.router','lbServices',
-    'ui.bootstrap','smart-table','xlat','blockUI'
+    'ui.bootstrap','smart-table','xlat','blockUI','angularFileUpload'
   ])
   //configure pagination template for smart-table
 	.config(function(stConfig) {
@@ -40,6 +40,12 @@ var app = angular
         controller: 'ItemController',
         authenticate: true
       })
+	  .state('uploadOrder', {
+        url: '/uploadOrder',
+		templateUrl: 'views/uploadOrders.html',
+        controller: 'UploadOrderController',
+        authenticate: true
+      })
 	   .state('prices', {
         url: '/prices',
 		templateUrl: 'views/prices.html',
@@ -52,7 +58,7 @@ var app = angular
       })
       .state('login', {
         url: '/login',
-        templateUrl: 'views/login.html',
+        templateUrl: 'login.html',
         controller: 'AuthLoginController'
       })
       .state('logout', {
@@ -65,7 +71,7 @@ var app = angular
         controller: 'ReportsController',
         authenticate: true
       });
-    $urlRouterProvider.otherwise('customers');
+    $urlRouterProvider.otherwise('login');
   }])
   //http interceptor
   .factory('httpRInterceptor', ['$rootScope', '$q', '$window', 'blockUI',
@@ -84,7 +90,7 @@ var app = angular
 	                                         responseError: function (rejection) {
 	                            			  blockUI.stop();
 	                                           if (rejection.status == 401) {
-	                                             return responseError;
+	                                             return rejection;
 	                                           }
 
 	                                           return $q.reject(rejection);
@@ -107,10 +113,10 @@ var app = angular
     	//alert(angular.toJson(next));
     	//$rootScope.isActive = (angular.toJson(next.url));
       // redirect to login page if not logged in
-     /* if (next.authenticate && !$rootScope.currentUser) {
+      if (next.authenticate && !$rootScope.currentUser) {
         event.preventDefault(); //prevent current page from loading
-        $state.go('forbidden');
-      }*/
+        $state.go('login');
+      }
     });
   }]).controller('MainController',function($scope,$window){
 	 
@@ -123,10 +129,10 @@ var app = angular
 		   } else {
 			angular.element(document.getElementsByClassName("left-side")[0]).toggleClass("collapse-left");
 			angular.element(document.getElementsByClassName("right-side")[0]).toggleClass("strech");
-			/*var leftPane = angular.element(document.getElementsByClassName("left-side")[0]);
+			var leftPane = angular.element(document.getElementsByClassName("left-side")[0]);
 			var rightPane = angular.element(document.getElementsByClassName("right-side")[0]);
 			leftPane.toggleClass("collapse-left");
-            rightPane.toggleClass("strech");*/
+            rightPane.toggleClass("strech");
 		   }
 	  };
 	  

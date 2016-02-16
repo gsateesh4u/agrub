@@ -7,6 +7,7 @@ Order.placeOrder= function(orderObj, cb) {
 	var salesOrders = orderObj.salesOrders;
 	var customerId = orderObj.customerId;
 	var dataSource = app.datasources.db;
+	var newOrderId;
 	return Order
 			.create(orderObj)
 			.then(function createSalesOrders (newOrder) {
@@ -27,22 +28,38 @@ Order.placeOrder= function(orderObj, cb) {
 								SalesOrderLine.create(salesOrderLineTemp).then(function createSalesOrderLineItem(newSalesOrderLineIte){
 									salesOrderLineTemp.id=newSalesOrderLineIte.id;
 								}).catch(function (err) {
-								  return err;
+								  console.log('error while creating order '+err);
+									cb(err);
 								});
 							}
 						}).catch(function (err) {
-								  return err;
-								});;
+								  console.log('error while creating order '+err);
+									cb(err);
+								});
 					}
 					originalOrder.salesOrders = salesOrders;
 				}
+				Order.app.models.Customer.findById(customerId, function (err, cust) {
+									var email = cust.email;
+									var emailOderId = newOrderId;
+									 Order.app.models.Email.send({
+										  to: email,
+										  from: 'agrubcare@gmail.com',
+										  subject: 'Order Received #'+emailOderId,
+										  text: 'New Order',
+										  html: 'Hi '+cust.name+' , Your Order with reference number <b> '+emailOderId+' </b> has been received. We will inform you once we confirm your order. Thank you for placing order with us.'
+										}, function(err, mail) {
+										  console.log('email sent to !'+cust.name+' for order with orderId '+emailOderId);
+										});
+								});
 			})
 			.catch(function (err) {
-		  return err;
+			 console.log('error while creating order '+err);
+			 cb(err);
 		});
-		return originalOrder;
-	
+		cb(originalOrder);
 }
+
 Order.fullOrders = function(cb) {
 	Order.find({
 	  include:[{salesOrders:{salesOrderLines:'item'}}],

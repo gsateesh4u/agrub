@@ -730,4 +730,3 @@ angular.module('blockUI').run(['$templateCache', function($templateCache){
   $templateCache.put('angular-block-ui/angular-block-ui.ng.html', '<div class=\"block-ui-overlay\"></div><div class=\"block-ui-message-container\" aria-live=\"assertive\" aria-atomic=\"true\"><div class=\"block-ui-message\" ng-class=\"$_blockUiMessageClass\">{{ state.message }}</div></div>');
 }]);
 })(angular);
-//# sourceMappingURL=angular-block-ui.js.map
