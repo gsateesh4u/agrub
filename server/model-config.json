@@ -94,5 +94,9 @@
   },
   "Email": {
     "dataSource": "emailDataSource"
+  },
+  "container": {
+    "dataSource": "storage",
+    "public": true
   }
 }

@@ -16,9 +16,11 @@
     <script src="js/lib/angular-block-ui.js"></script>
     <script src="js/lib/ui-bootstrap-tpls-0.13.0.js"></script>
     <script src="js/lib/smart-table.min.js"></script>
+	<script src="js/lib/angular-file-upload.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/services/lb-services.js"></script>
 	 <script src="js/services/appServices.js"></script>
+	 <script src="js/services/auth.js"></script>
     <script src="js/appMessages.js"></script>
 	<script src="js/controllers/CustomerController.js"></script>
 	<script src="js/controllers/OrderController.js"></script>
@@ -26,9 +28,11 @@
 	<script src="js/controllers/HubController.js"></script>
 	<script src="js/controllers/ItemController.js"></script>
 	<script src="js/controllers/PriceController.js"></script>
+	 <script src="js/controllers/UploadOrderController.js"></script>
 	<script src="js/controllers/ReportsController.js"></script>
 	<script src="js/controllers/AuthLogoutController.js"></script>
 	<script src="js/controllers/AuthLoginController.js"></script>
+	<script src="js/controllers/SignUpController.js"></script>
   </head>
    <body class="skin-black  pace-done" ng-controller="MainController">
    <div class="pace  pace-inactive">
@@ -38,7 +42,7 @@
 		<div class="pace-activity"></div>
 	</div>
 	 <!-- header logo: style can be found in header.less -->
-        <header class="header">
+        <header class="header" ng-if="currentUser">
             <span class="logo">
                 {{'appLogo' | xlat}}
             </span>
@@ -55,11 +59,11 @@
                     <ul class="nav navbar-nav">
                         
                         <!-- User Account: style can be found in dropdown.less -->
-                        <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-user"></i>
-                                <span><i class="fa fa-ban fa-fw pull-right"></i> Logout</span>
-                            </a>
+								<li class="dropdown user user-menu">
+									<a href="#logout" class="dropdown-toggle" data-toggle="dropdown">
+										<i class="fa fa-user"></i>
+										<span><i class="fa fa-ban fa-fw pull-right"></i> Logout</span>
+									</a>
                                 </li>
                             </ul>
                         </div>
@@ -67,7 +71,7 @@
                 </header>
 				 <div class="wrapper row-offcanvas row-offcanvas-left">
                     <!-- Left side column. contains the logo and sidebar -->
-                    <aside class="left-side sidebar-offcanvas">
+                    <aside class="left-side sidebar-offcanvas" ng-if="currentUser">
                         <!-- sidebar: style can be found in sidebar.less -->
                         <section class="sidebar">
                             <!-- Sidebar user panel -->
@@ -76,7 +80,7 @@
                                     <img src="./css/images/profile.png" class="img-circle" alt="User Image">
                                 </div>
                                 <div class="pull-left info">
-                                    <p>Hello, Sateesh</p>
+                                    <p>Hello, {{currentUser.username}}</p>
                                 </div>
                             </div>
                             <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -118,6 +122,11 @@
                                         <i class="fa fa-glass"></i> <span>{{'menu_reports' | xlat}}</span>
                                     </a>
                                 </li>
+								<li id="uploadOrder">
+                                    <a href="#uploadOrder">
+                                        <i class="fa fa-glass"></i> <span>{{'menu_upload_order' | xlat}}</span>
+                                    </a>
+                                </li>
 
                             </ul>
                         </section>
@@ -129,10 +138,10 @@
 					<!-- Main content -->
 					<div ui-view></div>
 					<!-- /.content -->
-                <div class="footer-main">
+					</aside><!-- /.right-side -->
+			<div class="footer-main">
                     {{'copyright' | xlat}}
                 </div>
-            </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->    
   </body>
 </html>
