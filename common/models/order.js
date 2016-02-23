@@ -65,6 +65,35 @@ Order.fullOrders = function(cb) {
 	  include:[{salesOrders:{salesOrderLines:'item'}}],
 	}, cb);
 };
+Order.acceptOrder = function(orderId, cb) {
+	Order.findById(orderId,{
+	  include:[{salesOrders:{salesOrderLines:'item'}}]
+	},function(err,exOrder){
+		if(err){
+			cb(err);
+		}
+		var ordObj = exOrder.toJSON();;
+		if(ordObj.salesOrders == null || ordObj.salesOrders.length == 0){
+			cb(null,'no sales orders exist for this order');
+		}
+	
+		for(var j=0;j<ordObj.salesOrders.length;j++)
+		{
+			var tempDC = {
+							"purchaseOrderId": ordObj.salesOrders[j].id,
+							"salesOrderId": ordObj.salesOrders[j].id,
+							"customerId": ordObj.customerId
+						};
+			Order.app.models.DeliveryChalan.create(tempDC).then(function createDeliverChallan(newDeliveryChallan){
+				console.log(newDeliveryChallan);
+			}).catch(function (err){
+			 console.log('error while creating DeliveryChallan '+err);
+				cb(err);
+			});
+		}
+		cb(null, 'success');
+	});
+};
 Order.remoteMethod(
         'placeOrder', 
         {
@@ -77,6 +106,14 @@ Order.remoteMethod(
         {
           returns: {arg: 'orders', type: 'array'},
 		  http: {path:'/full', verb: 'get'}
+        }
+    );
+Order.remoteMethod(
+        'acceptOrder', 
+        {
+		  accepts: {arg: 'orderId', type: 'string'},
+          returns: {arg: 'status', type: 'object'},
+		  http: {path:'/accept', verb: 'get'}
         }
     );
 };
