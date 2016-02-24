@@ -18,11 +18,7 @@
     "loopback-connector-cloudant": "^1.0.3",
     "loopback-connector-postgresql": "^2.4.0",
     "loopback-datasource-juggler": "^2.39.0",
-<<<<<<< HEAD
-	"nodemailer": "^1.3.1",
-=======
     "nodemailer": "^1.3.1",
->>>>>>> 67f278e4d291e44f36f0e78461b559d16d9c5d6a
     "nodemailer-stub-transport": "^0.1.5",
     "passport": "^0.3.2",
     "serve-favicon": "^2.0.1"
