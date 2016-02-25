@@ -8,7 +8,7 @@
   "properties": {
     "soLineItemsQuantity": {
       "type": "number",
-      "required": true
+      "required": false
     },
     "custUpdatedItemQuantity": {
       "type": "number"

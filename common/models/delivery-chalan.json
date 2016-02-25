@@ -9,7 +9,7 @@
   "properties": {},
   "validations": [],
   "relations": {
-    "purchaseOrder": {
+    "salesOrder": {
       "type": "belongsTo",
       "model": "SalesOrder",
       "foreignKey": ""

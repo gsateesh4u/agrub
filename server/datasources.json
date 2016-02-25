@@ -11,6 +11,7 @@
     "connector": "postgresql",
     "debug": true
   },
+  
   "emailDataSource": {
     "name": "emailDataSource",
     "connector": "mail",
