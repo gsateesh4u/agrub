@@ -16,4 +16,26 @@ app.controller('OrderController', function($scope,Order){
 		  $scope.error = "Error has occurred while loading orders!";
 		  $scope.isLoading = false;
    });
+   $scope.showOrderDetails = function showOrderDetails(ord){
+   Order.findById({id:ord.id,
+		filter: {include:[{salesOrders:{salesOrderLines:'item'}}] }
+	}).$promise
+		.then(function(response) { 
+		  if(response.length==0){
+				 $scope.subError = "No data found!!!";
+			 }
+			 else{
+				$scope.selectedOrder = response;
+				$scope.salesOrders = response.salesOrders;
+			 }
+			 $scope.isSubLoading = false;
+	  },function( errorMessage ) {
+		  $scope.subError = "Error has occurred while loading order details!";
+		  $scope.isSubLoading = false;
+   });
+   }
+   $scope.cancel = function resetSelectedOrder(){
+		$scope.selectedOrder = null;
+		$scope.salesOrders = null;
+   }
 });

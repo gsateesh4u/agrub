@@ -1,4 +1,4 @@
-app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User',  function($scope, $rootScope, $state, User){
+app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User','$cookieStore',  function($scope, $rootScope, $state, User, $cookieStore){
 	$scope.loginError = "";
 	$scope.login = function() {
 	$scope.loginError = "";
@@ -21,6 +21,9 @@ app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User', 
 					tokenId: response.id,
 					email: $scope.email
 				};
+				var currentUser = {};
+				angular.copy($rootScope.currentUser, currentUser);
+				$cookieStore.put("currentUser",currentUser);				
 				$state.go('customers');
 			}          
         });
@@ -31,6 +34,7 @@ app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User', 
        .$promise
        .then(function() {
          $rootScope.currentUser = null;
+		 $cookieStore.remove('currentUser');
 		 $state.go('login');
        });
     }
