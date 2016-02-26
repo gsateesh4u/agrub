@@ -42,7 +42,7 @@
       "foreignKey": ""
     },
     "salesOrderStatus": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "SalesOrderStatus",
       "foreignKey": ""
     }

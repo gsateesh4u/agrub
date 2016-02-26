@@ -13,7 +13,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+	"salesOrders": {
+      "type": "hasMany",
+      "model": "SalesOrder",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }
