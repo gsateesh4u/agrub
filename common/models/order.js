@@ -62,9 +62,16 @@ Order.placeOrder= function(orderObj, cb) {
 
 Order.fullOrders = function(cb) {
 	Order.find({
-	  include:[{salesOrders:{salesOrderLines:'item'}}],
+	  include:['orderStatus',{salesOrders:{salesOrderLines:'item'}}],
 	}, cb);
 };
+
+Order.fullOrder = function(orderId, cb) {
+	Order.findById(orderId,{
+	  include:['orderStatus',{salesOrders:{salesOrderLines:'item'}}],
+	}, cb);
+};
+
 Order.acceptOrder = function(orderId, cb) {
 	Order.findById(orderId,{
 	  include:[{salesOrders:{salesOrderLines:'item'}}]
@@ -105,7 +112,15 @@ Order.remoteMethod(
         'fullOrders', 
         {
           returns: {arg: 'orders', type: 'array'},
-		  http: {path:'/full', verb: 'get'}
+		  http: {path:'/fullOrders', verb: 'get'}
+        }
+    );
+Order.remoteMethod(
+        'fullOrder', 
+        {
+		  accepts: {arg: 'orderId', type: 'string'},
+          returns: {arg: 'order', type: 'object'},
+		  http: {path:'/fullOrders/:orderId', verb: 'get'}
         }
     );
 Order.remoteMethod(
