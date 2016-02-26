@@ -18,7 +18,7 @@ app.controller('OrderController', function($scope,Order){
    });
    $scope.showOrderDetails = function showOrderDetails(ord){
    Order.findById({id:ord.id,
-		filter: {include:[{salesOrders:{salesOrderLines:'item'}}] }
+		filter: {include:[{salesOrders:['salesOrderStatus',{salesOrderLines:'item'}]}]}
 	}).$promise
 		.then(function(response) { 
 		  if(response.length==0){

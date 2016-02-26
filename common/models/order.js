@@ -69,13 +69,13 @@ Order.placeOrder= function(orderObj, cb) {
 
 Order.fullOrders = function(cb) {
 	Order.find({
-	  include:['orderStatus',{salesOrders:{salesOrderLines:'item'}}],
+	  include:['orderStatus',{salesOrders:['salesOrderStatus',{salesOrderLines:'item'}]}],
 	}, cb);
 };
 
 Order.fullOrder = function(orderId, cb) {
 	Order.findById(orderId,{
-	  include:['orderStatus',{salesOrders:{salesOrderLines:'item'}}],
+	  include:['orderStatus',{salesOrders:['salesOrderStatus',{salesOrderLines:'item'}]}],
 	}, cb);
 };
 

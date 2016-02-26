@@ -73,18 +73,22 @@
 								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
 							</div>
 							<div class="col-md-12">
-							<div class="form-group col-xs-4" ng-class="{ 'has-error': orderForm.selectedSalesOrder.$invalid }">
+							<div class="form-group col-xs-3" ng-class="{ 'has-error': orderForm.selectedSalesOrder.$invalid }">
 								<label>Sales Orders <font color="red">*</font> :</label> 
 								<select name="selectedSalesOrder" class="form-control" name="selectedSalesOrder" ng-model="selectedSalesOrder" required class="form-control" ng-options="salesOrder.deliveryDate for salesOrder in salesOrders track by salesOrder.id">
 								</select>
 							</div>
-							<div class="form-group col-xs-4" ng-if="selectedSalesOrder">
+							<div class="form-group col-xs-3" ng-if="selectedSalesOrder">
 								<label>Delivery Date :</label> 
 								<input type="text" class="form-control" ng-disabled="true" value="{{selectedSalesOrder.deliveryDate}}"/> 
 							</div>
-							<div class="form-group col-xs-4" ng-if="selectedSalesOrder">
+							<div class="form-group col-xs-3" ng-if="selectedSalesOrder">
 								<label>Delivery Time :</label> 
 								<input type="text" class="form-control" ng-disabled="true" value="{{selectedSalesOrder.deliveryTime}}"/> 
+							</div>
+							<div class="form-group col-xs-3" ng-if="selectedSalesOrder">
+								<label>Status :</label> 
+								<input type="text" class="form-control label-warning" ng-disabled="true" value="{{selectedSalesOrder.salesOrderStatus.name}}"/>
 							</div>
 							<div class="col-xs-12">
 							<section class="panel" ng-if="selectedSalesOrder">
