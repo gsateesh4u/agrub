@@ -1,4 +1,4 @@
-app.controller('OrderController', function($scope,Order,SalesOrder, DeliveryChalan, SalesOrderStatus, OrderStatus,$filter){
+app.controller('OrderController', function($scope,Order,SalesOrder, DeliveryChalan, SalesOrderStatus, OrderStatus, Email, $filter){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
@@ -79,7 +79,7 @@ app.controller('OrderController', function($scope,Order,SalesOrder, DeliveryChal
 			 $scope.foundOrder.orderStatusId = 2;
 			 //$scope.foundOrder.orderStatus = OrderStatus.findById({id:'2'});
 		  }
-		   Order.findById({id:so.id,
+		   Order.findById({id:so.orderId,
 			filter: {include:[{salesOrders:['salesOrderStatus',{salesOrderLines:'item'}]}]}
 			}).$promise
 				.then(function(response) { 
