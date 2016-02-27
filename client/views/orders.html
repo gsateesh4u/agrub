@@ -33,7 +33,13 @@
 									<td>{{row.name}}</td>
 									<td>{{row.startDate}}</td>
 									<td>{{row.endDate}}</td>
-									<td>{{row.orderStatus.name}}</td>
+									<td align="center">
+										<span class="label label-pill label-primary" ng-if="row.orderStatusId=='1'">New</span>
+										<span class="label label-pill label-info" ng-if="row.orderStatusId=='2'">Accepted</span>
+										<span class="label label-pill label-warning" ng-if="row.orderStatusId=='3'">Partially Accepted</span>
+										<span class="label label-pill label-success" ng-if="row.orderStatusId=='5'">Completed</span>
+										<span class="label label-pill label-default" ng-if="row.orderStatusId=='4'">Rejected</span>
+									</td>
 									<td align="center">
 										<span class="sprite sprite-edit" title="Edit Order" style="cursor:pointer" ng-click="showOrderDetails(row)"></span>&nbsp;&nbsp;&nbsp;
 										<span class="sprite sprite-delete" title="Delete Order" style="cursor:pointer"></span>
@@ -123,7 +129,7 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-primary" ng-click="addOrUpdate(selectedOrder,header)" ng-disabled="orderForm.$invalid">Accept Order</button>
+							<button class="btn btn-primary" ng-if="selectedSalesOrder.salesOrderStatusId=='1'" ng-click="acceptSO(selectedSalesOrder)" ng-disabled="orderForm.$invalid">Accept</button>
 							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 						</div>
 					</form>
