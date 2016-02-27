@@ -5172,6 +5172,40 @@ module.factory(
           method: "POST"
         },
 
+        /**
+         * @ngdoc method
+         * @name lbServices.SalesOrder#acceptSO
+         * @methodOf lbServices.SalesOrder
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{string=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `deliveryCallan` – `{object=}` - 
+         */
+        "acceptSO": {
+          url: urlBase + "/SalesOrders/:id/Accept",
+          method: "GET"
+        },
+
         // INTERNAL. Use Order.salesOrders.findById() instead.
         "::findById::Order::salesOrders": {
           params: {
@@ -7053,24 +7087,6 @@ module.factory(
           method: "GET"
         },
 
-        // INTERNAL. Use DeliveryChalan.deliveryChalanStatus.create() instead.
-        "prototype$__create__deliveryChalanStatus": {
-          url: urlBase + "/DeliveryChalans/:id/deliveryChalanStatus",
-          method: "POST"
-        },
-
-        // INTERNAL. Use DeliveryChalan.deliveryChalanStatus.update() instead.
-        "prototype$__update__deliveryChalanStatus": {
-          url: urlBase + "/DeliveryChalans/:id/deliveryChalanStatus",
-          method: "PUT"
-        },
-
-        // INTERNAL. Use DeliveryChalan.deliveryChalanStatus.destroy() instead.
-        "prototype$__destroy__deliveryChalanStatus": {
-          url: urlBase + "/DeliveryChalans/:id/deliveryChalanStatus",
-          method: "DELETE"
-        },
-
         // INTERNAL. Use DeliveryChalan.invoice() instead.
         "prototype$__get__invoice": {
           url: urlBase + "/DeliveryChalans/:id/invoice",
@@ -7607,6 +7623,65 @@ module.factory(
           method: "GET"
         },
 
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.findById() instead.
+        "::findById::DeliveryChalanStatus::deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.destroyById() instead.
+        "::destroyById::DeliveryChalanStatus::deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.updateById() instead.
+        "::updateById::DeliveryChalanStatus::deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans() instead.
+        "::get::DeliveryChalanStatus::deliveryChalans": {
+          isArray: true,
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.create() instead.
+        "::create::DeliveryChalanStatus::deliveryChalans": {
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans",
+          method: "POST"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.createMany() instead.
+        "::createMany::DeliveryChalanStatus::deliveryChalans": {
+          isArray: true,
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans",
+          method: "POST"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.destroyAll() instead.
+        "::delete::DeliveryChalanStatus::deliveryChalans": {
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.count() instead.
+        "::count::DeliveryChalanStatus::deliveryChalans": {
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans/count",
+          method: "GET"
+        },
+
         // INTERNAL. Use Invoice.deliveryChalan() instead.
         "::get::Invoice::deliveryChalan": {
           url: urlBase + "/Invoices/:id/deliveryChalan",
@@ -7826,20 +7901,6 @@ module.factory(
           var action = TargetResource["::get::DeliveryChalan::customer"];
           return action.apply(R, arguments);
         };
-    /**
-     * @ngdoc object
-     * @name lbServices.DeliveryChalan.deliveryChalanStatus
-     * @header lbServices.DeliveryChalan.deliveryChalanStatus
-     * @object
-     * @description
-     *
-     * The object `DeliveryChalan.deliveryChalanStatus` groups methods
-     * manipulating `DeliveryChalanStatus` instances related to `DeliveryChalan`.
-     *
-     * Call {@link lbServices.DeliveryChalan#deliveryChalanStatus DeliveryChalan.deliveryChalanStatus()}
-     * to query all related instances.
-     */
-
 
         /**
          * @ngdoc method
@@ -7848,7 +7909,7 @@ module.factory(
          *
          * @description
          *
-         * Fetches hasOne relation deliveryChalanStatus.
+         * Fetches belongsTo relation deliveryChalanStatus.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -7874,151 +7935,6 @@ module.factory(
         R.deliveryChalanStatus = function() {
           var TargetResource = $injector.get("DeliveryChalanStatus");
           var action = TargetResource["::get::DeliveryChalan::deliveryChalanStatus"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.DeliveryChalan.deliveryChalanStatus#create
-         * @methodOf lbServices.DeliveryChalan.deliveryChalanStatus
-         *
-         * @description
-         *
-         * Creates a new instance in deliveryChalanStatus of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DeliveryChalanStatus` object.)
-         * </em>
-         */
-        R.deliveryChalanStatus.create = function() {
-          var TargetResource = $injector.get("DeliveryChalanStatus");
-          var action = TargetResource["::create::DeliveryChalan::deliveryChalanStatus"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.DeliveryChalan.deliveryChalanStatus#createMany
-         * @methodOf lbServices.DeliveryChalan.deliveryChalanStatus
-         *
-         * @description
-         *
-         * Creates a new instance in deliveryChalanStatus of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {function(Array.<Object>,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DeliveryChalanStatus` object.)
-         * </em>
-         */
-        R.deliveryChalanStatus.createMany = function() {
-          var TargetResource = $injector.get("DeliveryChalanStatus");
-          var action = TargetResource["::createMany::DeliveryChalan::deliveryChalanStatus"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.DeliveryChalan.deliveryChalanStatus#destroy
-         * @methodOf lbServices.DeliveryChalan.deliveryChalanStatus
-         *
-         * @description
-         *
-         * Deletes deliveryChalanStatus of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
-        R.deliveryChalanStatus.destroy = function() {
-          var TargetResource = $injector.get("DeliveryChalanStatus");
-          var action = TargetResource["::destroy::DeliveryChalan::deliveryChalanStatus"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.DeliveryChalan.deliveryChalanStatus#update
-         * @methodOf lbServices.DeliveryChalan.deliveryChalanStatus
-         *
-         * @description
-         *
-         * Update deliveryChalanStatus of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DeliveryChalanStatus` object.)
-         * </em>
-         */
-        R.deliveryChalanStatus.update = function() {
-          var TargetResource = $injector.get("DeliveryChalanStatus");
-          var action = TargetResource["::update::DeliveryChalan::deliveryChalanStatus"];
           return action.apply(R, arguments);
         };
     /**
@@ -14158,6 +14074,58 @@ module.factory(
       { 'id': '@id' },
       {
 
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.findById() instead.
+        "prototype$__findById__deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.destroyById() instead.
+        "prototype$__destroyById__deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.updateById() instead.
+        "prototype$__updateById__deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans() instead.
+        "prototype$__get__deliveryChalans": {
+          isArray: true,
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.create() instead.
+        "prototype$__create__deliveryChalans": {
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans",
+          method: "POST"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.destroyAll() instead.
+        "prototype$__delete__deliveryChalans": {
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use DeliveryChalanStatus.deliveryChalans.count() instead.
+        "prototype$__count__deliveryChalans": {
+          url: urlBase + "/DeliveryChalanStatuses/:id/deliveryChalans/count",
+          method: "GET"
+        },
+
         /**
          * @ngdoc method
          * @name lbServices.DeliveryChalanStatus#create
@@ -14585,31 +14553,6 @@ module.factory(
           url: urlBase + "/DeliveryChalans/:id/deliveryChalanStatus",
           method: "GET"
         },
-
-        // INTERNAL. Use DeliveryChalan.deliveryChalanStatus.create() instead.
-        "::create::DeliveryChalan::deliveryChalanStatus": {
-          url: urlBase + "/DeliveryChalans/:id/deliveryChalanStatus",
-          method: "POST"
-        },
-
-        // INTERNAL. Use DeliveryChalan.deliveryChalanStatus.createMany() instead.
-        "::createMany::DeliveryChalan::deliveryChalanStatus": {
-          isArray: true,
-          url: urlBase + "/DeliveryChalans/:id/deliveryChalanStatus",
-          method: "POST"
-        },
-
-        // INTERNAL. Use DeliveryChalan.deliveryChalanStatus.update() instead.
-        "::update::DeliveryChalan::deliveryChalanStatus": {
-          url: urlBase + "/DeliveryChalans/:id/deliveryChalanStatus",
-          method: "PUT"
-        },
-
-        // INTERNAL. Use DeliveryChalan.deliveryChalanStatus.destroy() instead.
-        "::destroy::DeliveryChalan::deliveryChalanStatus": {
-          url: urlBase + "/DeliveryChalans/:id/deliveryChalanStatus",
-          method: "DELETE"
-        },
       }
     );
 
@@ -14752,6 +14695,307 @@ module.factory(
     */
     R.modelName = "DeliveryChalanStatus";
 
+    /**
+     * @ngdoc object
+     * @name lbServices.DeliveryChalanStatus.deliveryChalans
+     * @header lbServices.DeliveryChalanStatus.deliveryChalans
+     * @object
+     * @description
+     *
+     * The object `DeliveryChalanStatus.deliveryChalans` groups methods
+     * manipulating `DeliveryChalan` instances related to `DeliveryChalanStatus`.
+     *
+     * Call {@link lbServices.DeliveryChalanStatus#deliveryChalans DeliveryChalanStatus.deliveryChalans()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DeliveryChalanStatus#deliveryChalans
+         * @methodOf lbServices.DeliveryChalanStatus
+         *
+         * @description
+         *
+         * Queries deliveryChalans of DeliveryChalanStatus.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DeliveryChalan` object.)
+         * </em>
+         */
+        R.deliveryChalans = function() {
+          var TargetResource = $injector.get("DeliveryChalan");
+          var action = TargetResource["::get::DeliveryChalanStatus::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DeliveryChalanStatus.deliveryChalans#count
+         * @methodOf lbServices.DeliveryChalanStatus.deliveryChalans
+         *
+         * @description
+         *
+         * Counts deliveryChalans of DeliveryChalanStatus.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.deliveryChalans.count = function() {
+          var TargetResource = $injector.get("DeliveryChalan");
+          var action = TargetResource["::count::DeliveryChalanStatus::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DeliveryChalanStatus.deliveryChalans#create
+         * @methodOf lbServices.DeliveryChalanStatus.deliveryChalans
+         *
+         * @description
+         *
+         * Creates a new instance in deliveryChalans of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DeliveryChalan` object.)
+         * </em>
+         */
+        R.deliveryChalans.create = function() {
+          var TargetResource = $injector.get("DeliveryChalan");
+          var action = TargetResource["::create::DeliveryChalanStatus::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DeliveryChalanStatus.deliveryChalans#createMany
+         * @methodOf lbServices.DeliveryChalanStatus.deliveryChalans
+         *
+         * @description
+         *
+         * Creates a new instance in deliveryChalans of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DeliveryChalan` object.)
+         * </em>
+         */
+        R.deliveryChalans.createMany = function() {
+          var TargetResource = $injector.get("DeliveryChalan");
+          var action = TargetResource["::createMany::DeliveryChalanStatus::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DeliveryChalanStatus.deliveryChalans#destroyAll
+         * @methodOf lbServices.DeliveryChalanStatus.deliveryChalans
+         *
+         * @description
+         *
+         * Deletes all deliveryChalans of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.deliveryChalans.destroyAll = function() {
+          var TargetResource = $injector.get("DeliveryChalan");
+          var action = TargetResource["::delete::DeliveryChalanStatus::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DeliveryChalanStatus.deliveryChalans#destroyById
+         * @methodOf lbServices.DeliveryChalanStatus.deliveryChalans
+         *
+         * @description
+         *
+         * Delete a related item by id for deliveryChalans.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for deliveryChalans
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.deliveryChalans.destroyById = function() {
+          var TargetResource = $injector.get("DeliveryChalan");
+          var action = TargetResource["::destroyById::DeliveryChalanStatus::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DeliveryChalanStatus.deliveryChalans#findById
+         * @methodOf lbServices.DeliveryChalanStatus.deliveryChalans
+         *
+         * @description
+         *
+         * Find a related item by id for deliveryChalans.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for deliveryChalans
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DeliveryChalan` object.)
+         * </em>
+         */
+        R.deliveryChalans.findById = function() {
+          var TargetResource = $injector.get("DeliveryChalan");
+          var action = TargetResource["::findById::DeliveryChalanStatus::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DeliveryChalanStatus.deliveryChalans#updateById
+         * @methodOf lbServices.DeliveryChalanStatus.deliveryChalans
+         *
+         * @description
+         *
+         * Update a related item by id for deliveryChalans.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for deliveryChalans
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DeliveryChalan` object.)
+         * </em>
+         */
+        R.deliveryChalans.updateById = function() {
+          var TargetResource = $injector.get("DeliveryChalan");
+          var action = TargetResource["::updateById::DeliveryChalanStatus::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
 
     return R;
   }]);

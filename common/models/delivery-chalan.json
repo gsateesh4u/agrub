@@ -15,7 +15,7 @@
       "foreignKey": ""
     },
     "deliveryChalanStatus": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "DeliveryChalanStatus",
       "foreignKey": ""
     },
