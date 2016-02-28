@@ -23,6 +23,13 @@ app.use(passport.initialize());
 
 
 // Protect Orders endpoint so it can only be accessed by agrub mobile
+app.get('/api/TryAgain', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+      console.log("Tried again - passed");
+        res.send(200);
+    }
+
+);
+
 
 app.get('/api/Orders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
      var atts = JSON.parse(req.user.attributes);
