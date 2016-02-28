@@ -58,9 +58,9 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
       'user', 
       function (err, token) {
           // login fails
-          console.log("login fails");
           if (err) {
-                     res.render('response', {
+            console.log("login fails");
+                     res.send({
                      status: "failure",
                      challenge: {
                      message: "unknown credentials"
@@ -81,7 +81,7 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
             },
           function(err, userM){      
              if (err) {     
-                res.render('response', {
+                res.send({
                 status: "failure",
                 challenge: {
                 message: "unknown credentials"
@@ -89,24 +89,24 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
                });
                return;
              }
-              if ( userM ) {
-                 var user = userM.toJSON();
-                 res.render('response', {
+              if ( userM ) {             
+                 var userO = userM.toJSON();              
+                 res.send( {
                     status: "success",
                     userIdentity: {
-                    userName: user.email,
-                    displayName: user.name,
+                    userName: userO.email,
+                    displayName: userO.username,
                     attributes: {
-                      customerId: new String(user.customer.id),
-                      customerName: user.customer.name,
-                      hubId: new String(user.customer.hub.id),
-                      hubName:user.customer.hub.name
+                      customerId: new String(userO.customer.id),
+                      customerName: userO.customer.name,
+                      hubId: new String(userO.customer.hub.id),
+                      hubName:userO.customer.hub.name
                     }
                   }
                  });
                return; 
              }   
-             res.render('response', {
+             res.send( {
                status: "failure",
                challenge: {
                message: "unknown credentials"
