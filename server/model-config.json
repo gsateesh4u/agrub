@@ -26,11 +26,11 @@
   },
   "RoleMapping": {
     "dataSource": "db",
-    "public": false
+    "public": true
   },
   "Role": {
     "dataSource": "db",
-    "public": false
+    "public": true
   },
   "ItemCategory": {
     "dataSource": "db",
@@ -97,6 +97,10 @@
   },
   "container": {
     "dataSource": "storage",
+    "public": true
+  },
+  "user": {
+    "dataSource": "db",
     "public": true
   }
 }

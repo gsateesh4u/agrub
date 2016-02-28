@@ -14,12 +14,12 @@
   },
   "validations": [],
   "relations": {
-   "deliveryChalans": {
+    "deliveryChalans": {
       "type": "hasMany",
       "model": "DeliveryChalan",
       "foreignKey": ""
     }
-},
+  },
   "acls": [],
   "methods": {}
 }

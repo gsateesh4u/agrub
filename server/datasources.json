@@ -11,7 +11,6 @@
     "connector": "postgresql",
     "debug": true
   },
-  
   "emailDataSource": {
     "name": "emailDataSource",
     "connector": "mail",
@@ -36,6 +35,6 @@
     "connector": "loopback-component-storage",
     "provider": "filesystem",
     "root": "./server/storage",
-	"maxFileSize": "52428800"
+    "maxFileSize": "52428800"
   }
 }

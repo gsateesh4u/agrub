@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bms-mca-token-validation-strategy": "2.x",
+    "body-parser": "^1.14.2",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "express": "^4.13.4",

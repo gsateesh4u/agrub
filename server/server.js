@@ -3,6 +3,134 @@ var boot = require('loopback-boot');
 
 var app = module.exports = loopback();
 
+// ------------ Protecting mobile backend with Mobile Client Access start -----------------
+
+// Load passport (http://passportjs.org)
+var passport = require('passport');
+
+// Get the MCA passport strategy to use
+var MCABackendStrategy = require('bms-mca-token-validation-strategy').MCABackendStrategy;
+
+// Tell passport to use the MCA strategy
+passport.use(new MCABackendStrategy())
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
+// Tell application to use passport
+app.use(passport.initialize());
+
+
+// Protect Orders endpoint so it can only be accessed by agrub mobile
+app.get('/api/TryAgain', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+      console.log("Tried again - passed");
+        res.send(200);
+    }
+
+);
+
+
+app.get('/api/Orders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+     var atts = JSON.parse(req.user.attributes);
+      app.models.Order.find(
+       { where: {customerId:parseInt(atts.customerId)}
+       },
+      function(err, orders){
+           if (err) { res.send(err);
+           }
+           if ( orders ) {
+             res.status(200).send(orders);
+           }
+         }
+    );
+  }
+);
+
+
+app.post('/apps/:tenantID/agrub/startAuthorization', function(req, res) {
+         res.json({
+             status: "challenge",
+             challenge: {question: "userCredentials - email, password"}
+         });
+     });
+
+
+app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
+  
+    app.models.user.login(
+      {  email: req.body.challengeAnswer.email,
+         password: req.body.challengeAnswer.password
+      },
+      'user', 
+      function (err, token) {
+          // login fails
+          if (err) {
+            console.log("login fails");
+                     res.send({
+                     status: "failure",
+                     challenge: {
+                     message: "unknown credentials"
+                     }
+                     });
+                     return;
+          }       
+          // login succeeds 
+          console.log("login succeeds");       
+          app.models.user.findOne(
+            { include:{
+              relation:'customer',
+              scope:{include: {
+              relation:'hub'
+                 }
+                }
+              },where: {email:req.body.challengeAnswer.email}
+            },
+          function(err, userM){      
+             if (err) {     
+                res.send({
+                status: "failure",
+                challenge: {
+                message: "unknown credentials"
+                 }
+               });
+               return;
+             }
+              if ( userM ) {             
+                 var userO = userM.toJSON();              
+                 res.send( {
+                    status: "success",
+                    userIdentity: {
+                    userName: userO.email,
+                    displayName: userO.username,
+                    attributes: {
+                      customerId: new String(userO.customer.id),
+                      customerName: userO.customer.name,
+                      hubId: new String(userO.customer.hub.id),
+                      hubName:userO.customer.hub.name
+                    }
+                  }
+                 });
+               return; 
+             }   
+             res.send( {
+               status: "failure",
+               challenge: {
+               message: "unknown credentials"
+              }
+              });
+             return;
+            }
+          );
+         
+      }
+    );
+     } 
+);
+
+// ------------ Protecting backend APIs with Mobile Client Access end -----------------
+
+
 app.start = function() {
   // start the web server
   return app.listen(function() {
