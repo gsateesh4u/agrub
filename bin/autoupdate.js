@@ -47,3 +47,12 @@ ds.autoupdate('Pricing', function(err) {
 ds.autoupdate('ItemPrice', function(err) {
   if (err) throw err;
 });
+ds.autoupdate('user', function(err) {
+  if (err) throw err;
+});
+ds.autoupdate('Role', function(err) {
+  if (err) throw err;
+});
+ds.autoupdate('RoleMapping', function(err) {
+  if (err) throw err;
+});

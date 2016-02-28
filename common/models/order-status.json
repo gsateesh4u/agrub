@@ -14,12 +14,12 @@
   },
   "validations": [],
   "relations": {
-  "orders": {
+    "orders": {
       "type": "hasMany",
       "model": "Order",
       "foreignKey": ""
     }
-},
+  },
   "acls": [],
   "methods": {}
 }

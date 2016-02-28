@@ -14,7 +14,7 @@
   },
   "validations": [],
   "relations": {
-	"salesOrders": {
+    "salesOrders": {
       "type": "hasMany",
       "model": "SalesOrder",
       "foreignKey": ""
