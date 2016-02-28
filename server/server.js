@@ -30,8 +30,25 @@ app.get('/api/TryAgain', passport.authenticate('mca-backend-strategy', {session:
 
 );
 
+app.get('/api/m/ItemCategories', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+     var atts = JSON.parse(req.user.attributes);
+      app.models.ItemCategory.find(
+       { include:{
+              relation:'items'
+              },where: {hubId:parseInt(atts.hubId)}
+            },
+      function(err, itemCategories){
+           if (err) { res.send(err);
+           }
+           if ( itemCategories ) {
+             res.status(200).send(itemCategories);
+           }
+         }
+    );
+  }
+);
 
-app.get('/api/Orders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+app.get('/api/m/Orders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
      var atts = JSON.parse(req.user.attributes);
       app.models.Order.find(
        { where: {customerId:parseInt(atts.customerId)}
