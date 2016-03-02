@@ -77,7 +77,7 @@ var app = angular
         controller: 'ReportsController',
         authenticate: true
       });
-    $urlRouterProvider.otherwise('login');
+    $urlRouterProvider.otherwise('hubs');
   }])
   //http interceptor
   .factory('httpRInterceptor', ['$rootScope', '$q', '$window', 'blockUI',

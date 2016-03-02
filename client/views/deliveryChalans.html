@@ -124,7 +124,8 @@
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-primary" ng-if="selectedDC.deliveryChalanStatusId=='1'" ng-click="acceptDC(selectedDC)">Accept</button>
+							<button class="btn btn-primary" ng-if="selectedDC.deliveryChalanStatusId=='1'" ng-click="changeDCStatus(selectedDC,2)">Accept</button>
+							<button class="btn btn-primary" ng-if="selectedDC.deliveryChalanStatusId=='2'" ng-click="changeDCStatus(selectedDC,3)">Ship To Warehosue</button>
 							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 						</div>
 					</form>

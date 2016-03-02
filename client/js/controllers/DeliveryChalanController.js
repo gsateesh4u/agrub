@@ -19,14 +19,14 @@ app.controller('DeliveryChalanController', function($scope,SalesOrder, DeliveryC
    $scope.showDCDetails = function showDCDetails(dc){
 	$scope.selectedDC = dc;
    }
-   $scope.acceptDC = function(dc){
+   $scope.changeDCStatus = function(dc,status){
 		DeliveryChalan.prototype$updateAttributes(
 		   { id: dc.id }, 
-		   { deliveryChalanStatusId: '2' }
+		   { deliveryChalanStatusId: status }
 		 );
-		 dc.deliveryChalanStatusId = 2;
-		 $scope.selectedDC.deliveryChalanStatusId = 2;
-		 dc.deliveryChalanStatus = DeliveryChalanStatus.findById({id:2});
+		 dc.deliveryChalanStatusId = status;
+		 $scope.selectedDC.deliveryChalanStatusId = status;
+		 dc.deliveryChalanStatus = DeliveryChalanStatus.findById({id:status});
    }
    $scope.cancel = function resetSelectedOrder(){
 		$scope.selectedOrder = null;
