@@ -48,6 +48,28 @@ app.get('/api/m/ItemCategories', passport.authenticate('mca-backend-strategy', {
   }
 );
 
+
+app.get('/api/m/DeliveryChalans', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+     var atts = JSON.parse(req.user.attributes);
+      app.models.DeliveryChalan.find(
+       { 
+       include:{'salesOrder':'salesOrderLines'},
+          
+              where: {customerId:parseInt(atts.customerId)}
+            },
+      function(err, deliveryChalans){
+           if (err) { res.send(err);
+           }
+           if ( deliveryChalans ) {
+             res.status(200).send(deliveryChalans);
+           }
+         }
+    );
+  }
+);
+
+
+
 app.get('/api/m/Orders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
      var atts = JSON.parse(req.user.attributes);
       app.models.Order.find(
