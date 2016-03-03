@@ -48,17 +48,14 @@ app.get('/api/m/ItemCategories', passport.authenticate('mca-backend-strategy', {
   }
 );
 
-/*
+
 app.get('/api/m/DeliveryChalans', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
      var atts = JSON.parse(req.user.attributes);
       app.models.DeliveryChalan.find(
-       { include:{
-              relation:'salesOrders'   ,
-        scope:{include: {
-              relation:'salesOrderLines'
-              }
-        }   
-              },where: {customerId:parseInt(atts.customerId)}
+       { 
+       include:{'salesOrder':'salesOrderLines'},
+          
+              where: {customerId:parseInt(atts.customerId)}
             },
       function(err, deliveryChalans){
            if (err) { res.send(err);
@@ -70,7 +67,7 @@ app.get('/api/m/DeliveryChalans', passport.authenticate('mca-backend-strategy', 
     );
   }
 );
-*/
+
 
 
 app.get('/api/m/Orders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
