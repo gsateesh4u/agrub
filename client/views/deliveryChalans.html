@@ -34,10 +34,7 @@
 									<td>{{row.salesOrder.deliveryDate}}</td>
 									<td>{{row.salesOrder.deliveryTime}}</td>
 									<td align="center">
-										<span class="label label-pill label-primary" ng-if="row.deliveryChalanStatusId=='1'">New</span>
-										<span class="label label-pill label-info" ng-if="row.deliveryChalanStatusId=='2'">Accepted</span>
-										<span class="label label-pill label-success" ng-if="row.deliveryChalanStatusId=='4'">Completed</span>
-										<span class="label label-pill label-warning" ng-if="row.deliveryChalanStatusId=='3'">Sent To Warehouse</span>
+										<span class="label label-pill label-primary">{{row.deliveryChalanStatus.name}}</span>
 									</td>
 									<td align="center">
 										<span class="sprite sprite-edit" title="Edit Order" style="cursor:pointer" ng-click="showDCDetails(row)"></span>&nbsp;&nbsp;&nbsp;
@@ -126,6 +123,9 @@
 						<div class="modal-footer">
 							<button class="btn btn-primary" ng-if="selectedDC.deliveryChalanStatusId=='1'" ng-click="changeDCStatus(selectedDC,2)">Accept</button>
 							<button class="btn btn-primary" ng-if="selectedDC.deliveryChalanStatusId=='2'" ng-click="changeDCStatus(selectedDC,3)">Ship To Warehosue</button>
+							<button class="btn btn-primary" ng-if="selectedDC.deliveryChalanStatusId=='3'" ng-click="changeDCStatus(selectedDC,4)">Received at WH</button>
+							<button class="btn btn-primary" ng-if="selectedDC.deliveryChalanStatusId=='4'" ng-click="changeDCStatus(selectedDC,5)">Delivered</button>
+							<button class="btn btn-primary" ng-if="selectedDC.deliveryChalanStatusId=='6'" ng-click="changeDCStatus(selectedDC,7)">Generate Invoice</button>
 							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 						</div>
 					</form>
