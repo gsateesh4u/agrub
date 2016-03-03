@@ -36,6 +36,9 @@
       "through": "RoleMapping"
     }
   },
+  "mixins": {
+    "ClearBaseAcls": true
+  },
   "acls": [
     {
       "accessType": "*",
