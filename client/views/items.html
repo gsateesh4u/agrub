@@ -6,7 +6,17 @@
 					<header class="panel-heading">
 					  {{'tbl_head_items' | xlat}}
 					</header>
-					<div class="panel-body table-responsive" ng-controller="ItemController">
+					<div class="panel-body table-responsive">
+					<table width="100%" style="margin-bottom:5px">
+							<tr>
+								<td align="left">
+									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
+								</td>
+								<td align="right">
+									<button class="btn btn-primary" ng-click="showItem(tempItem,'Add')" align="right">Add Item</button>
+								</td>
+							</tr>
+						</table> 
 						<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="rowCollection" st-table="itemsCollection">
 							<thead>
 							<tr>
@@ -87,20 +97,20 @@
 							</div>
 							<div class="form-group col-xs-6">
 								<label>Category <font color="red">*</font> :</label> 
-								<select name="selectedCategory" class="form-control"  ng-model="selectedCategory" required class="form-control" ng-options="category.name for category in categories track by category.id">
+								<select name="selectedItemCategory" class="form-control"  ng-model="selectedItemCategory" required class="form-control" ng-options="category.name for category in itemCategories track by category.id">
 								</select>
 							</div>
 							<div class="form-group col-xs-6">
-								<label>Description<font color="red">*</font> :</label> <input type="textarea" ng-model="item.description" class="form-control"/>
+								<label>Description<font color="red">*</font> :</label> <input type="textarea" ng-model="item.description" required class="form-control"/>
 							</div>
 							<div class="form-group col-xs-6">
-								<label>Unit:</label> <input type="text" ng-model="item.units" class="form-control"/>
+								<label>Unit:</label> <input type="text" ng-model="item.unit" required class="form-control"/>
 							</div>
 							<div class="form-group col-xs-6">
-								<label>Quality Param<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityParam" class="form-control"/>
+								<label>Quality Param<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityParam" required class="form-control"/>
 							</div>
 							<div class="form-group col-xs-6">
-								<label>Quality Variance<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityVariance" class="form-control"/>
+								<label>Quality Variance<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityVariance" required class="form-control"/>
 							</div>
 						</div>
 						<div class="modal-footer">

@@ -1,4 +1,4 @@
-app.controller('ItemController',function($scope,Item){
+app.controller('ItemController',function($scope,Item, Hub, ItemCategory){
 	$scope.tempItem = {
 		name : "",
 		description: "",
@@ -37,6 +37,7 @@ app.controller('ItemController',function($scope,Item){
 	};
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
+	$scope.showAddUpdateItem = false;
 	$scope.isLoading = true;
 	Item.find({
 		filter: { include: 'itemCategory' }
@@ -54,7 +55,7 @@ app.controller('ItemController',function($scope,Item){
 	$scope.showItem = function(item,operation){
 	   $scope.isSubLoading = true;
 	   $scope.header = operation;
-	   if(operation == 'Update'){
+	 /*  if(operation == 'Update'){
 		   $scope.hubs = [item.hub];
 		   $scope.selectedHub = item.hub;
 		   $scope.showAddUpdateItem = true;
@@ -62,37 +63,50 @@ app.controller('ItemController',function($scope,Item){
 		   angular.copy(item,$scope.addUpdateItem);
 		   $scope.item = $scope.addUpdateItem;
 	   }
-	   if(operation == 'Add'){
+	   if(operation == 'Add'){*/
 		   Hub.find().$promise
 			.then(function(response) { 
 				$scope.hubs = [].concat(response);
 				if($scope.hubs ==null || $scope.hubs.length==0){
-					 $scope.error = "No hubs found!!!";
+					 $scope.errorMessage = "No hubs found!!!";
 					 $scope.showAddUpdateItem = false;
 				}else {
 					ItemCategory.find().$promise.then(function(res){
 						$scope.itemCategories = [].concat(res);
 						$scope.isSubLoading = false;
 						if($scope.itemCategories ==null || $scope.itemCategories.length==0){
-							 $scope.error = "No item categories found!!!";
+							 $scope.errorMessage = "No item categories found!!!";
 							 $scope.showAddUpdateItem = false;
 						}else {
+						if(operation == 'Update'){
+							   angular.forEach($scope.hubs, function (tempHub) {
+								 if(tempHub.id == item.hubId){
+									$scope.selectedHub = tempHub;
+								 }
+							  });
+							   angular.forEach($scope.itemCategories, function (tempCat) {
+								 if(tempCat.id == item.itemCategoryId){
+									$scope.selectedItemCategory = tempCat;
+								 }
+							  });
+						   }
 							$scope.showAddUpdateItem = true;
 							angular.copy(item,$scope.addUpdateItem);
 							$scope.item = $scope.addUpdateItem;
+							
 						}
 					},function( errorMessage ) {
-					  $scope.error = "Error has occurred while loading item categories!";
+					  $scope.errorMessage = "Error has occurred while loading item categories!";
 					  $scope.isSubLoading = false;
 					  $scope.showAddUpdateItem = false;
 					});
 				}
 			},function( errorMessage ) {
-			  $scope.error = "Error has occurred while loading hubs!";
+			  $scope.errorMessage = "Error has occurred while loading hubs!";
 			  $scope.isSubLoading = false;
 			  $scope.showAddUpdateItem = false;
 			});
-	   }
+	   //}
    };
    $scope.cancel = function(){
 	   angular.copy($scope.tempItem,$scope.addUpdateItem);
@@ -124,11 +138,11 @@ app.controller('ItemController',function($scope,Item){
 	   }
    };
    $scope.addOrUpdate = function addOrUpdate(item,operation){
-	   if(operation == 'Add'){
-		  item.hubId = $scope.selectedHub.id;
-		  item.hub.id = $scope.selectedHub.id;
+    item.hubId = $scope.selectedHub.id;
+		  //item.hub.id = $scope.selectedHub.id;
 		  item.itemCategoryId = $scope.selectedItemCategory.id;
-		  item.itemCategory.id = $scope.selectedItemCategory.id;
+		  //item.itemCategory.id = $scope.selectedItemCategory.id;
+	   if(operation == 'Add'){
 		  Item.create(item).$promise
 				.then(function(response) { 
 				 Item.find({
@@ -155,7 +169,30 @@ app.controller('ItemController',function($scope,Item){
 		   });
 	   } 
 	   if(operation == 'Update'){
-		   
+		   Item.upsert(item).$promise
+				.then(function(response) { 
+				 Item.find({
+						filter: { include: 'itemCategory' }
+					}).$promise
+						.then(function(response) {
+						  $scope.rowCollection = [].concat(response);
+						   $scope.displayedCollection = [].concat($scope.rowCollection);
+						  if($scope.rowCollection.length==0){
+								 $scope.error = "No data found!!!";
+							 }
+							 $scope.isLoading = false;
+							 $scope.showAddUpdateItem = false;
+					  },function( errorMessage ) {
+						  $scope.error = "Error has occurred while loading items!";
+						  $scope.showAddUpdateItem = false;
+						  $scope.isLoading = false;
+				   });
+				   $scope.showAddUpdateItem = false;
+					 $scope.isLoading = false;
+			  },function( errorMessage ) {
+				  $scope.subError = "Error has occurred while creating item!";
+				  $scope.isLoading = false;
+		   });
 	   }
    };
 });
