@@ -1,5 +1,5 @@
 app.controller('AuthLogoutController',['$scope', '$rootScope', '$state', 'User', '$cookieStore',  function($scope, $rootScope, $state, User, $cookieStore){
-	 User
+	User
        .logout()
        .$promise
        .then(function(response) {
@@ -8,6 +8,7 @@ app.controller('AuthLogoutController',['$scope', '$rootScope', '$state', 'User',
 		 $state.go('login');
        },function(error){
 		$rootScope.currentUser = null;
+		$cookieStore.remove('currentUser');
 			$state.go('login');
 	   });
 }]);

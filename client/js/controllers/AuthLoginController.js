@@ -1,6 +1,6 @@
 app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User','$cookieStore',  function($scope, $rootScope, $state, User, $cookieStore){
 	$scope.loginError = "";
-	$scope.login = function() {
+	$scope.signIn = function signIn() {
 	$scope.loginError = "";
 	User
         .login({email: $scope.email, password: $scope.password})
@@ -15,18 +15,29 @@ app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User','
 					$scope.loginError = "Unable to process your request";
 				}
 			}else{
-				$rootScope.currentUser = {
-					id: response.user.id,
-					username:response.user.username,
-					tokenId: response.id,
-					email: $scope.email
-				};
-				var currentUser = {};
-				angular.copy($rootScope.currentUser, currentUser);
-				$cookieStore.put("currentUser",currentUser);				
-				$state.go('customers');
+				var tokenId = response.id;
+				User.findById({id:response.user.id,
+					filter: {include:'roles'}
+					}).$promise
+						.then(function(curUser) { 
+						  if(!curUser){
+								 $scope.loginError = "Unable to find you!!!1";
+							 }
+							 else{
+								$rootScope.currentUser = curUser;
+								$rootScope.currentUser.tokenId = tokenId;
+								var currentUser = {};
+								angular.copy($rootScope.currentUser, currentUser);
+								$cookieStore.put("currentUser",currentUser);
+							 }
+					  },function( errorMessage ) {
+						  $scope.loginError = "Unable to process your request";
+				   });					
+				//$state.go('/');
 			}          
-        });
+        },function( errorMessage ) {
+				  $scope.loginError = "Error has occurred while loading order details!"+errorMessage;
+		   });
     };
 	$scope.logout =  function logout() {
        User

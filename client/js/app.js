@@ -64,7 +64,7 @@ var app = angular
       })
       .state('login', {
         url: '/login',
-        templateUrl: 'login.html',
+        templateUrl: 'views/login.html',
         controller: 'AuthLoginController'
       })
       .state('logout', {
@@ -127,8 +127,11 @@ var app = angular
         $state.go('login');
       }
     });
-  }]).controller('MainController',function($scope,$window){
-	 
+  }]).controller('MainController',function($rootScope, $scope,$window,commonService){
+	 $rootScope.hasPermission = function hasCreatePermission(role){
+			  return commonService.hasPermission(role);
+		  };
+	
 	  $scope.toggleSideBar = function(){
 		   if ($window.width <= 992) {
 			   angular.element(document.getElementsByClassName("row-offcanvas")[0]).toggleClass("active");
@@ -145,4 +148,28 @@ var app = angular
 		   }
 	  };
 	  
-  });
+  }).service(
+	        "commonService",
+	        function($cookieStore) {
+	            // Return public API.
+	            return({
+	                hasPermission : hasPermission
+	            });
+				//check for permission
+	            function hasPermission(role){
+	            	var currentUser = $cookieStore.get("currentUser");
+					//alert(angular.toJson(currentUser));
+	            	if(currentUser == null || currentUser.roles == null || currentUser.roles.length == 0){
+	            		return false;
+	            	} else {
+						var flag = false;
+						 angular.forEach(currentUser.roles, function (tempRole) {
+							 if(tempRole.name == role){
+								flag = true;
+							 }
+					     });
+	            		 return flag;
+	            	}
+	            };
+	});
+				

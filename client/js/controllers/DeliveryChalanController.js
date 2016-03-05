@@ -1,4 +1,4 @@
-app.controller('DeliveryChalanController', function($scope,SalesOrder, DeliveryChalan, DeliveryChalanStatus, $filter){
+app.controller('DeliveryChalanController', function($scope,SalesOrder, DeliveryChalan, DeliveryChalanStatus, $filter, commonService){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
@@ -31,5 +31,16 @@ app.controller('DeliveryChalanController', function($scope,SalesOrder, DeliveryC
    $scope.cancel = function resetSelectedOrder(){
 		$scope.selectedOrder = null;
 		$scope.salesOrders = null;
+   }
+   $scope.showChangeStatusButton = function(id){
+   if(commonService.hasPermission('iidcadmin')){
+		return true;
+	}else if(commonService.hasPermission('ccadmin') && (id=='1' || id == '2')){
+			return true;
+	} else if(commonService.hasPermission('whadmin') && (id=='3' || id == '4')){
+			return true;
+	} else {
+		return false;
+	}
    }
 });
