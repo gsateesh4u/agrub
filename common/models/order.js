@@ -1,9 +1,6 @@
 module.exports = function(Order) {
 // remote method before hook
  Order.beforeRemote('placeOrder', function(context, order, next) {
-	console.log(order);
-	console.log(context.req.body);
-    order.orderStatusId = 1;
     next();
   });
 Order.placeOrder= function(orderObj, cb) {
