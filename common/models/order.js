@@ -14,6 +14,7 @@ Order.placeOrder= function(orderObj, cb) {
 	var salesOrders = orderObj.salesOrders;
 	var customerId = orderObj.customerId;
 	var dataSource = app.datasources.db;
+	orderObj.orderStatusId = 1;
 	var newOrderId;
 	return Order
 			.create(orderObj)
@@ -26,6 +27,7 @@ Order.placeOrder= function(orderObj, cb) {
 						salesOrders[i].orderId = newOrder.id;
 						salesOrders[i].customerId = customerId;
 						var salesOrderTemp = salesOrders[i];
+						salesOrderTemp.salesOrderStatusId = 1;
 						SalesOrder.create(salesOrderTemp).then(function createSalesOrderLines(newSalesOrder){
 							salesOrderTemp.id=newSalesOrder.id;
 							for(var j=0;j<salesOrderLines.length;j++)

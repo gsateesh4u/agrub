@@ -44,7 +44,8 @@ app.controller('OrderController', function($scope,Order,SalesOrder, DeliveryChal
 		});*/
 		DeliveryChalan.create({
 			salesOrderId:so.id,
-			customerId: so.customerId
+			customerId: so.customerId,
+			deliveryChalanStatusId: 1
 		});
 		SalesOrder.prototype$updateAttributes(
 		   { id: so.id }, 
