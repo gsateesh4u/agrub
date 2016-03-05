@@ -87,6 +87,21 @@ app.get('/api/m/Orders', passport.authenticate('mca-backend-strategy', {session:
 );
 
 
+app.post('/api/m/Orders/placeOrder',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
+   //  var atts = JSON.parse(req.user.attributes);
+      app.models.Order.placeOrder(req.orderObj,
+      function(err, order){
+           if (err) { res.send(err);
+           }
+           if ( order ) {
+             res.status(200).send(order);
+           }
+         }
+    );
+  }
+);
+
+
 app.post('/apps/:tenantID/agrub/startAuthorization', function(req, res) {
          res.json({
              status: "challenge",
