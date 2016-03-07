@@ -19,14 +19,15 @@ Order.placeOrder= function(orderObj, cb) {
 				newOrderId = newOrder.id;
 				originalOrder.id = newOrder.id;
 				if (salesOrders) {
+				var itr = 0;
 					for(var i=0;i<salesOrders.length;i++){
-						var salesOrderLines = salesOrders[i].salesOrderLines;
 						salesOrders[i].orderId = newOrder.id;
 						salesOrders[i].customerId = customerId;
 						var salesOrderTemp = salesOrders[i];
 						salesOrderTemp.salesOrderStatusId = 1;
 						SalesOrder.create(salesOrderTemp).then(function createSalesOrderLines(newSalesOrder){
 							salesOrderTemp.id=newSalesOrder.id;
+							var salesOrderLines = orderObj.salesOrders[itr++].salesOrderLines;
 							for(var j=0;j<salesOrderLines.length;j++)
 							{
 								salesOrderLines[j].salesOrderId = newSalesOrder.id;
