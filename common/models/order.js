@@ -63,7 +63,7 @@ Order.placeOrder= function(orderObj, cb) {
 			 console.log('error while creating order '+err);
 			 cb(err);
 		});
-		cb(originalOrder);
+		cb(null,originalOrder);
 }
 
 Order.fullOrders = function(cb) {
