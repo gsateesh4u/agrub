@@ -86,6 +86,19 @@ app.get('/api/m/Orders', passport.authenticate('mca-backend-strategy', {session:
   }
 );
 
+app.get('/api/m/Orders/fullOrders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+     var atts = JSON.parse(req.user.attributes);
+      app.models.Order.fullOrders(
+      function(err, orders){
+           if (err) { res.send(err);
+           }
+           if ( orders ) {
+             res.status(200).send(orders);
+           }
+         }
+    );
+  }
+);
 
 app.post('/api/m/Orders/placeOrder',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
    //  var atts = JSON.parse(req.user.attributes);
