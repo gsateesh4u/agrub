@@ -53,7 +53,7 @@ app.get('/api/m/DeliveryChalans', passport.authenticate('mca-backend-strategy', 
      var atts = JSON.parse(req.user.attributes);
       app.models.DeliveryChalan.find(
        { 
-       include:{'salesOrder':'salesOrderLines'},
+       include:{'salesOrder':{'salesOrderLines':'item'}},
           
               where: {customerId:parseInt(atts.customerId)}
             },
