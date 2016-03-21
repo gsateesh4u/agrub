@@ -53,7 +53,7 @@ app.get('/api/m/DeliveryChalans', passport.authenticate('mca-backend-strategy', 
      var atts = JSON.parse(req.user.attributes);
       app.models.DeliveryChalan.find(
        { 
-       include:{'salesOrder':{'salesOrderLines':'item'}},
+       include:[{'salesOrder':{'salesOrderLines':'item'}},'deliveryChalanStatus'],
           
               where: {customerId:parseInt(atts.customerId)}
             },
@@ -113,7 +113,18 @@ app.post('/api/m/Orders/placeOrder',passport.authenticate('mca-backend-strategy'
     );
   }
 );
-
+app.put('/api/m/DeliveryChalans/updateSO',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
+      app.models.DeliveryChalan.updateSO(req.dc,
+      function(err, deliveryChalan){
+           if (err) { res.send(err);
+           }
+           if ( deliveryChalan ) {
+             res.status(200).send(deliveryChalan);
+           }
+         }
+    );
+  }
+);
 
 app.post('/apps/:tenantID/agrub/startAuthorization', function(req, res) {
          res.json({

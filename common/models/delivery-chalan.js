@@ -11,7 +11,7 @@ DeliveryChalan.afterSave = function(next) {
   }
   next();
 };
-DeliveryChalan.updateSO = function(id, dc, cb) {
+DeliveryChalan.updateSO = function(dc, cb) {
 	var salesOrder = dc.salesOrder;
 	if(salesOrder == null || salesOrder.salesOrderLines == null || salesOrder.salesOrderLines.length == 0){
 		var err = new Error();
@@ -44,11 +44,10 @@ DeliveryChalan.remoteMethod(
         'updateSO', 
         {
 		  accepts: [
-					{arg: 'id', type: 'string'},
 					{arg: 'dc', type: 'object'}
 					],
           returns: {arg: 'deliveryChalan', type: 'object'},
-		  http: {path:'/:id/updateSO', verb: 'put'}
+		  http: {path:'/updateSO', verb: 'put'}
         }
     );
 };
