@@ -6,7 +6,17 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+	"firstname": {
+      "type": "string"
+    },
+	"middlename": {
+      "type": "string"
+    },
+	"lastname": {
+      "type": "string"
+    }
+  },
   "validations": [],
   "relations": {
     "customer": {

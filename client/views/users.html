@@ -7,123 +7,120 @@
 					  {{'tbl_head_users' | xlat}}
 					</header>
 					<div class="panel-body table-responsive">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-								  <th>#</th>
-								  <th>Project</th>
-								  <th>Manager</th>
-								  <!-- <th>Client</th> -->
-								  <th>Deadline</th>
-								  <!-- <th>Price</th> -->
-								  <th>Status</th>
-								  <th>Progress</th>
-							  </tr>
-						  </thead>
-						  <tbody>
+						<table width="100%" style="margin-bottom:5px">
 							<tr>
-							  <td>1</td>
-							  <td>Facebook</td>
-							  <td>Mark</td>
-							  <!-- <td>Steve</td> -->
-							  <td>10/10/2014</td>
-							  <!-- <td>$1500</td> -->
-							  <td><span class="label label-danger">in progress</span></td>
-							  <td><span class="badge badge-info">50%</span></td>
-						  </tr>
-						  <tr>
-							  <td>2</td>
-							  <td>Twitter</td>
-							  <td>Evan</td>
-							  <!-- <td>Darren</td> -->
-							  <td>10/8/2014</td>
-							  <!-- <td>$1500</td> -->
-							  <td><span class="label label-success">completed</span></td>
-							  <td><span class="badge badge-success">100%</span></td>
-						  </tr>
-						  <tr>
-							  <td>3</td>
-							  <td>Google</td>
-							  <td>Larry</td>
-							  <!-- <td>Nick</td> -->
-							  <td>10/12/2014</td>
-							  <!-- <td>$2000</td> -->
-							  <td><span class="label label-warning">in progress</span></td>
-							  <td><span class="badge badge-warning">75%</span></td>
-						  </tr>
-						 <tr>
-							  <td>4</td>
-							  <td>Google</td>
-							  <td>Larry</td>
-							  <!-- <td>Nick</td> -->
-							  <td>10/12/2014</td>
-							  <!-- <td>$2000</td> -->
-							  <td><span class="label label-warning">in progress</span></td>
-							  <td><span class="badge badge-warning">75%</span></td>
-						  </tr>
-						  <tr>
-							  <td>5</td>
-							  <td>Google</td>
-							  <td>Larry</td>
-							  <!-- <td>Nick</td> -->
-							  <td>10/12/2014</td>
-							  <!-- <td>$2000</td> -->
-							  <td><span class="label label-warning">in progress</span></td>
-							  <td><span class="badge badge-warning">75%</span></td>
-						  </tr>
-						  <tr>
-							  <td>6</td>
-							  <td>LinkedIn</td>
-							  <td>Allen</td>
-							  <!-- <td>Rock</td> -->
-							  <td>10/01/2015</td>
-							  <!-- <td>$2000</td> -->
-							  <td><span class="label label-info">in progress</span></td>
-							  <td><span class="badge badge-info">65%</span></td>
-						  </tr>
-						  <tr>
-							  <td>7</td>
-							  <td>Tumblr</td>
-							  <td>David</td>
-							  <!-- <td>HHH</td> -->
-							  <td>01/11/2014</td>
-							  <!-- <td>$2000</td> -->
-							  <td><span class="label label-warning">in progress</span></td>
-							  <td><span class="badge badge-danger">95%</span></td>
-						  </tr>
-						  <tr>
-							  <td>8</td>
-							  <td>Tesla</td>
-							  <td>Musk</td>
-							  <!-- <td>HHH</td> -->
-							  <td>01/11/2014</td>
-							  <!-- <td>$2000</td> -->
-							  <td><span class="label label-info">in progress</span></td>
-							  <td><span class="badge badge-success">95%</span></td>
-						  </tr>
-						  <tr>
-							  <td>9</td>
-							  <td>Ghost</td>
-							  <td>XXX</td>
-							  <!-- <td>HHH</td> -->
-							  <td>01/11/2014</td>
-							  <!-- <td>$2000</td> -->
-							  <td><span class="label label-info">in progress</span></td>
-							  <td><span class="badge badge-success">95%</span></td>
-						  </tr>
-						  <tr>
-							  <td>10</td>
-							  <td>Google</td>
-							  <td>Larry</td>
-							  <!-- <td>Nick</td> -->
-							  <td>10/12/2014</td>
-							  <!-- <td>$2000</td> -->
-							  <td><span class="label label-warning">in progress</span></td>
-							  <td><span class="badge badge-warning">75%</span></td>
-						  </tr>
-					</tbody>
-				</table>
+								<td align="right">
+									<button class="btn btn-primary" ng-click="showUser(tempCustomer,'Add')" align="right">Add User</button>
+								</td>
+							</tr>
+						</table> 
+						<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle"  st-safe-src="rowCollection" st-table="userCollection">
+							<thead>
+							<tr>
+									<th st-sort="firstname" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>First Name</th>
+									<th st-sort="middlename"><i class="glyphicon glyphicon-filter"></i>Middle Name</th>
+									<th st-sort="lastname"><i class="glyphicon glyphicon-filter"></i>Last Name</th>
+									<th st-sort="username"><i class="glyphicon glyphicon-filter"></i>User Name</th>
+									<th st-sort="email"><i class="glyphicon glyphicon-filter"></i>Email</th>
+									<th width="50px">Actions</th>
+								</tr>
+								<tr>
+									<th>
+										<input st-search="firstname" placeholder="search for firstname" class="input-sm form-control" type="search"/>
+									</th>
+									<th>
+										<input st-search="middlename" placeholder="search for middlename" class="input-sm form-control" type="search"/>
+									</th>
+									<th>
+										<input st-search="lastname" placeholder="search for lastname" class="input-sm form-control" type="search"/>
+									</th>
+									<th>
+										<input st-search="username" placeholder="search for username" class="input-sm form-control" type="search"/>
+									</th>
+									<th>
+										<input st-search="email" placeholder="search for email" class="input-sm form-control" type="search"/>
+									</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody ng-show="!isLoading">
+							<tr st-select-row="row" ng-repeat="row in userCollection">
+									<td>{{row.firstname}}</td>
+									<td>{{row.middlename}}</td>
+									<td>{{row.lastname}}</td>
+									<td>{{row.username}}</td>
+									<td>{{row.email}}</td>
+									<td align="center">
+										<span class="sprite sprite-edit" title="Edit User" style="cursor:pointer" ng-click="showUser(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
+										<span class="sprite sprite-delete" title="Delete User" style="cursor:pointer" ng-click="deleteUser(row)"></span>
+									</td>
+							</tr>
+							<tr ng-if="userCollection.length == 0">
+						   		<td colspan="5" class="text-center">{{error}}</td>
+							</tr>
+							</tbody>
+							<tbody ng-show="isLoading">
+							<tr>
+								<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
+							</tr>
+							</tbody>
+							<tfoot>
+							<tr ng-show="!isLoading && userCollection.length != 0">
+								<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
+								</td>
+							</tr>
+							</tfoot>
+						</table>
 			</div>
+			<!-- CRUD User-->
+			<div class="row" ng-show="showAddUpdateUser">
+				<div class="col-md-12">
+					<header class="panel-heading">
+						<b>{{header}} User</b>
+					</header>
+				</div>
+				<div class="col-md-12">
+					<!--<div class="col-md-12" ng-if="isSubLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Hubs&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>-->
+					<form name="UserForm" class="css-form" novalidate ng-show="!isSubLoading">
+						<div>
+						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="error" ng-bind-html="error"></div>
+							<div class="col-md-12">
+								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+							</div>
+							<div class="form-group col-xs-6" ng-class="{ 'has-error': customerForm.name.$invalid }">
+								<label>Customer name<font color="red">*</font> :</label> <input type="text"
+									ng-model="customer.name" required ng-class="{'form-control':true, 'has-error': customerForm.name.$invalid }" name="name"/>
+							</div>
+							<!--<div class="form-group col-xs-6">
+								<label>Hub:</label> <input type="text" ng-model="customer.hub.name" class="form-control" ng-disabled="true"/>
+							</div>-->
+							<div class="form-group col-xs-6" ng-class="{ 'has-error': customerForm.selectedHub.$invalid }">
+								<label>Hub <font color="red">*</font> :</label> 
+								<select name="selectedHub" class="form-control" name="selectedHub" ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-disabled="header=='Update'">
+								</select>
+							</div>
+							<div class="form-group col-xs-4" ng-class="{ 'has-error': customerForm.email.$invalid }">
+								<label>Email:</label> <input type="email" name="email" ng-model="customer.email" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Phone:</label> <input type="text" ng-model="customer.phone" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Fax:</label> <input type="text" ng-model="customer.fax" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-12" ng-class="{ 'has-error': customerForm.address.$invalid }">
+								<label>Address<font color="red">*</font> :</label> <input type="textarea" name="address" ng-model="customer.address" class="form-control" required/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="addOrUpdate(customer,header)" ng-disabled="customerForm.$invalid">OK</button>
+							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+						</div>
+					</form>
+				</div>
+              </div>
+              <!-- row end -->
 		</section>
 	</div>
 		</div>
