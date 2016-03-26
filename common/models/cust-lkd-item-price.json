@@ -1,55 +1,55 @@
 {
-  "name": "Item",
-  "plural": "Items",
+  "name": "CustLkdItemPrice",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
+    "price": {
       "type": "string",
       "required": true
     },
-    "description": {
+	 "uom": {
       "type": "string",
       "required": true
     },
-    "qualityParam": {
+	 "startDate": {
+      "type": "date"
+    },
+	 "endDate": {
+      "type": "date"
+    },
+	 "timezone": {
       "type": "string"
     },
-    "qualityVariance": {
+	 "status": {
       "type": "string"
-    },
-    "unit": {
-      "type": "string"
-    },
-    "available": {
-      "type": "boolean"
     }
   },
   "validations": [],
   "relations": {
-    "itemCategory": {
-      "type": "belongsTo",
-      "model": "ItemCategory",
-      "foreignKey": ""
-    },
-    "hub": {
+	 "hub": {
       "type": "belongsTo",
       "model": "Hub",
       "foreignKey": ""
     },
-    "itemPrices": {
-      "type": "hasMany",
-      "model": "ItemPrice",
+	"item": {
+      "type": "belongsTo",
+      "model": "Item",
       "foreignKey": ""
     },
-    "dailyMktPrices": {
-      "type": "hasMany",
-      "model": "DailyMktPrice",
+	"currency": {
+      "type": "belongsTo",
+      "model": "Currency",
+      "foreignKey": ""
+    },
+	"customer": {
+      "type": "belongsTo",
+      "model": "Customer",
       "foreignKey": ""
     }
+	
   },
   "acls": [],
   "methods": {}

@@ -1,6 +1,5 @@
 {
-  "name": "Item",
-  "plural": "Items",
+  "name": "Consumer",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -11,43 +10,54 @@
       "type": "string",
       "required": true
     },
-    "description": {
+	"address1": {
+      "type": "string"
+    },
+	"address2": {
+      "type": "string"
+    },
+	"address3": {
+      "type": "string"
+    },
+	"city": {
       "type": "string",
       "required": true
     },
-    "qualityParam": {
+	"state": {
+      "type": "string",
+      "required": true
+    },
+	"country": {
+      "type": "string",
+      "required": true
+    },
+	"zip": {
+      "type": "string",
+      "required": true
+    },
+	"phone": {
       "type": "string"
     },
-    "qualityVariance": {
+	"altPhone": {
       "type": "string"
     },
-    "unit": {
+	"email": {
       "type": "string"
     },
-    "available": {
-      "type": "boolean"
+	"fax": {
+      "type": "string"
     }
   },
   "validations": [],
   "relations": {
-    "itemCategory": {
-      "type": "belongsTo",
-      "model": "ItemCategory",
-      "foreignKey": ""
-    },
     "hub": {
       "type": "belongsTo",
       "model": "Hub",
       "foreignKey": ""
     },
-    "itemPrices": {
-      "type": "hasMany",
-      "model": "ItemPrice",
-      "foreignKey": ""
-    },
-    "dailyMktPrices": {
-      "type": "hasMany",
-      "model": "DailyMktPrice",
+	"customer": {
+      "type": "belongsTo",
+      "model": "Customer",
       "foreignKey": ""
     }
   },

@@ -23,9 +23,24 @@
       "model": "ItemCategory",
       "foreignKey": ""
     },
+	 "transportOperators": {
+      "type": "hasMany",
+      "model": "TransportOperator",
+      "foreignKey": ""
+    },
     "items": {
       "type": "hasMany",
       "model": "Item",
+      "foreignKey": ""
+    },
+    "dailyMktPrices": {
+      "type": "hasMany",
+      "model": "DailyMktPrice",
+      "foreignKey": ""
+    },
+    "custLkdItemPrices": {
+      "type": "hasMany",
+      "model": "CustLkdItemPrice",
       "foreignKey": ""
     }
   },

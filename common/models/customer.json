@@ -54,9 +54,19 @@
       "model": "Invoice",
       "foreignKey": ""
     },
+	"consumers": {
+      "type": "hasMany",
+      "model": "Consumer",
+      "foreignKey": ""
+    },
     "deliveryChalans": {
       "type": "hasMany",
       "model": "DeliveryChalan",
+      "foreignKey": ""
+    },
+    "custLkdItemPrices": {
+      "type": "hasMany",
+      "model": "CustLkdItemPrice",
       "foreignKey": ""
     }
   },

@@ -1,0 +1,28 @@
+{
+  "name": "Currency",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "code": {
+      "type": "string",
+      "required": true
+    },
+	 "country": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "dailyMktPrices": {
+      "type": "hasMany",
+      "model": "DailyMktPrice",
+      "foreignKey": ""
+    }
+	},
+  "acls": [],
+  "methods": {}
+}
