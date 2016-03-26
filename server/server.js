@@ -52,9 +52,9 @@ app.get('/api/m/ItemCategories', passport.authenticate('mca-backend-strategy', {
 app.get('/api/m/DeliveryChalans', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
      var atts = JSON.parse(req.user.attributes);
       app.models.DeliveryChalan.find(
-       { 
+       {
        include:[{'salesOrder':{'salesOrderLines':'item'}},'deliveryChalanStatus'],
-          
+
               where: {customerId:parseInt(atts.customerId)}
             },
       function(err, deliveryChalans){
@@ -135,12 +135,12 @@ app.post('/apps/:tenantID/agrub/startAuthorization', function(req, res) {
 
 
 app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
-  
+
     app.models.user.login(
       {  email: req.body.challengeAnswer.email,
          password: req.body.challengeAnswer.password
       },
-      'user', 
+      'user',
       function (err, token) {
           // login fails
           if (err) {
@@ -152,9 +152,9 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
                      }
                      });
                      return;
-          }       
-          // login succeeds 
-          console.log("login succeeds");       
+          }
+          // login succeeds
+          console.log("login succeeds");
           app.models.user.findOne(
             { include:{
               relation:'customer',
@@ -162,10 +162,14 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
               relation:'hub'
                  }
                 }
-              },where: {email:req.body.challengeAnswer.email}
+              },
+              include:{
+              relation:'roles'
+              },
+              where: {email:req.body.challengeAnswer.email}
             },
-          function(err, userM){      
-             if (err) {     
+          function(err, userM){
+             if (err) {
                 res.send({
                 status: "failure",
                 challenge: {
@@ -174,23 +178,45 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
                });
                return;
              }
-              if ( userM ) {             
-                 var userO = userM.toJSON();              
+              if ( userM ) {
+                 var userO = userM.toJSON();
+            //       console.log(JSON.stringify(userO));
+                  console.log(userO);
+                  var _rolesNames = "";
+                 for (index = 0; index < userO.roles.length; ++index) {
+                   if (index >0) _rolesNames += ",";
+                     _rolesNames += userO.roles[index].name;
+                 }
+                 var _customerId = null;
+                 var _customerName = null;
+                 var _hubId = null;
+                 var _hubName = null;
+                 if (_rolesNames === "admin") {
+                   _hubId = "1";
+                   _hubName = "Hyderabad"; 
+                 }
+                 if (userO.customerId){
+                   _customerId = new String(userO.customer.id);
+                   _customerName = userO.customer.name;
+                   _hubId = new String(userO.customer.hub.id);
+                   _hubName = userO.customer.hub.name;
+                 }
                  res.send( {
                     status: "success",
                     userIdentity: {
                     userName: userO.email,
                     displayName: userO.username,
                     attributes: {
-                      customerId: new String(userO.customer.id),
-                      customerName: userO.customer.name,
-                      hubId: new String(userO.customer.hub.id),
-                      hubName:userO.customer.hub.name
+                      customerId:_customerId,
+                      customerName: _customerName,
+                      hubId: _hubId,
+                      hubName:_hubName,
+                      roles:_rolesNames
                     }
                   }
                  });
-               return; 
-             }   
+               return;
+             }
              res.send( {
                status: "failure",
                challenge: {
@@ -200,10 +226,10 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
              return;
             }
           );
-         
+
       }
     );
-     } 
+     }
 );
 
 // ------------ Protecting backend APIs with Mobile Client Access end -----------------
