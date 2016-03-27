@@ -12,8 +12,8 @@
 							<tr>
 									<th st-sort="item.name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
 									<th>UOM</th>
-									<th>Price</th>
-									<th width="50px">Actions</th>
+									<th>Price<span ng-if="dmpCollection.length>0">&nbsp;({{dmpCollection[0].currency.code}})</span></th>
+									<th>Actions</th>
 								</tr>
 								<tr>
 									<th>
@@ -26,7 +26,7 @@
 							<tr st-select-row="row" ng-repeat="row in dmpCollection">
 									<td>{{row.item.name}}</td>
 									<td>{{row.item.unit}}</td>
-									<td>{{row.price}}&nbsp;{{row.currency.currencyCode}}</td>
+									<td>{{row.price}}</td>
 									<td align="center">
 										<span class="sprite sprite-edit" title="Edit DMP" style="cursor:pointer"></span>&nbsp;&nbsp;&nbsp;
 										<span class="sprite sprite-delete" title="Delete DMP" style="cursor:pointer"></span>
