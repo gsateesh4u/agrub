@@ -1,11 +1,11 @@
-app.controller('PriceController', function($scope,Pricing){
+app.controller('PriceController', function($scope,DailyMktPrice){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
-	Pricing.find({
-		filter: { include: ['customer','orderStatus'] }
+	DailyMktPrice.find({
+		filter: { include: ['hub','item','currency'] }
 	}).$promise
-		.then(function(response) { $scope.rowCollection = [].concat(response);
+		.then(function(response) { 
 		  $scope.rowCollection = [].concat(response);
 		   $scope.displayedCollection = [].concat($scope.rowCollection);
 		  if($scope.rowCollection.length==0){
@@ -13,7 +13,7 @@ app.controller('PriceController', function($scope,Pricing){
 			 }
 			 $scope.isLoading = false;
 	  },function( errorMessage ) {
-		  $scope.error = "Error has occurred while loading orders!";
+		  $scope.error = "Error has occurred while loading prices!";
 		  $scope.isLoading = false;
    });
 });
