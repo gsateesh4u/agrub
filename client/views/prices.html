@@ -13,24 +13,23 @@
 									<th st-sort="item.name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
 									<th>UOM</th>
 									<th>Price<span ng-if="dmpCollection.length>0">&nbsp;({{dmpCollection[0].currency.code}})</span></th>
-									<th>Actions</th>
 								</tr>
 								<tr>
 									<th>
 										<input st-search="item.name" placeholder="search for item" class="input-sm form-control" type="search"/>
 									</th>
-									<th></th><th></th><th></th>
+									<th></th><th></th>
 								</tr>
 							</thead>
 							<tbody ng-show="!isLoading">
 							<tr st-select-row="row" ng-repeat="row in dmpCollection">
 									<td>{{row.item.name}}</td>
 									<td>{{row.item.unit}}</td>
-									<td>{{row.price}}</td>
-									<td align="center">
+									<td><div ng-model="price" contentEditable ng-enter="updatePrice(price,row)">{{row.price}}</div></td>
+									<!--<td align="center">
 										<span class="sprite sprite-edit" title="Edit DMP" style="cursor:pointer"></span>&nbsp;&nbsp;&nbsp;
 										<span class="sprite sprite-delete" title="Delete DMP" style="cursor:pointer"></span>
-									</td>
+									</td>-->
 							</tr>
 							<tr ng-if="dmpCollection.length == 0">
 						   		<td colspan="6" class="text-center">{{error}}</td>

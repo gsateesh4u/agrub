@@ -16,4 +16,13 @@ app.controller('PriceController', function($scope,DailyMktPrice){
 		  $scope.error = "Error has occurred while loading prices!";
 		  $scope.isLoading = false;
    });
+   
+   $scope.updatePrice = function updatePrice(updatedPrice, row){
+		if(updatedPrice!=row.price){
+			DailyMktPrice.prototype$updateAttributes(
+			   { id: row.id }, 
+			   { price: updatedPrice }
+			 );
+		}
+   }
 });

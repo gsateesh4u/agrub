@@ -171,5 +171,36 @@ var app = angular
 	            		 return flag;
 	            	}
 	            };
-	});
+	}).directive('contenteditable', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ctrl) {
+            // view -> model
+            elm.bind('blur', function() {
+                scope.$apply(function() {
+                    ctrl.$setViewValue(elm.html());
+					scope.$eval(attrs.ngEnter);
+                });
+            });
+
+            // model -> view
+           /* ctrl.render = function(value) {
+                elm.html(value);
+            };*/
+
+            // load init value from DOM
+           // ctrl.$setViewValue(elm.html());
+			 elm.bind("keydown keypress", function (event) {
+	            if(event.which === 13) {
+					ctrl.$setViewValue(elm.html());
+	                scope.$apply(function (){
+	                    scope.$eval(attrs.ngEnter);
+	                });
+	 
+	                event.preventDefault();
+	            }
+	        });           
+        }
+    };
+});
 				
