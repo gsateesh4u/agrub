@@ -141,10 +141,6 @@ var app = angular
 		   } else {
 			angular.element(document.getElementsByClassName("left-side")[0]).toggleClass("collapse-left");
 			angular.element(document.getElementsByClassName("right-side")[0]).toggleClass("strech");
-			var leftPane = angular.element(document.getElementsByClassName("left-side")[0]);
-			var rightPane = angular.element(document.getElementsByClassName("right-side")[0]);
-			leftPane.toggleClass("collapse-left");
-            rightPane.toggleClass("strech");
 		   }
 	  };
 	  
