@@ -1,4 +1,28 @@
 app.controller('PriceController', function($scope,DailyMktPrice){
+	var tabClasses;
+  
+  function initTabs() {
+    tabClasses = ["","",""];
+  }
+  
+  $scope.getTabClass = function (tabNum) {
+    return tabClasses[tabNum];
+  };
+  
+  $scope.getTabPaneClass = function (tabNum) {
+    return "tab-pane " + tabClasses[tabNum];
+  }
+  
+  $scope.setActiveTab = function (tabNum) {
+    initTabs();
+    tabClasses[tabNum] = "active";
+  };
+ 
+  //Initialize 
+  initTabs();
+  $scope.setActiveTab(1);
+  
+  
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
