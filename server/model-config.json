@@ -112,15 +112,19 @@
     "dataSource": "db",
     "public": true
   },
-  "Currency": {
-    "dataSource": "db",
-    "public": true
-  },
   "DailyMktPrice": {
     "dataSource": "db",
     "public": true
   },
   "Consumer": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Market": {
+    "dataSource": "db",
+    "public": true
+  },
+  "CustLkdPeriod": {
     "dataSource": "db",
     "public": true
   },

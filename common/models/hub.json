@@ -9,6 +9,12 @@
     "name": {
       "type": "string",
       "required": true
+    },
+	"currencyISO": {
+      "type": "string"
+    },
+	"timezone": {
+      "type": "string"
     }
   },
   "validations": [],
@@ -31,6 +37,11 @@
     "items": {
       "type": "hasMany",
       "model": "Item",
+      "foreignKey": ""
+    },
+    "markets": {
+      "type": "hasMany",
+      "model": "Market",
       "foreignKey": ""
     },
     "dailyMktPrices": {

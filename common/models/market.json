@@ -1,28 +1,34 @@
 {
-  "name": "Currency",
+  "name": "Market",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "code": {
-      "type": "string",
-      "required": true
-    },
-    "country": {
+    "name": {
       "type": "string",
       "required": true
     }
   },
   "validations": [],
   "relations": {
-    "dailyMktPrices": {
+    "hub": {
+      "type": "belongsTo",
+      "model": "Hub",
+      "foreignKey": ""
+    },
+	"dailyMktPrices": {
       "type": "hasMany",
       "model": "DailyMktPrice",
       "foreignKey": ""
+    },
+	"dailyMktPriceHistory": {
+      "type": "hasMany",
+      "model": "DailyMktPriceHistory",
+      "foreignKey": ""
     }
-  },
+	},
   "acls": [],
   "methods": {}
 }

@@ -16,8 +16,7 @@
       "required": true
     },
     "updatedTimestamp": {
-      "type": "date",
-      "required": true
+      "type": "date"
     }
   },
   "validations": [],
@@ -25,6 +24,11 @@
     "item": {
       "type": "belongsTo",
       "model": "Item",
+      "foreignKey": ""
+    },
+	"market": {
+      "type": "belongsTo",
+      "model": "Market",
       "foreignKey": ""
     }
   },

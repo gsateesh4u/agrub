@@ -68,6 +68,11 @@
       "type": "hasMany",
       "model": "CustLkdItemPrice",
       "foreignKey": ""
+    },
+    "custLkdPeriods": {
+      "type": "hasMany",
+      "model": "CustLkdPeriod",
+      "foreignKey": ""
     }
   },
   "acls": [],

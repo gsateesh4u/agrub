@@ -1,33 +1,28 @@
 {
-  "name": "DailyMktPrice",
+  "name": "CustLkdPeriod",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "price": {
-      "type": "string",
-      "required": true
+    "startDate": {
+      "type": "date"
     },
-    "dmpDate": {
-      "type": "date",
-      "required": true
-    },
-    "updatedTimestamp": {
+    "endDate": {
       "type": "date"
     }
   },
   "validations": [],
   "relations": {
-    "market": {
+    "customer": {
       "type": "belongsTo",
-      "model": "Market",
+      "model": "Customer",
       "foreignKey": ""
     },
-    "item": {
-      "type": "belongsTo",
-      "model": "Item",
+    "custLkdItemPrices": {
+      "type": "hasMany",
+      "model": "CustLkdItemPrice",
       "foreignKey": ""
     }
   },
