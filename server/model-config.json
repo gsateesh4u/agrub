@@ -15,7 +15,7 @@
   },
   "User": {
     "dataSource": "db",
-	"public": false
+    "public": false
   },
   "AccessToken": {
     "dataSource": "db",
@@ -125,6 +125,10 @@
     "public": true
   },
   "CustLkdItemPrice": {
+    "dataSource": "db",
+    "public": true
+  },
+  "DailyMktPriceHistory": {
     "dataSource": "db",
     "public": true
   }

@@ -10,38 +10,38 @@
       "type": "string",
       "required": true
     },
-	"address1": {
+    "address1": {
       "type": "string"
     },
-	"address2": {
+    "address2": {
       "type": "string"
     },
-	"address3": {
+    "address3": {
       "type": "string"
     },
-	"city": {
+    "city": {
       "type": "string",
       "required": true
     },
-	"state": {
+    "state": {
       "type": "string",
       "required": true
     },
-	"country": {
+    "country": {
       "type": "string",
       "required": true
     },
-	"zip": {
+    "zip": {
       "type": "string",
       "required": true
     },
-	"phone": {
+    "phone": {
       "type": "string"
     },
-	"email": {
+    "email": {
       "type": "string"
     },
-	"fax": {
+    "fax": {
       "type": "string"
     }
   },

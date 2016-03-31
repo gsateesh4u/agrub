@@ -49,6 +49,61 @@ app.get('/api/m/ItemCategories', passport.authenticate('mca-backend-strategy', {
 );
 
 
+app.get('/api/m/DailyMktPrices', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+     var atts = JSON.parse(req.user.attributes);
+      app.models.DailyMktPrice.find(
+       { where: {hubId:parseInt(atts.hubId)}
+       },
+      function(err, dailyMktPrices){
+           if (err) { res.send(err);
+           }
+           if ( dailyMktPrices ) {
+             res.status(200).send(dailyMktPrices);
+           }
+         }
+    );
+  }
+);
+
+app.put('/api/m/DailyMktPrices',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
+ console.log("entered DMPs PUT");
+  var atts = JSON.parse(req.user.attributes);
+  var dailyMktPrices = req.body;
+  console.log("dailyMktPrices " + dailyMktPrices);
+   for (index = 0; index < dailyMktPrices.length; ++index) {
+console.log("dailyMktPrices[] " + dailyMktPrices[index]);
+  app.models.DailyMktPrice.findById(
+    parseInt(dailyMktPrices[index].itemId)
+   ,
+  function(err, dmp){
+       if (err) { res.send(err);
+       }
+       if ( dmp ) {
+         dailyMktPrices[index].id = dmp.id;
+         app.models.DailyMktPriceHistory.create(dmp, function(err,dmpH){
+            if (err) {
+              console.log(err);
+            }
+         }
+       );
+       }
+     }
+  );
+  dailyMktPrices[index].updatedTimestamp = new Date();
+  dailyMktPrices[index].dmpDate = new Date();
+  app.models.DailyMktPrice.update(dailyMktPrices[index],
+  function(err, dmp){
+       if (err) { res.send(err);
+       }
+       if ( dmp ) {
+         res.status(200).send(dmp);
+       }
+     }
+);
+} //end for loop
+}
+);
+
 app.get('/api/m/DeliveryChalans', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
      var atts = JSON.parse(req.user.attributes);
       app.models.DeliveryChalan.find(
@@ -191,9 +246,9 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
                  var _customerName = null;
                  var _hubId = null;
                  var _hubName = null;
-                 if (_rolesNames === "admin") {
+                 if (_rolesNames === "whadmin") {
                    _hubId = "1";
-                   _hubName = "Hyderabad"; 
+                   _hubName = "Hyderabad";
                  }
                  if (userO.customerId){
                    _customerId = new String(userO.customer.id);

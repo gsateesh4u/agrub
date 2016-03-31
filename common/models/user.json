@@ -6,14 +6,17 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "ClearBaseAcls": true
+  },
   "properties": {
-	"firstname": {
+    "firstname": {
       "type": "string"
     },
-	"middlename": {
+    "middlename": {
       "type": "string"
     },
-	"lastname": {
+    "lastname": {
       "type": "string"
     }
   },
@@ -46,16 +49,13 @@
       "through": "RoleMapping"
     }
   },
-  "mixins": {
-    "ClearBaseAcls": true
-  },
   "acls": [
     {
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "admin",
       "permission": "ALLOW"
-    }   
+    }
   ],
   "methods": {}
 }

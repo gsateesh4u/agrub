@@ -10,46 +10,45 @@
       "type": "string",
       "required": true
     },
-	 "uom": {
+    "uom": {
       "type": "string",
       "required": true
     },
-	 "startDate": {
+    "startDate": {
       "type": "date"
     },
-	 "endDate": {
+    "endDate": {
       "type": "date"
     },
-	 "timezone": {
+    "timezone": {
       "type": "string"
     },
-	 "status": {
+    "status": {
       "type": "string"
     }
   },
   "validations": [],
   "relations": {
-	 "hub": {
+    "hub": {
       "type": "belongsTo",
       "model": "Hub",
       "foreignKey": ""
     },
-	"item": {
+    "item": {
       "type": "belongsTo",
       "model": "Item",
       "foreignKey": ""
     },
-	"currency": {
+    "currency": {
       "type": "belongsTo",
       "model": "Currency",
       "foreignKey": ""
     },
-	"customer": {
+    "customer": {
       "type": "belongsTo",
       "model": "Customer",
       "foreignKey": ""
     }
-	
   },
   "acls": [],
   "methods": {}

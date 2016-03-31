@@ -54,7 +54,7 @@
       "model": "Invoice",
       "foreignKey": ""
     },
-	"consumers": {
+    "consumers": {
       "type": "hasMany",
       "model": "Consumer",
       "foreignKey": ""

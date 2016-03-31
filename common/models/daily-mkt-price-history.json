@@ -1,25 +1,30 @@
 {
-  "name": "Currency",
+  "name": "DailyMktPriceHistory",
+  "plural": "DailyMktPricesHistory",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "code": {
+    "price": {
       "type": "string",
       "required": true
     },
-    "country": {
-      "type": "string",
+    "dmpDate": {
+      "type": "date",
+      "required": true
+    },
+    "updatedTimestamp": {
+      "type": "date",
       "required": true
     }
   },
   "validations": [],
   "relations": {
-    "dailyMktPrices": {
-      "type": "hasMany",
-      "model": "DailyMktPrice",
+    "item": {
+      "type": "belongsTo",
+      "model": "Item",
       "foreignKey": ""
     }
   },

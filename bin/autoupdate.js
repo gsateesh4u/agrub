@@ -56,3 +56,6 @@ ds.autoupdate('Role', function(err) {
 ds.autoupdate('RoleMapping', function(err) {
   if (err) throw err;
 });
+ds.autoupdate('DailyMktPriceHistory', function(err) {
+  if (err) throw err;
+});

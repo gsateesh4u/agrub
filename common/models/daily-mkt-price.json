@@ -10,34 +10,34 @@
       "type": "string",
       "required": true
     },
-	 "uom": {
+    "uom": {
       "type": "string"
     },
-	 "dmpDate": {
+    "dmpDate": {
       "type": "date",
       "required": true
     },
-	 "updatedTimestamp": {
+    "updatedTimestamp": {
       "type": "date",
       "required": true
     },
-	 "timezone": {
+    "timezone": {
       "type": "string"
     }
   },
   "validations": [],
   "relations": {
-	 "hub": {
+    "hub": {
       "type": "belongsTo",
       "model": "Hub",
       "foreignKey": ""
     },
-	"item": {
+    "item": {
       "type": "belongsTo",
       "model": "Item",
       "foreignKey": ""
     },
-	"currency": {
+    "currency": {
       "type": "belongsTo",
       "model": "Currency",
       "foreignKey": ""

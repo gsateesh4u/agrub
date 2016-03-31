@@ -23,7 +23,7 @@
       "model": "ItemCategory",
       "foreignKey": ""
     },
-	 "transportOperators": {
+    "transportOperators": {
       "type": "hasMany",
       "model": "TransportOperator",
       "foreignKey": ""
