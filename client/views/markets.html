@@ -1,0 +1,99 @@
+<section class="content">
+		<!-- Main row -->
+		<div class="row">
+			<div class="col-md-12">
+				<section class="panel">
+					<header class="panel-heading">
+					  {{'tbl_head_markets' | xlat}}
+					</header>
+					<div class="panel-body table-responsive">
+					<table width="100%" style="margin-bottom:5px">
+							<tr>
+								<td align="left">
+									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
+								</td>
+								<td align="right">
+									<button class="btn btn-primary" ng-click="showMarket(tempMaket,'Add')" align="right">Add Market</button>
+								</td>
+							</tr>
+						</table> 
+						<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="rowCollection" st-table="marketsCollection">
+							<thead>
+							<tr>
+									<th st-sort="name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Market</th>
+									<th st-sort="hub.name"><i class="glyphicon glyphicon-filter"></i>Hub</th>
+									<th width="50px">Actions</th>
+								</tr>
+								<tr>
+									<th>
+										<input st-search="name" placeholder="search for market" class="input-sm form-control" type="search"/>
+									</th>
+									<th>
+										<input st-search="hub.name" placeholder="search for hub" class="input-sm form-control" type="search"/>
+									</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody ng-show="!isLoading">
+							<tr st-select-row="row" ng-repeat="row in marketsCollection">
+									<td>{{row.name}}</td>
+									<td>{{row.hub.name}}</td>
+									<td align="center">
+										<span class="sprite sprite-edit" title="Edit Market" style="cursor:pointer" ng-click="showMarket(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
+										<span class="sprite sprite-delete" title="Delete Market" style="cursor:pointer" ng-click="deleteMarket(row)"></span>
+									</td>
+							</tr>
+							<tr ng-if="marketsCollection.length == 0">
+						   		<td colspan="5" class="text-center">{{error}}</td>
+							</tr>
+							</tbody>
+							<tbody ng-show="isLoading">
+							<tr>
+								<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
+							</tr>
+							</tbody>
+							<tfoot>
+							<tr ng-show="!isLoading && marketsCollection.length != 0">
+								<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
+								</td>
+							</tr>
+							</tfoot>
+						</table>
+			</div>
+			<!-- CRUD Hub-->
+			<div class="row" ng-show="showAddUpdateMarket">
+				<div class="col-md-12">
+					<header class="panel-heading">
+						<b>{{header}} Market</b>
+					</header>
+				</div>
+				<div class="col-md-12">
+					<form name="marketForm" class="css-form" novalidate>
+						<div>
+						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="error" ng-bind-html="error"></div>
+							<div class="col-md-12">
+								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Market name<font color="red">*</font> :</label> <input type="text"
+									ng-model="market.name" required class="form-control" name="name"/>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Hub <font color="red">*</font> :</label> 
+								<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-disabled="header=='Update'">
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="addOrUpdate(market,header)" ng-disabled="marketForm.$invalid">OK</button>
+							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+						</div>
+					</form>
+				</div>
+              </div>
+              <!-- row end -->
+		</section>
+	</div>
+		</div>
+</section>

@@ -34,6 +34,7 @@
 	<script src="js/controllers/ReportsController.js"></script>
 	<script src="js/controllers/AuthLogoutController.js"></script>
 	<script src="js/controllers/AuthLoginController.js"></script>
+	<script src="js/controllers/MarketController.js"></script>
 	<script src="js/controllers/SignUpController.js"></script>
   </head>
    <body class="skin-black  pace-done">
@@ -111,6 +112,12 @@
                                 <li id="hubs" ng-if="hasPermission('admin')">
                                     <a href="#hubs">
                                         <i class="fa fa-globe"></i> <span>{{'menu_hubs' | xlat}}</span>
+                                    </a>
+                                </li>
+								
+								 <li id="markets" ng-if="hasPermission('admin')">
+                                    <a href="#markets">
+                                        <i class="fa fa-globe"></i> <span>{{'menu_markets' | xlat}}</span>
                                     </a>
                                 </li>
 

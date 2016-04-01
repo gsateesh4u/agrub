@@ -24,8 +24,8 @@
 							<tr st-select-row="row" ng-repeat="row in hubsCollection">
 									<td>{{row.name}}</td>
 									<td align="center">
-										<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer" ng-click="showHub(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
-										<span class="sprite sprite-delete" title="Delete Item" style="cursor:pointer" ng-click="deleteHub(row)"></span>
+										<span class="sprite sprite-edit" title="Edit Hub" style="cursor:pointer" ng-click="showHub(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
+										<span class="sprite sprite-delete" title="Delete Hub" style="cursor:pointer" ng-click="deleteHub(row)"></span>
 									</td>
 							</tr>
 							<tr ng-if="hubsCollection.length == 0">

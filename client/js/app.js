@@ -40,6 +40,12 @@ var app = angular
         controller: 'HubController',
         authenticate: true
       })
+	   .state('markets', {
+        url: '/markets',
+        templateUrl: 'views/markets.html',
+        controller: 'MarketController',
+        authenticate: true
+      })
       .state('items', {
         url: '/items',
 		templateUrl: 'views/items.html',
