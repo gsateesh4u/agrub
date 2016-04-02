@@ -72,14 +72,16 @@ app.post('/api/m/DailyMktPrices',passport.authenticate('mca-backend-strategy', {
    for (index = 0; index < dailyMktPrices.length; ++index) {
   var currentId;
   app.models.DailyMktPrice.findOne(
-     { where: {and: [ {itemId:parseInt(dailyMktPrices[index].itemId)}, {marketId:parseInt(dailyMktPrices[index].marketId)} ] }
+     { where: {and: [ {itemId:dailyMktPrices[index].itemId}, {marketId:dailyMktPrices[index].marketId} ] }
   },
   function(er1, dmp){
        if (er1) throw er1;
        if ( dmp == null ) {
          console.log("No existing DMP found for this item " )}
        else {
-         currentId = dmp.id;
+         console.log("Found existing DMP " + dmp.id );
+         currentId = dmp.id;   // need to get this back using callback
+         console.log("currentId just set " + currentId );
          dmp.id = null;
          dmp.updatedTimestamp = new Date();
          app.models.DailyMktPriceHistory.create(dmp, function(er2,dmpH){
@@ -94,7 +96,7 @@ app.post('/api/m/DailyMktPrices',passport.authenticate('mca-backend-strategy', {
        }
      }
   );
-  console.log("currentId " + currentId);
+  console.log("currentId just before dmp update" + currentId);
   today = new Date();
   dailyMktPrices[index].updatedTimestamp = today;
   dailyMktPrices[index].dmpDate = today;
