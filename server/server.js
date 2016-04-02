@@ -65,42 +65,56 @@ app.get('/api/m/DailyMktPrices', passport.authenticate('mca-backend-strategy', {
   }
 );
 
-app.put('/api/m/DailyMktPrices',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
- console.log("entered DMPs PUT");
+app.post('/api/m/DailyMktPrices',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
   var atts = JSON.parse(req.user.attributes);
+  var updatedDMPs = new Array();
   var dailyMktPrices = req.body;
-  console.log("dailyMktPrices " + dailyMktPrices);
    for (index = 0; index < dailyMktPrices.length; ++index) {
-console.log("dailyMktPrices[] " + dailyMktPrices[index]);
-  app.models.DailyMktPrice.findById(
-    parseInt(dailyMktPrices[index].itemId)
-   ,
-  function(err, dmp){
-       if (err) { res.send(err);
-       }
-       if ( dmp ) {
-         dailyMktPrices[index].id = dmp.id;
-         app.models.DailyMktPriceHistory.create(dmp, function(err,dmpH){
-            if (err) {
-              console.log(err);
+  var currentId;
+  app.models.DailyMktPrice.findOne(
+     { where: {and: [ {itemId:parseInt(dailyMktPrices[index].itemId)}, {marketId:parseInt(dailyMktPrices[index].marketId)} ] }
+  },
+  function(er1, dmp){
+       if (er1) throw er1;
+       if ( dmp == null ) {
+         console.log("No existing DMP found for this item " )}
+       else {
+         currentId = dmp.id;
+         dmp.id = null;
+         dmp.updatedTimestamp = new Date();
+         app.models.DailyMktPriceHistory.create(dmp, function(er2,dmpH){
+            if (er2) { throw er2;}
+            if (dmpH == null) {
+              console.log("Did not create DMP history for this item " )
             }
+            else {
+              console.log("Created DMP history for this item "  )}
          }
        );
        }
      }
   );
-  dailyMktPrices[index].updatedTimestamp = new Date();
-  dailyMktPrices[index].dmpDate = new Date();
-  app.models.DailyMktPrice.update(dailyMktPrices[index],
-  function(err, dmp){
-       if (err) { res.send(err);
+  console.log("currentId " + currentId);
+  today = new Date();
+  dailyMktPrices[index].updatedTimestamp = today;
+  dailyMktPrices[index].dmpDate = today;
+  if (currentId){
+  dailyMktPrices[index].id = currentId;
+  }
+  app.models.DailyMktPrice.upsert(dailyMktPrices[index],
+  function(err, dmp_updated){
+       if (err) {throw err;   }
+       if ( dmp_updated == null){
+         console.log("Did not create DMP for this item ")
        }
-       if ( dmp ) {
-         res.status(200).send(dmp);
+       else {
+         console.log("Created DMP history for this item Pushing into return array")
+         updatedDMPs.push(dmp_updated);
        }
      }
 );
 } //end for loop
+res.status(200).send(updatedDMPs);
 }
 );
 
@@ -211,16 +225,17 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
           // login succeeds
           console.log("login succeeds");
           app.models.user.findOne(
-            { include:{
+            { include:[{
               relation:'customer',
               scope:{include: {
               relation:'hub'
                  }
                 }
               },
-              include:{
+              {
               relation:'roles'
-              },
+            }]
+          ,
               where: {email:req.body.challengeAnswer.email}
             },
           function(err, userM){
@@ -235,13 +250,15 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
              }
               if ( userM ) {
                  var userO = userM.toJSON();
-            //       console.log(JSON.stringify(userO));
+              //   console.log(JSON.stringify(userO));
                   console.log(userO);
                   var _rolesNames = "";
+                if ("roles" in userO){
                  for (index = 0; index < userO.roles.length; ++index) {
                    if (index >0) _rolesNames += ",";
                      _rolesNames += userO.roles[index].name;
                  }
+               }
                  var _customerId = null;
                  var _customerName = null;
                  var _hubId = null;
