@@ -113,10 +113,10 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 				  $scope.isDmpLoading = false;
 			});
 		}
-		else if(commonService.hasPermission('hubadmin')){
+		/*else if(commonService.hasPermission('hubadmin')){
 			$scope.showForm = 1;
 			$scope.hubs = [commonService.getCurrentUser().hub];
-		}
+		}*/
    };
    $scope.populateMarkets = function populateMarkets(){
 		if($scope.selectedHub){
