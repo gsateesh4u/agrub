@@ -184,8 +184,8 @@ app.post('/api/m/Orders/placeOrder',passport.authenticate('mca-backend-strategy'
     );
   }
 );
-app.put('/api/m/DeliveryChalans/updateSO',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
-      app.models.DeliveryChalan.updateSO(req.dc,
+app.post('/api/m/DeliveryChalans/updateSO',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
+      app.models.DeliveryChalan.updateSO(req.body,
       function(err, deliveryChalan){
            if (err) { res.send(err);
            }
