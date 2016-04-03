@@ -9,22 +9,6 @@
     "price": {
       "type": "string",
       "required": true
-    },
-    "uom": {
-      "type": "string",
-      "required": true
-    },
-    "startDate": {
-      "type": "date"
-    },
-    "endDate": {
-      "type": "date"
-    },
-    "timezone": {
-      "type": "string"
-    },
-    "status": {
-      "type": "string"
     }
   },
   "validations": [],
@@ -39,9 +23,9 @@
       "model": "Item",
       "foreignKey": ""
     },
-    "currency": {
+    "custLkdPeriod": {
       "type": "belongsTo",
-      "model": "Currency",
+      "model": "CustLkdPeriod",
       "foreignKey": ""
     },
     "customer": {
