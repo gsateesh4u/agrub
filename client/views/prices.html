@@ -7,6 +7,16 @@
 					  {{'tbl_head_prices' | xlat}}
 					</header>
 					<div class="panel-body table-responsive">
+						<table width="100%" style="margin-bottom:5px">
+							<tr>
+								<td align="left">
+									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
+								</td>
+								<td align="right">
+									<button class="btn btn-primary" ng-if="selectedTab==1" ng-click="showDMP(tempDMP,'Add')" align="right">Add New Item Price</button>
+								</td>
+							</tr>
+						</table> 
 						 <div class="tabbable">
 							  <ul class="nav nav-tabs">
 								 <li ng-class="getTabClass(1)" ng-click="setActiveTab(1)"><a href=""  data-toggle="tab">{{'menu_DMP' | xlat}}</a></li>
@@ -149,6 +159,49 @@
 								</div>
 							  </div>
 						</div>
+						<!-- CRUD Item-->
+			<div class="row" ng-show="showForm ==1">
+				<div class="col-md-12">
+					<header class="panel-heading">
+						<b>{{header}} New Item Price</b>
+					</header>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-12" ng-if="isDmpLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Data&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>
+					<form name="dmpForm" class="css-form" novalidate ng-show="!isDmpLoading">
+						<div>
+						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+							<div class="col-md-12">
+								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Hub <font color="red">*</font> :</label> 
+								<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-change="populateMarkets()">
+								</select>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Market <font color="red">*</font> :</label> 
+								<select name="selectedMarket" class="form-control"  ng-model="selectedMarket" required class="form-control" ng-options="market.name for market in markets track by market.id" ng-change="populateItems()">
+								</select>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Item <font color="red">*</font> :</label> 
+								<select name="selectedItem" class="form-control"  ng-model="selectedItem" required class="form-control" ng-options="item.name for item in items track by item.id">
+								</select>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Price<font color="red">*</font> :</label> <input type="text" ng-model="price" required class="form-control" name="price"/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="addNewItemPrice()" ng-disabled="dmpForm.$invalid">OK</button>
+							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+						</div>
+					</form>
+				</div>
+              </div>
+              <!-- row end -->
 			</div>
 		</section>
 	</div>

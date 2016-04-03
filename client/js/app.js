@@ -1,7 +1,7 @@
 var app = angular
   .module('app', [
     'ui.router','lbServices','ngCookies',
-    'ui.bootstrap','smart-table','xlat','blockUI','angularFileUpload'
+    'ui.bootstrap','smart-table','xlat','blockUI','angularFileUpload','ngSanitize'
   ])
   //configure pagination template for smart-table
 	.config(function(stConfig) {
@@ -155,7 +155,8 @@ var app = angular
 	        function($cookieStore) {
 	            // Return public API.
 	            return({
-	                hasPermission : hasPermission
+	                hasPermission : hasPermission,
+					getCurrentUser : getCurrentUser
 	            });
 				//check for permission
 	            function hasPermission(role){
@@ -173,6 +174,9 @@ var app = angular
 	            		 return flag;
 	            	}
 	            };
+				function getCurrentUser(){
+					return $cookieStore.get("currentUser");
+				};
 	}).directive('contenteditable', function() {
     return {
         require: 'ngModel',

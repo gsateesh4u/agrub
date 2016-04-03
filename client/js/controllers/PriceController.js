@@ -1,6 +1,13 @@
-app.controller('PriceController', function($scope,DailyMktPrice, CustLkdItemPrice, CustLkdPeriod){
+app.controller('PriceController', function($scope,commonService, DailyMktPrice, CustLkdItemPrice, CustLkdPeriod, Hub, Market, Item, $filter){
 	var tabClasses;
-  
+  $scope.selectedTab = 1;
+  $scope.tempDMP = {
+		itemId : "",
+		price : "",
+		dmpDate : "",
+		updatedTimestamp : "",
+		marketId : ""
+	};
   function initTabs() {
     tabClasses = ["","",""];
   }
@@ -15,6 +22,7 @@ app.controller('PriceController', function($scope,DailyMktPrice, CustLkdItemPric
   
   $scope.setActiveTab = function (tabNum) {
     initTabs();
+	$scope.selectedTab = tabNum;
     tabClasses[tabNum] = "active";
 	if(tabNum ==1){
 		fillDMPTab();
@@ -34,7 +42,7 @@ app.controller('PriceController', function($scope,DailyMktPrice, CustLkdItemPric
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
 	DailyMktPrice.find({
-		filter: { include: ['market','item'] }
+		filter: { include: ['item',{market:'hub'}] }
 	}).$promise
 		.then(function(response) { 
 		  $scope.dmpsCollection = [].concat(response);
@@ -91,4 +99,84 @@ app.controller('PriceController', function($scope,DailyMktPrice, CustLkdItemPric
 			 );
 		}
    }
+   $scope.showDMP = function(){
+		if(commonService.hasPermission('admin')){
+			$scope.isDmpLoading = true;
+			Hub.find().$promise
+				.then(function(response) { 
+					$scope.hubs  = [].concat(response);
+					$scope.isDmpLoading = false;
+					$scope.showForm = 1;
+				},function( errorMessage ) {
+					$scope.showForm = 1;
+				  $scope.subError = "Error has occurred while loading hubs!";
+				  $scope.isDmpLoading = false;
+			});
+		}
+		else if(commonService.hasPermission('hubadmin')){
+			$scope.showForm = 1;
+			$scope.hubs = [commonService.getCurrentUser().hub];
+		}
+   };
+   $scope.populateMarkets = function populateMarkets(){
+		if($scope.selectedHub){
+			$scope.isDmpLoading = true;
+			Market.find({
+			   filter:{
+				  where:{hubId: $scope.selectedHub.id}  
+			   }
+		   }).$promise
+		   .then(function(response){
+				$scope.isDmpLoading = false;
+				$scope.markets = [].concat(response);
+		   },function( errorMessage ) {
+				  $scope.subError = "Error has occurred while loading markets!";
+				  $scope.isDmpLoading = false;
+			});
+		}
+   };
+   $scope.populateItems = function populateItems(){
+		if($scope.selectedHub){
+			$scope.isDmpLoading = true;
+			Item.find({
+			   filter:{
+				  where:{hubId: $scope.selectedHub.id}  
+			   }
+		   }).$promise
+		   .then(function(response){
+				$scope.isDmpLoading = false;
+				$scope.existing = [].concat(response);
+				$scope.items = $filter('filter')($scope.existing,
+					function(exItem, index) {
+						var flag = true;
+						angular.forEach($scope.dmpsCollection, function (tDMP) {
+						 if((tDMP.market.id == $scope.selectedMarket.id && tDMP.market.hub.id == $scope.selectedHub.id && exItem.id == tDMP.item.id)){
+							flag = false;
+							return;
+						 }
+				      });
+					  return flag;
+				  	});
+		   },function( errorMessage ) {
+				  $scope.subError = "Error has occurred while loading items!";
+				  $scope.isDmpLoading = false;
+			});
+		}
+   };
+   $scope.addNewItemPrice = function addNewItemPrice(){
+		var insertDMP = {
+		itemId : $scope.selectedItem.id,
+		price : $scope.price,
+		dmpDate : new Date(),
+		updatedTimestamp : new Date().getTime(),
+		marketId : $scope.selectedMarket.id
+	};
+		
+		DailyMktPrice.create(insertDMP).$promise.then(function(response){
+			$scope.showForm = 0;
+			$scope.setActiveTab(1);
+		},function( errorMessage ) {
+				  $scope.subError = "Error has occurred while adding dmp!";
+		});
+   };
 });
