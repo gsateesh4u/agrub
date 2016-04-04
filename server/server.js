@@ -12,14 +12,14 @@ var passport = require('passport');
 var MCABackendStrategy = require('bms-mca-token-validation-strategy').MCABackendStrategy;
 
 // Tell passport to use the MCA strategy
-//passport.use(new MCABackendStrategy())
+passport.use(new MCABackendStrategy())
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 // Tell application to use passport
-//app.use(passport.initialize());
+app.use(passport.initialize());
 
 
 // Protect Orders endpoint so it can only be accessed by agrub mobile
