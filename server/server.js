@@ -12,14 +12,14 @@ var passport = require('passport');
 var MCABackendStrategy = require('bms-mca-token-validation-strategy').MCABackendStrategy;
 
 // Tell passport to use the MCA strategy
-passport.use(new MCABackendStrategy())
+//passport.use(new MCABackendStrategy())
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 // Tell application to use passport
-app.use(passport.initialize());
+//app.use(passport.initialize());
 
 
 // Protect Orders endpoint so it can only be accessed by agrub mobile
@@ -66,57 +66,15 @@ app.get('/api/m/DailyMktPrices', passport.authenticate('mca-backend-strategy', {
 );
 
 app.post('/api/m/DailyMktPrices',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
-  var atts = JSON.parse(req.user.attributes);
-  var updatedDMPs = new Array();
-  var dailyMktPrices = req.body;
-   for (index = 0; index < dailyMktPrices.length; ++index) {
-  var currentId;
-  app.models.DailyMktPrice.findOne(
-     { where: {and: [ {itemId:dailyMktPrices[index].itemId}, {marketId:dailyMktPrices[index].marketId} ] }
-  },
-  function(er1, dmp){
-       if (er1) throw er1;
-       if ( dmp == null ) {
-         console.log("No existing DMP found for this item " )}
-       else {
-         console.log("Found existing DMP " + dmp.id );
-         currentId = dmp.id;   // need to get this back using callback
-         console.log("currentId just set " + currentId );
-         dmp.id = null;
-         dmp.updatedTimestamp = new Date();
-         app.models.DailyMktPriceHistory.create(dmp, function(er2,dmpH){
-            if (er2) { throw er2;}
-            if (dmpH == null) {
-              console.log("Did not create DMP history for this item " )
-            }
-            else {
-              console.log("Created DMP history for this item "  )}
-         }
-       );
+  app.models.DailyMktPrice.uploadDMP(req.body,
+  function(err, dmps){
+       if (err) { res.send(err);
        }
-     }
-  );
-  console.log("currentId just before dmp update" + currentId);
-  today = new Date();
-  dailyMktPrices[index].updatedTimestamp = today;
-  dailyMktPrices[index].dmpDate = today;
-  if (currentId){
-  dailyMktPrices[index].id = currentId;
-  }
-  app.models.DailyMktPrice.upsert(dailyMktPrices[index],
-  function(err, dmp_updated){
-       if (err) {throw err;   }
-       if ( dmp_updated == null){
-         console.log("Did not create DMP for this item ")
-       }
-       else {
-         console.log("Created DMP history for this item Pushing into return array")
-         updatedDMPs.push(dmp_updated);
+       if ( dmps ) {
+         res.status(200).send(dmps);
        }
      }
 );
-} //end for loop
-res.status(200).send(updatedDMPs);
 }
 );
 
