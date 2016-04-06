@@ -1,7 +1,7 @@
 var app = angular
   .module('app', [
     'ui.router','lbServices','ngCookies',
-    'ui.bootstrap','smart-table','xlat','blockUI','angularFileUpload','ngSanitize'
+    'ui.bootstrap','smart-table','xlat','blockUI','angularFileUpload','ngSanitize','ui.bootstrap.datetimepicker'
   ])
   //configure pagination template for smart-table
 	.config(function(stConfig) {

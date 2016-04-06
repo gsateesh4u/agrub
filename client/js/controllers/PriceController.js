@@ -1,4 +1,23 @@
 app.controller('PriceController', function($scope,commonService, DailyMktPrice, CustLkdItemPrice, CustLkdPeriod, Hub, Market, Item, $filter){
+	 $scope.dates = {
+	    today: new Date(),
+	    start: "",
+	    end: ""
+	  };
+	  $scope.open = {
+	    start: false,
+	    end: false
+	  };
+	  // Disable weekend selection
+	  $scope.disabled = function(date, mode) {
+	    return (mode === 'day' && (new Date().toDateString() == date.toDateString()));
+	  };
+	  $scope.openCalendar = function(e, date) {
+	      e.preventDefault();
+	      e.stopPropagation();
+	      $scope.open[date] = true;
+	  };
+	
 	var tabClasses;
   $scope.selectedTab = 1;
   $scope.tempDMP = {
@@ -31,6 +50,16 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 	}else if(tabNum == 3){
 		$scope.fillCustLkdPrices();
 	}
+	$scope.showForm = 0;
+	$scope.customers = null;
+	$scope.selectedCustomer = null;
+	$scope.markets = null;
+	$scope.selectedMarket = null;
+	$scope.hubs = null;
+	$scope.items = null;
+	$scope.selectedItem = null;
+	$scope.selectedHub = null;
+	$scope.price = null;
   };
  
   //Initialize 
@@ -98,7 +127,15 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			   { price: updatedPrice }
 			 );
 		}
-   }
+   };
+   $scope.updateCustPrice = function updateCustPrice(updatedPrice, row){
+		if(updatedPrice!=row.price){
+			CustLkdItemPrice.prototype$updateAttributes(
+			   { id: row.id }, 
+			   { price: updatedPrice }
+			 );
+		}
+   };
    $scope.showDMP = function(){
 		if(commonService.hasPermission('admin')){
 			$scope.isDmpLoading = true;
@@ -117,6 +154,118 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			$scope.showForm = 1;
 			$scope.hubs = [commonService.getCurrentUser().hub];
 		}*/
+   };
+   $scope.showCLP = function(){
+		$scope.showForm = 3;
+		$scope.isClpLoading = true;
+		CustLkdPeriod.find({
+			filter: { include: [{customer:'hub'}] }
+		}).$promise
+			.then(function(response) { 
+			  var existing = [].concat(response);
+			  $scope.customers = [];
+			  angular.forEach(existing,function(ex){
+				$scope.customers.push(ex.customer);
+			  });
+			  if($scope.customers.length==0){
+					 $scope.subError = "No data found!!!";
+				 }
+				 $scope.isClpLoading = false;
+		  },function( errorMessage ) {
+			  $scope.subError = "Error has occurred while loading customers!";
+			  $scope.isClpLoading = false;
+	   });
+   };
+   $scope.showLokedPeriods = function showLokedPeriods(){
+		$scope.showForm = 2;
+		$scope.isClLoading = true;
+		Hub.find({
+			filter: { include: ['customers'] }
+		}).$promise
+			.then(function(response) { 
+			  $scope.hubs = [].concat(response);
+			  if($scope.hubs.length==0){
+					 $scope.subError = "No hubs defined!!!";
+				 }
+				 $scope.isClLoading = false;
+		  },function( errorMessage ) {
+			  $scope.subError = "Error has occurred while loading hubs!";
+			  $scope.isClLoading = false;
+	   });
+   };
+   $scope.showRemainingCustomers = function showRemainingCustomers(){
+		if($scope.selectedHub){
+			angular.forEach($scope.hubs,function(hub){
+				if(hub.id == $scope.selectedHub.id){
+					$scope.customers = hub.customers;
+					return;
+				}
+			});
+			$scope.customers = $filter('filter')($scope.customers,
+					function(exItem, index) {
+						var flag = true;
+						angular.forEach($scope.custPeriodsCollection, function (tCLP) {
+						 if((exItem.id == tCLP.customerId)){
+							flag = false;
+							return;
+						 }
+				      });
+					  return flag;
+				  	});
+		}
+   };
+   $scope.showRemainingItems = function showRemainingItems(){
+	if($scope.selectedCustomer){
+		$scope.selectedHub = $scope.selectedCustomer.hub;
+			$scope.isClpLoading = true;
+			Item.find({
+			   filter:{
+				  where:{hubId: $scope.selectedHub.id}  
+			   }
+		   }).$promise
+		   .then(function(response){
+				$scope.isClpLoading = false;
+				$scope.existing = [].concat(response);
+				$scope.items = $filter('filter')($scope.existing,
+					function(exItem, index) {
+						var flag = true;
+						angular.forEach($scope.custPricesCollection, function (tCLP) {
+						 if((tCLP.hub.id == $scope.selectedHub.id && exItem.id == tCLP.item.id)){
+							flag = false;
+							return;
+						 }
+				      });
+					  return flag;
+				  	});
+		   },function( errorMessage ) {
+				  $scope.subError = "Error has occurred while loading items!";
+				  $scope.isClpLoading = false;
+			});
+		}
+   };
+   $scope.addNewCustomerItemPrice = function addNewCustomerItemPrice(){
+		var custLkdPeriodId = null;
+		angular.forEach($scope.custPricesCollection,function(custPrice){
+			if(custPrice.customerId == $scope.selectedCustomer.id){
+				custLkdPeriodId = custPrice.custLkdPeriodId;
+				return;
+			}
+		});
+		if(custLkdPeriodId){
+			var custLkdPrice = {
+			price : $scope.price,
+			itemId : $scope.selectedItem.id,
+			hubId : $scope.selectedCustomer.hubId,
+			customerId : $scope.selectedCustomer.id,
+			custLkdPeriodId : custLkdPeriodId
+			};
+			CustLkdItemPrice.create(custLkdPrice).$promise.then(function(response){
+				$scope.showForm = 0;
+				$scope.setActiveTab(3);
+			},function( errorMessage ) {
+					  $scope.subError = "Error has occurred while adding customer lokced item price!";
+			});
+		}
    };
    $scope.populateMarkets = function populateMarkets(){
 		if($scope.selectedHub){
@@ -177,6 +326,19 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			$scope.setActiveTab(1);
 		},function( errorMessage ) {
 				  $scope.subError = "Error has occurred while adding dmp!";
+		});
+   };
+   $scope.addNewCustomerLkdPeriod = function addNewCustomerLkdPeriod(){
+		var insertLkdPeriod = {
+		startDate : $filter('date')($scope.dates.start, "yyyy-MM-dd"),
+		endDate : $filter('date')($scope.dates.end, "yyyy-MM-dd"),
+		customerId : $scope.selectedCustomer.id
+	};
+	CustLkdPeriod.create(insertLkdPeriod).$promise.then(function(response){
+			$scope.showForm = 0;
+			$scope.setActiveTab(2);
+		},function( errorMessage ) {
+				  $scope.subError = "Error has occurred while adding customer locked period!";
 		});
    };
 });

@@ -13,7 +13,9 @@
 									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
 								</td>
 								<td align="right">
-									<button class="btn btn-primary" ng-if="selectedTab==1" ng-click="showDMP(tempDMP,'Add')" align="right">Add New Item Price</button>
+									<button class="btn btn-primary" ng-if="selectedTab==1" ng-click="showDMP()" align="right">Add New Item Price</button>
+									<button class="btn btn-primary" ng-if="selectedTab==2" ng-click="showLokedPeriods()" align="right">Add Customer Locked Period</button>
+									<button class="btn btn-primary" ng-if="selectedTab==3" ng-click="showCLP()" align="right">Add Customer Locked Item</button>
 								</td>
 							</tr>
 						</table> 
@@ -77,12 +79,13 @@
 												<th>Start Date</th>
 												<th>End Date</th>
 												<th>Status</th>
+												<th>Actions</th>
 											</tr>
 											<tr>
 												<th>
 													<input st-search="customer.name" placeholder="search for customer" class="input-sm form-control" type="search"/>
 												</th>
-												<th></th><th></th><th></th>
+												<th></th><th></th><th></th><th></th>
 											</tr>
 										</thead>
 										<tbody ng-show="!isLoading">
@@ -91,19 +94,23 @@
 												<td>{{row.startDate}}</td>
 												<td>{{row.endDate}}</td>
 												<td></td>
+												<td align="center">
+													<span class="sprite sprite-edit" title="Edit CLP" style="cursor:pointer"></span>&nbsp;&nbsp;&nbsp;
+													<span class="sprite sprite-delete" title="Delete CLP" style="cursor:pointer"></span>
+												</td>
 										</tr>
 										<tr ng-if="custpCollection.length == 0">
-											<td colspan="4" class="text-center">{{error}}</td>
+											<td colspan="5" class="text-center">{{error}}</td>
 										</tr>
 										</tbody>
 										<tbody ng-show="isLoading">
 										<tr>
-											<td colspan="4" class="text-center"><img src="./css/images/loading.gif"/></td>
+											<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
 										</tr>
 										</tbody>
 										<tfoot>
 										<tr ng-show="!isLoading && custpCollection.length != 0">
-											<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="4">
+											<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
 											</td>
 										</tr>
 										</tfoot>
@@ -135,7 +142,7 @@
 										<tr st-select-row="row" ng-repeat="row in custppCollection">
 												<td>{{row.customer.name}}</td>
 												<td>{{row.item.name}}</td>
-												<td>{{row.price}}</td>
+												<td><div ng-model="custPrice" contentEditable ng-enter="updateCustPrice(custPrice,row)">{{row.price}}</div></td>
 												<td>{{row.custLkdPeriod.startDate}}</td>
 												<td>{{row.custLkdPeriod.endDate}}</td>
 												<td></td>
@@ -159,49 +166,139 @@
 								</div>
 							  </div>
 						</div>
-						<!-- CRUD Item-->
-			<div class="row" ng-show="showForm ==1">
-				<div class="col-md-12">
-					<header class="panel-heading">
-						<b>{{header}} New Item Price</b>
-					</header>
-				</div>
-				<div class="col-md-12">
-					<div class="col-md-12" ng-if="isDmpLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Data&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>
-					<form name="dmpForm" class="css-form" novalidate ng-show="!isDmpLoading">
-						<div>
-						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
-							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+						<!-- Add for new DMP-->
+						<div class="row" ng-show="showForm ==1">
 							<div class="col-md-12">
-								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+								<header class="panel-heading">
+									<b>Add New Item Price</b>
+								</header>
 							</div>
-							<div class="form-group col-xs-6">
-								<label>Hub <font color="red">*</font> :</label> 
-								<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-change="populateMarkets()">
-								</select>
+							<div class="col-md-12">
+								<div class="col-md-12" ng-if="isDmpLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Data&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>
+								<form name="dmpForm" class="css-form" novalidate ng-show="!isDmpLoading">
+									<div>
+									  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+										<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+										<div class="col-md-12">
+											<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Hub <font color="red">*</font> :</label> 
+											<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-change="populateMarkets()">
+											</select>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Market <font color="red">*</font> :</label> 
+											<select name="selectedMarket" class="form-control"  ng-model="selectedMarket" required class="form-control" ng-options="market.name for market in markets track by market.id" ng-change="populateItems()">
+											</select>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Item <font color="red">*</font> :</label> 
+											<select name="selectedItem" class="form-control"  ng-model="selectedItem" required class="form-control" ng-options="item.name for item in items track by item.id">
+											</select>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Price<font color="red">*</font> :</label> <input type="text" ng-model="price" required class="form-control" name="price"/>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button class="btn btn-primary" ng-click="addNewItemPrice()" ng-disabled="dmpForm.$invalid">OK</button>
+										<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+									</div>
+								</form>
 							</div>
-							<div class="form-group col-xs-6">
-								<label>Market <font color="red">*</font> :</label> 
-								<select name="selectedMarket" class="form-control"  ng-model="selectedMarket" required class="form-control" ng-options="market.name for market in markets track by market.id" ng-change="populateItems()">
-								</select>
+						  </div>
+						  <!-- row end -->
+						  <!-- Add for new CLP-->
+						<div class="row" ng-show="showForm ==3">
+							<div class="col-md-12">
+								<header class="panel-heading">
+									<b>Add New Item Price</b>
+								</header>
 							</div>
-							<div class="form-group col-xs-6">
-								<label>Item <font color="red">*</font> :</label> 
-								<select name="selectedItem" class="form-control"  ng-model="selectedItem" required class="form-control" ng-options="item.name for item in items track by item.id">
-								</select>
+							<div class="col-md-12">
+								<div class="col-md-12" ng-if="isClpLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Data&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>
+								<form name="clpForm" class="css-form" novalidate ng-show="!isClpLoading">
+									<div>
+									  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+										<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+										<div class="col-md-12">
+											<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Customer <font color="red">*</font> :</label> 
+											<select name="selectedCustomer" class="form-control"  ng-model="selectedCustomer" required class="form-control" ng-options="customer.name for customer in customers track by customer.id" ng-change="showRemainingItems()">
+											</select>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Hub <font color="red">*</font> :</label> 
+											<input type="text" ng-model="selectedHub.name" required class="form-control" name="selectedHub.name" disabled="true"/>
+										</div>
+										<!--<div class="form-group col-xs-4">
+											<label>Locked Period <font color="red">*</font> :</label> 
+											<select name="selectedLkdPeriod" class="form-control"  ng-model="selectedLkdPeriod" required class="form-control" ng-options="customer.name for customer in customers track by customer.id" ng-change="showRemainingItems()">
+											</select>
+										</div>-->
+										<div class="form-group col-xs-6">
+											<label>Item <font color="red">*</font> :</label> 
+											<select name="selectedItem" class="form-control"  ng-model="selectedItem" required class="form-control" ng-options="item.name for item in items track by item.id">
+											</select>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Price<font color="red">*</font> :</label> <input type="text" ng-model="price" required class="form-control" name="price"/>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button class="btn btn-primary" ng-click="addNewCustomerItemPrice()" ng-disabled="clpForm.$invalid">OK</button>
+										<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+									</div>
+								</form>
 							</div>
-							<div class="form-group col-xs-6">
-								<label>Price<font color="red">*</font> :</label> <input type="text" ng-model="price" required class="form-control" name="price"/>
+						  </div>
+						  <!-- row end -->
+						   <!-- Add for new CLP-->
+						<div class="row" ng-show="showForm ==2">
+							<div class="col-md-12">
+								<header class="panel-heading">
+									<b>Add New Locked Period</b>
+								</header>
 							</div>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-primary" ng-click="addNewItemPrice()" ng-disabled="dmpForm.$invalid">OK</button>
-							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-						</div>
-					</form>
-				</div>
-              </div>
-              <!-- row end -->
+							<div class="col-md-12">
+								<div class="col-md-12" ng-if="isClLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Data&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>
+								<form name="clpForm" class="css-form" novalidate ng-show="!isClLoading">
+									<div>
+									  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+										<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+										<div class="col-md-12">
+											<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Hub <font color="red">*</font> :</label> 
+											<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-change="showRemainingCustomers()">
+											</select>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Customer <font color="red">*</font> :</label> 
+											<select name="selectedCustomer" class="form-control"  ng-model="selectedCustomer" required class="form-control" ng-options="customer.name for customer in customers track by customer.id">
+											</select>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>Start Date<font color="red">*</font> :</label> 
+											<input type="text" class="form-control" datetime-picker="yyyy-MM-dd" ng-model="dates.start" is-open="open.start" enable-time="false" max-date="dates.today" ng-focus="openCalendar($event, 'start')"/>
+										</div>
+										<div class="form-group col-xs-6">
+											<label>End Date<font color="red">*</font> :</label> 
+											<input type="text" class="form-control" datetime-picker="yyyy-MM-dd" ng-model="dates.end" is-open="open.end" enable-time="false" min-date="dates.start" ng-focus="openCalendar($event, 'end')"/>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button class="btn btn-primary" ng-click="addNewCustomerLkdPeriod()" ng-disabled="clpForm.$invalid">OK</button>
+										<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+									</div>
+								</form>
+							</div>
+						  </div>
+						  <!-- row end -->
 			</div>
 		</section>
 	</div>
