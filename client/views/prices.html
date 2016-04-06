@@ -91,12 +91,12 @@
 										<tbody ng-show="!isLoading">
 										<tr st-select-row="row" ng-repeat="row in custpCollection">
 												<td>{{row.customer.name}}</td>
-												<td>{{row.startDate}}</td>
-												<td>{{row.endDate}}</td>
+												<td>{{row.startDate | date:'yyyy-MM-dd'}}</td>
+												<td>{{row.endDate | date:'yyyy-MM-dd'}}</td>
 												<td></td>
 												<td align="center">
-													<span class="sprite sprite-edit" title="Edit CLP" style="cursor:pointer"></span>&nbsp;&nbsp;&nbsp;
-													<span class="sprite sprite-delete" title="Delete CLP" style="cursor:pointer"></span>
+													<span class="sprite sprite-edit" title="Edit CLP" style="cursor:pointer" ng-click="showUpdateCustLkdPeriod(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
+													<span class="sprite sprite-delete" title="Delete CLP" style="cursor:pointer" ng-click="deleteCustLkdPeriod(row)"></span>
 												</td>
 										</tr>
 										<tr ng-if="custpCollection.length == 0">
@@ -143,8 +143,8 @@
 												<td>{{row.customer.name}}</td>
 												<td>{{row.item.name}}</td>
 												<td><div ng-model="custPrice" contentEditable ng-enter="updateCustPrice(custPrice,row)">{{row.price}}</div></td>
-												<td>{{row.custLkdPeriod.startDate}}</td>
-												<td>{{row.custLkdPeriod.endDate}}</td>
+												<td>{{row.custLkdPeriod.startDate | date:'yyyy-MM-dd'}}</td>
+												<td>{{row.custLkdPeriod.endDate | date:'yyyy-MM-dd'}}</td>
 												<td></td>
 										</tr>
 										<tr ng-if="custppCollection.length == 0">
@@ -260,7 +260,7 @@
 						<div class="row" ng-show="showForm ==2">
 							<div class="col-md-12">
 								<header class="panel-heading">
-									<b>Add New Locked Period</b>
+									<b>{{header}} Locked Period</b>
 								</header>
 							</div>
 							<div class="col-md-12">
@@ -272,12 +272,12 @@
 										<div class="col-md-12">
 											<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
 										</div>
-										<div class="form-group col-xs-6">
+										<div class="form-group col-xs-6" ng-show="header=='Add'">
 											<label>Hub <font color="red">*</font> :</label> 
 											<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-change="showRemainingCustomers()">
 											</select>
 										</div>
-										<div class="form-group col-xs-6">
+										<div class="form-group col-xs-6" ng-show="header=='Add'">
 											<label>Customer <font color="red">*</font> :</label> 
 											<select name="selectedCustomer" class="form-control"  ng-model="selectedCustomer" required class="form-control" ng-options="customer.name for customer in customers track by customer.id">
 											</select>
@@ -292,7 +292,7 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button class="btn btn-primary" ng-click="addNewCustomerLkdPeriod()" ng-disabled="clpForm.$invalid">OK</button>
+										<button class="btn btn-primary" ng-click="addUpdateCustomerLkdPeriod(header)" ng-disabled="clpForm.$invalid">OK</button>
 										<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 									</div>
 								</form>

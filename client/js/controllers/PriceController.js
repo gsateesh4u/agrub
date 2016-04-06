@@ -178,6 +178,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
    };
    $scope.showLokedPeriods = function showLokedPeriods(){
 		$scope.showForm = 2;
+		$scope.header = 'Add';
 		$scope.isClLoading = true;
 		Hub.find({
 			filter: { include: ['customers'] }
@@ -327,6 +328,44 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		},function( errorMessage ) {
 				  $scope.subError = "Error has occurred while adding dmp!";
 		});
+   };
+   $scope.showUpdateCustLkdPeriod = function showUpdateCustLkdPeriod(custLkdPeriod, header){
+		$scope.header = header;
+		$scope.showForm = 2;
+		$scope.selectedLkdPeriod = custLkdPeriod;
+		$scope.dates.start = custLkdPeriod.startDate;
+		$scope.dates.end = custLkdPeriod.endDate;
+		$scope.selectedHub = {};
+		$scope.selectedCustomer = custLkdPeriod.customer;
+   };
+   $scope.updateCustLkdPeriod = function updateCustLkdPeriod(){
+		$scope.selectedLkdPeriod.startDate = $filter('date')($scope.dates.start, "yyyy-MM-dd");
+		$scope.selectedLkdPeriod.endDate = $filter('date')($scope.dates.end, "yyyy-MM-dd");
+		CustLkdPeriod.update(insertLkdPeriod).$promise.then(function(response){
+			$scope.showForm = 0;
+			$scope.setActiveTab(2);
+			},function( errorMessage ) {
+					  $scope.subError = "Error has occurred while updating customer locked period!";
+			});
+   };
+   $scope.deleteCustLkdPeriod = function deleteCustLkdPeriod(row){
+		 var flag = confirm("Do you really want to delete locked period for  "+row.customer.name+" ?");
+	   if(flag){
+		   CustLkdPeriod.delete({id:row.id}).$promise
+				.then(function(response) { 
+				 $scope.showForm = 0;
+				$scope.setActiveTab(2);
+			  },function( errorMessage ) {
+				  $scope.subError = "Error has occurred while deleting customer locked period!";
+		   });
+	   }
+   };
+   $scope.addUpdateCustomerLkdPeriod = function addUpdateCustomerLkdPeriod(header){
+		if(header == 'Add'){
+			$scope.addNewCustomerLkdPeriod();
+		}else if(header == 'Update'){
+			$scope.updateCustLkdPeriod();
+		}
    };
    $scope.addNewCustomerLkdPeriod = function addNewCustomerLkdPeriod(){
 		var insertLkdPeriod = {
