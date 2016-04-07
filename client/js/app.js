@@ -32,7 +32,8 @@ var app = angular
       .state('users', {
         url: '/users',
         templateUrl: 'views/users.html',
-        controller: 'UserController'
+        controller: 'UserController',
+		authenticate: true
       })
       .state('hubs', {
         url: '/hubs',
@@ -75,7 +76,8 @@ var app = angular
       })
       .state('logout', {
         url: '/logout',
-        controller: 'AuthLogoutController'
+        controller: 'AuthLogoutController',
+		authenticate: true
       })
       .state('reports', {
         url: '/reports',
@@ -86,8 +88,8 @@ var app = angular
     $urlRouterProvider.otherwise('hubs');
   }])
   //http interceptor
-  .factory('httpRInterceptor', ['$rootScope', '$q', '$window', 'blockUI',
-	                                     function($rootScope, $q, $window,blockUI) {
+  .factory('httpRInterceptor', ['$rootScope', '$q', '$window', 'blockUI','LoopBackAuth','$location',
+	                                     function($rootScope, $q, $window,blockUI,LoopBackAuth,$location) {
 	                                       return {
 	                                         request: function (req) {
 	                            			  blockUI.start();
@@ -102,7 +104,10 @@ var app = angular
 	                                         responseError: function (rejection) {
 	                            			  blockUI.stop();
 	                                           if (rejection.status == 401) {
-	                                             return rejection;
+	                                              LoopBackAuth.clearUser();
+												  LoopBackAuth.clearStorage();
+												  $location.nextAfterLogin = $location.path();
+												  $location.path('/login');
 	                                           }
 
 	                                           return $q.reject(rejection);

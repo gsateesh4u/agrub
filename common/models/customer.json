@@ -73,7 +73,12 @@
       "type": "hasMany",
       "model": "CustLkdPeriod",
       "foreignKey": ""
-    }
+    },
+	"users": {
+		"type": "hasMany",
+		"model": "user",
+		"through": "CustomerUser"
+	  }
   },
   "acls": [],
   "methods": {}

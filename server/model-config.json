@@ -135,5 +135,13 @@
   "DailyMktPriceHistory": {
     "dataSource": "db",
     "public": true
+  },
+  "CustomerUser": {
+    "dataSource": "db",
+    "public": true
+  },
+  "HubUser": {
+    "dataSource": "db",
+    "public": true
   }
 }

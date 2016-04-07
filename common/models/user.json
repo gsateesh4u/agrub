@@ -22,10 +22,15 @@
   },
   "validations": [],
   "relations": {
-    "customer": {
-      "type": "belongsTo",
-      "model": "Customer",
-      "foreignKey": ""
+    "customers": {
+		"type": "hasMany",
+		"model": "Customer",
+		"through": "CustomerUser"
+    },
+	"hubs": {
+		"type": "hasMany",
+		"model": "Hub",
+		"through": "HubUser"
     },
     "accessTokens": {
       "type": "hasMany",

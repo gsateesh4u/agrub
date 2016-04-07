@@ -53,6 +53,11 @@
       "type": "hasMany",
       "model": "CustLkdItemPrice",
       "foreignKey": ""
+    },
+	"users": {
+		"type": "hasMany",
+		"model": "User",
+		"through": "HubUser"
     }
   },
   "acls": [],
