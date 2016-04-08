@@ -4,7 +4,7 @@ app.controller('UserController',['$scope','User', function($scope,User){
 	$scope.isLoading = true;
 	$scope.showAddUpdateUser = false;	
 	User.find({
-		filter: { include: ['customer','roles'] }
+		filter: { include: ['customers','roles','hubs'] }
 	}).$promise
 		.then(function(response) { 
 		  $scope.rowCollection = [].concat(response);

@@ -158,24 +158,39 @@ var app = angular
   }).service(
 	        "commonService",
 	        function($cookieStore) {
+			
 	            // Return public API.
 	            return({
 	                hasPermission : hasPermission,
 					getCurrentUser : getCurrentUser
 	            });
 				//check for permission
-	            function hasPermission(role){
+	            function hasPermission(accessFor){
 	            	var currentUser = $cookieStore.get("currentUser");
 					//alert(angular.toJson(currentUser));
 	            	if(currentUser == null || currentUser.roles == null || currentUser.roles.length == 0){
 	            		return false;
 	            	} else {
 						var flag = false;
+						var tempRoles = [];
 						 angular.forEach(currentUser.roles, function (tempRole) {
-							 if(tempRole.name == role){
+							 /*if(tempRole.name == role){
 								flag = true;
-							 }
+							 }*/
+							 tempRoles.push(tempRole.name);
 					     });
+						 if(tempRoles.indexOf('SYSADMIN')!==-1 || tempRoles.indexOf('HUBOWNER')!==-1){
+							return true;
+						 }else{
+							if(accessFor == 'pricing'){
+								if(tempRoles.indexOf('HUBADMIN')!==-1)
+									return true;
+							} else if(accessFor == 'orders' | accessFor == 'uploadOrder'){
+								if(tempRoles.indexOf('CUSTOWNER')!==-1 || tempRoles.indexOf('CUSTADMIN')!==-1 || tempRoles.indexOf('CUSTREP')!==-1){
+									return true;
+								}
+							}
+						 }
 	            		 return flag;
 	            	}
 	            };

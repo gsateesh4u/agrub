@@ -137,7 +137,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		}
    };
    $scope.showDMP = function(){
-		if(commonService.hasPermission('admin')){
+		if(commonService.hasPermission('pricing')){
 			$scope.isDmpLoading = true;
 			Hub.find().$promise
 				.then(function(response) { 

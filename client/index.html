@@ -90,55 +90,55 @@
                             </div>
                             <!-- sidebar menu: : style can be found in sidebar.less -->
                             <ul class="sidebar-menu">
-                                <li id="customers" ng-if="hasPermission('admin')">
+                                <li id="customers" ng-if="hasPermission('customers')">
                                     <a href="#customers">
                                         <i class="fa fa-dashboard"></i> <span>{{'menu_customers' | xlat}}</span>
                                     </a>
                                 </li>
-								<li id="orders" ng-if="hasPermission('admin')">
+								<li id="orders" ng-if="hasPermission('orders')">
                                     <a href="#orders">
                                         <i class="fa fa-dashboard"></i> <span>{{'menu_orders' | xlat}}</span>
                                     </a>
                                 </li>
-								<li id="deliveryChalans">
+								<li id="deliveryChalans" ng-if="hasPermission('dcs')">
                                     <a href="#deliveryChalans">
                                         <i class="fa fa-dashboard"></i> <span>{{'menu_DC' | xlat}}</span>
                                     </a>
                                 </li>
-                                <li id="users" ng-if="hasPermission('admin')">
+                                <li id="users" ng-if="hasPermission('users')">
                                     <a href="#users">
                                         <i class="fa fa-gavel"></i> <span>{{'menu_users' | xlat}}</span>
                                     </a>
                                 </li>
 
-                                <li id="hubs" ng-if="hasPermission('admin')">
+                                <li id="hubs" ng-if="hasPermission('hubs')">
                                     <a href="#hubs">
                                         <i class="fa fa-globe"></i> <span>{{'menu_hubs' | xlat}}</span>
                                     </a>
                                 </li>
 								
-								 <li id="markets" ng-if="hasPermission('admin')">
+								 <li id="markets" ng-if="hasPermission('markets')">
                                     <a href="#markets">
                                         <i class="fa fa-globe"></i> <span>{{'menu_markets' | xlat}}</span>
                                     </a>
                                 </li>
 
-                                <li id="items" ng-if="hasPermission('admin')">
+                                <li id="items" ng-if="hasPermission('items')">
                                     <a href="#items">
                                         <i class="fa fa-glass"></i> <span>{{'menu_items' | xlat}}</span>
                                     </a>
                                 </li>
-								 <li id="prices" ng-if="hasPermission('admin')">
+								 <li id="prices" ng-if="hasPermission('pricing')">
                                     <a href="#prices">
                                         <i class="fa fa-glass"></i> <span>{{'menu_prices' | xlat}}</span>
                                     </a>
                                 </li>
-								<li id="reports" ng-if="hasPermission('admin')">
+								<li id="reports" ng-if="hasPermission('reports')">
                                     <a href="#reports">
                                         <i class="fa fa-glass"></i> <span>{{'menu_reports' | xlat}}</span>
                                     </a>
                                 </li>
-								<li id="uploadOrder" ng-if="hasPermission('admin')">
+								<li id="uploadOrder" ng-if="hasPermission('uploadOrder')">
                                     <a href="#uploadOrder">
                                         <i class="fa fa-glass"></i> <span>{{'menu_upload_order' | xlat}}</span>
                                     </a>
