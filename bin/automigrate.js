@@ -86,3 +86,9 @@ ds.automigrate('user', function(err) {
 ds.automigrate('Vendor', function(err) {
   if (err) throw err;
 });
+ds.automigrate('HubUserMap', function(err) {
+  if (err) throw err;
+});
+ds.automigrate('CustomerUserMap', function(err) {
+  if (err) throw err;
+});

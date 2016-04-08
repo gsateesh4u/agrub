@@ -77,7 +77,7 @@
 	"users": {
 		"type": "hasMany",
 		"model": "user",
-		"through": "CustomerUser"
+		"through": "CustomerUserMap"
 	  }
   },
   "acls": [],

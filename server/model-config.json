@@ -136,11 +136,11 @@
     "dataSource": "db",
     "public": true
   },
-  "CustomerUser": {
+  "CustomerUserMap": {
     "dataSource": "db",
     "public": true
   },
-  "HubUser": {
+  "HubUserMap": {
     "dataSource": "db",
     "public": true
   }

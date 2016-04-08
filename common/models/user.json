@@ -25,12 +25,12 @@
     "customers": {
 		"type": "hasMany",
 		"model": "Customer",
-		"through": "CustomerUser"
+		"through": "CustomerUserMap"
     },
 	"hubs": {
 		"type": "hasMany",
 		"model": "Hub",
-		"through": "HubUser"
+		"through": "HubUserMap"
     },
     "accessTokens": {
       "type": "hasMany",

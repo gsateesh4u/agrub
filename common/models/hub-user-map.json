@@ -1,5 +1,5 @@
 {
-  "name": "HubUser",
+  "name": "HubUserMap",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

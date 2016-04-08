@@ -1,5 +1,5 @@
 {
-  "name": "CustomerUser",
+  "name": "CustomerUserMap",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

@@ -57,7 +57,7 @@
 	"users": {
 		"type": "hasMany",
 		"model": "User",
-		"through": "HubUser"
+		"through": "HubUserMap"
     }
   },
   "acls": [],

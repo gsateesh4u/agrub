@@ -6,7 +6,7 @@
     "connector": "cloudant"
   },
   "db": {
-    "url": "postgres://admin:OUQWNQRQEBEOTJMZ@aws-us-east-1-portal.4.dblayer.com:10977/compose",
+    "url": "postgres://admin:OUQWNQRQEBEOTJMZ@aws-us-east-1-portal.4.dblayer.com:10977/agrub-dev",
     "name": "db",
     "connector": "postgresql",
     "debug": true
