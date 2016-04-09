@@ -1,16 +1,18 @@
+var loopback = require('loopback');
 module.exports = function(User) {
-
-User.profile = function(userId, cb) {
-	User.findById(userId,{
+User.profile = function(cb) {
+	var ctx = loopback.getCurrentContext();
+  // Get the current access token
+  var accessToken = ctx.get('accessToken');
+	User.findById(accessToken.userId,{
 	  include:['hubs','roles','customers'],
 	}, cb);
 };
 User.remoteMethod(
         'profile', 
         {
-		  accepts: {arg: 'userId', type: 'string'},
           returns: {arg: 'user', type: 'object'},
-		  http: {path:'/:userId/profile', verb: 'get'}
+		  http: {path:'/profile', verb: 'get'}
         }
     );
 };
