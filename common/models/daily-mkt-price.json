@@ -6,8 +6,12 @@
     "validateUpsert": true
   },
   "properties": {
-    "price": {
-      "type": "string",
+    "minPrice": {
+      "type": "number",
+      "required": true
+    },
+	"maxPrice": {
+      "type": "number",
       "required": true
     },
     "dmpDate": {

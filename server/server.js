@@ -186,7 +186,7 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
           console.log("login succeeds");
           app.models.user.findOne(
             { include:[{
-              relation:'customer',
+              relation:'customers',
               scope:{include: {
               relation:'hub'
                  }
@@ -223,10 +223,6 @@ app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
                  var _customerName = null;
                  var _hubId = null;
                  var _hubName = null;
-                 if (_rolesNames === "whadmin") {
-                   _hubId = "1";
-                   _hubName = "Hyderabad";
-                 }
                  if (userO.customerId){
                    _customerId = new String(userO.customer.id);
                    _customerName = userO.customer.name;

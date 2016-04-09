@@ -13,7 +13,8 @@ DailyMktPrice.uploadDMP = function(dmps, callback) {
 					existing.forEach(function(ex,j){
 						if(ex == null){
 							var tempDmp = {
-								price : dmps[j].price,
+								minPrice : dmps[j].minPrice,
+								maxPrice : dmps[j].maxPrice,
 								dmpDate : new Date(),
 								updatedTimestamp : new Date().getTime(),
 								itemId : dmps[j].itemId,
@@ -23,7 +24,8 @@ DailyMktPrice.uploadDMP = function(dmps, callback) {
 							found.push(tempDmp);
 						} else {
 							var tempDmp = {
-								price : dmps[j].price,
+								minPrice : dmps[j].minPrice,
+								maxPrice : dmps[j].maxPrice,
 								dmpDate : dmps[j].dmpDate,
 								updatedTimestamp : new Date().getTime(),
 								itemId : ex.itemId,
@@ -55,7 +57,8 @@ DailyMktPrice.observe('after save', function(ctx, next){
 	var app = DailyMktPrice.app;
 	var DailyMktPriceHistory = app.models.DailyMktPriceHistory;
 	var dmpHistory = {
-		price : mdl.price,
+		minPrice : mdl.minPrice,
+		maxPrice : mdl.maxPrice,
 		dmpDate : mdl.dmpDate,
 		updatedTimestamp : mdl.updatedTimestamp,
 		itemId : mdl.itemId,

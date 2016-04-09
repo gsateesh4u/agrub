@@ -32,21 +32,23 @@
 										<tr>
 												<th st-sort="item.name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
 												<th>UOM</th>
-												<th>Price</th>
+												<th>Min Price</th>
+												<th>Max Price</th>
 												<th>Market</th>
 											</tr>
 											<tr>
 												<th>
 													<input st-search="item.name" placeholder="search for item" class="input-sm form-control" type="search"/>
 												</th>
-												<th></th><th></th><th></th>
+												<th></th><th></th><th></th><th></th>
 											</tr>
 										</thead>
 										<tbody ng-show="!isLoading">
 										<tr st-select-row="row" ng-repeat="row in dmpCollection">
 												<td>{{row.item.name}}</td>
 												<td>{{row.item.unit}}</td>
-												<td><div ng-model="price" contentEditable ng-enter="updatePrice(price,row)">{{row.price}}</div></td>
+												<td><div ng-model="minPrice" contentEditable ng-enter="updateMinPrice(minPrice,row)">{{row.minPrice}}</div></td>
+												<td><div ng-model="maxPrice" contentEditable ng-enter="updateMaxPrice(maxPrice,row)">{{row.maxPrice}}</div></td>
 												<td>{{row.market.name}}</td>
 												<!--<td align="center">
 													<span class="sprite sprite-edit" title="Edit DMP" style="cursor:pointer"></span>&nbsp;&nbsp;&nbsp;
@@ -54,17 +56,17 @@
 												</td>-->
 										</tr>
 										<tr ng-if="dmpCollection.length == 0">
-											<td colspan="4" class="text-center">{{error}}</td>
+											<td colspan="5" class="text-center">{{error}}</td>
 										</tr>
 										</tbody>
 										<tbody ng-show="isLoading">
 										<tr>
-											<td colspan="4" class="text-center"><img src="./css/images/loading.gif"/></td>
+											<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
 										</tr>
 										</tbody>
 										<tfoot>
 										<tr ng-show="!isLoading && dmpCollection.length != 0">
-											<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="4">
+											<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
 											</td>
 										</tr>
 										</tfoot>
@@ -197,8 +199,11 @@
 											<select name="selectedItem" class="form-control"  ng-model="selectedItem" required class="form-control" ng-options="item.name for item in items track by item.id">
 											</select>
 										</div>
-										<div class="form-group col-xs-6">
-											<label>Price<font color="red">*</font> :</label> <input type="text" ng-model="price" required class="form-control" name="price"/>
+										<div class="form-group col-xs-3">
+											<label>Min Price<font color="red">*</font> :</label> <input type="text" ng-model="minPrice" required class="form-control" name="minPrice"/>
+										</div>
+										<div class="form-group col-xs-3">
+											<label>Max Price<font color="red">*</font> :</label> <input type="text" ng-model="maxPrice" required class="form-control" name="maxPrice"/>
 										</div>
 									</div>
 									<div class="modal-footer">

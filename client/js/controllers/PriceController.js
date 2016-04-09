@@ -22,7 +22,8 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
   $scope.selectedTab = 1;
   $scope.tempDMP = {
 		itemId : "",
-		price : "",
+		minPrice : "",
+		maxPrice : "",
 		dmpDate : "",
 		updatedTimestamp : "",
 		marketId : ""
@@ -59,7 +60,8 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 	$scope.items = null;
 	$scope.selectedItem = null;
 	$scope.selectedHub = null;
-	$scope.price = null;
+	$scope.minPrice = null;
+	$scope.maxPrice = null;
   };
  
   //Initialize 
@@ -120,11 +122,19 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			  $scope.isLoading = false;
 	   });
   };
-   $scope.updatePrice = function updatePrice(updatedPrice, row){
-		if(updatedPrice!=row.price){
+   $scope.updateMinPrice = function updateMinPrice(updatedPrice, row){
+		if(updatedPrice!=row.minPrice){
 			DailyMktPrice.prototype$updateAttributes(
 			   { id: row.id }, 
-			   { price: updatedPrice }
+			   { minPrice: updatedPrice }
+			 );
+		}
+   };
+    $scope.updateMaxPrice = function updateMaxPrice(updatedPrice, row){
+		if(updatedPrice!=row.maxPrice){
+			DailyMktPrice.prototype$updateAttributes(
+			   { id: row.id }, 
+			   { maxPrice: updatedPrice }
 			 );
 		}
    };
@@ -316,7 +326,8 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
    $scope.addNewItemPrice = function addNewItemPrice(){
 		var insertDMP = {
 		itemId : $scope.selectedItem.id,
-		price : $scope.price,
+		minPrice : $scope.minPrice,
+		maxPrice : $scope.maxPrice,
 		dmpDate : new Date(),
 		updatedTimestamp : new Date().getTime(),
 		marketId : $scope.selectedMarket.id
