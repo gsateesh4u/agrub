@@ -56,6 +56,27 @@ ds.autoupdate('Role', function(err) {
 ds.autoupdate('RoleMapping', function(err) {
   if (err) throw err;
 });
+ds.autoupdate('DailyMktPrice', function(err) {
+  if (err) throw err;
+});
 ds.autoupdate('DailyMktPriceHistory', function(err) {
+  if (err) throw err;
+});
+ds.autoupdate('CustLkdItemPrice', function(err) {
+  if (err) throw err;
+});
+ds.autoupdate('CustLkdPeriod', function(err) {
+  if (err) throw err;
+});
+ds.autoupdate('HubUserMap', function(err) {
+  if (err) throw err;
+});
+ds.autoupdate('CustomerUserMap', function(err) {
+  if (err) throw err;
+});
+ds.autoupdate('TransportOperator', function(err) {
+  if (err) throw err;
+});
+ds.autoupdate('Market', function(err) {
   if (err) throw err;
 });

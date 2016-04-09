@@ -9,10 +9,10 @@ User.profile = function(cb) {
 	}, cb);
 };
 User.remoteMethod(
-        'profile', 
+        'profile',
         {
           returns: {arg: 'user', type: 'object'},
-		  http: {path:'/profile', verb: 'get'}
+		  http: {path:'/profile/me', verb: 'get'}
         }
     );
 };
