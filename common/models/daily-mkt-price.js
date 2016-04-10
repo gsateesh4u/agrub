@@ -18,8 +18,7 @@ DailyMktPrice.uploadDMP = function(dmps, callback) {
 								dmpDate : new Date(),
 								updatedTimestamp : new Date().getTime(),
 								itemId : dmps[j].itemId,
-								marketId : dmps[j].marketId,
-								hubId : dmps[j].hubId
+								marketId : dmps[j].marketId
 							};
 							found.push(tempDmp);
 						} else {
@@ -30,7 +29,6 @@ DailyMktPrice.uploadDMP = function(dmps, callback) {
 								updatedTimestamp : new Date().getTime(),
 								itemId : ex.itemId,
 								marketId : ex.marketId,
-								hubId : ex.hubId,
 								id : ex.id
 							};
 							found.push(tempDmp);

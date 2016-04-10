@@ -88,8 +88,8 @@ var app = angular
     $urlRouterProvider.otherwise('hubs');
   }])
   //http interceptor
-  .factory('httpRInterceptor', ['$rootScope', '$q', '$window', 'blockUI','LoopBackAuth','$location',
-	                                     function($rootScope, $q, $window,blockUI,LoopBackAuth,$location) {
+  .factory('httpRInterceptor', ['$rootScope', '$q', '$window', 'blockUI','LoopBackAuth','$location','$cookieStore',
+	                                     function($rootScope, $q, $window,blockUI,LoopBackAuth,$location,$cookieStore) {
 	                                       return {
 	                                         request: function (req) {
 	                            			  blockUI.start();
@@ -106,7 +106,8 @@ var app = angular
 	                                           if (rejection.status == 401) {
 	                                              LoopBackAuth.clearUser();
 												  LoopBackAuth.clearStorage();
-												  $location.nextAfterLogin = $location.path();
+												  $rootScope.currentUser = null;
+												  $cookieStore.remove('currentUser');
 												  $location.path('/login');
 	                                           }
 
