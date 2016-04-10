@@ -1,6 +1,6 @@
 var app = angular
   .module('app', [
-    'ui.router','lbServices','ngCookies',
+    'ui.router','lbServices','ngCookies','angular.filter',
     'ui.bootstrap','smart-table','xlat','blockUI','angularFileUpload','ngSanitize','ui.bootstrap.datetimepicker'
   ])
   //configure pagination template for smart-table
@@ -183,11 +183,11 @@ var app = angular
 						 if(tempRoles.indexOf('SYSADMIN')!==-1 || tempRoles.indexOf('HUBOWNER')!==-1){
 							return true;
 						 }else{
-							if(accessFor == 'pricing'){
-								if(tempRoles.indexOf('HUBADMIN')!==-1)
+							if(tempRoles.indexOf('HUBADMIN')!==-1){
+								if(accessFor !== 'reports')
 									return true;
-							} else if(accessFor == 'orders' | accessFor == 'uploadOrder'){
-								if(tempRoles.indexOf('CUSTOWNER')!==-1 || tempRoles.indexOf('CUSTADMIN')!==-1 || tempRoles.indexOf('CUSTREP')!==-1){
+							} else if(tempRoles.indexOf('CUSTOWNER')!==-1 || tempRoles.indexOf('CUSTADMIN')!==-1 || tempRoles.indexOf('CUSTREP')!==-1){
+								if(accessFor == 'orders' || accessFor == 'uploadOrder'){
 									return true;
 								}
 							}

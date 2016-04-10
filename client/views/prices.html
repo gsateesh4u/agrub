@@ -13,6 +13,10 @@
 									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
 								</td>
 								<td align="right">
+									<select name="group" ng-model="groupProperty" ng-show="selectedTab==1 || selectedTab==4">
+									  <option value="item.itemCategory.name">Item Category</option>
+									  <option value="market.name">Market</option>
+									</select>&nbsp;&nbsp;&nbsp;&nbsp;  
 									<button class="btn btn-primary" ng-if="selectedTab==1" ng-click="showDMP()" align="right">Add New Item Price</button>
 									<button class="btn btn-primary" ng-if="selectedTab==2" ng-click="showLokedPeriods()" align="right">Add Customer Locked Period</button>
 									<button class="btn btn-primary" ng-if="selectedTab==3" ng-click="showCLP()" align="right">Add Customer Locked Item</button>
@@ -22,12 +26,13 @@
 						 <div class="tabbable">
 							  <ul class="nav nav-tabs">
 								 <li ng-class="getTabClass(1)" ng-click="setActiveTab(1)"><a href=""  data-toggle="tab">{{'menu_DMP' | xlat}}</a></li>
+								 <li ng-class="getTabClass(4)" ng-click="setActiveTab(4)"><a href="" data-toggle="tab">{{'menu_DMPH' | xlat}}</a></li>
 								 <li ng-class="getTabClass(2)" ng-click="setActiveTab(2)"><a href="" data-toggle="tab">{{'menu_Cust_Lock_Periods' | xlat}}</a></li>
 								 <li ng-class="getTabClass(3)" ng-click="setActiveTab(3)"><a href="" data-toggle="tab">{{'menu_Cust_Prices' | xlat}}</a></li>
 							  </ul>
 							  <div class="tab-content">
 								<div ng-class="getTabPaneClass(1)" id="dmp">    
-									<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="dmpsCollection" st-table="dmpCollection">
+									<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="dmpsCollection" st-table="dmpCollection" st-group="market.name">
 										<thead>
 										<tr>
 												<th st-sort="item.name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
@@ -43,8 +48,11 @@
 												<th></th><th></th><th></th><th></th>
 											</tr>
 										</thead>
-										<tbody ng-show="!isLoading">
-										<tr st-select-row="row" ng-repeat="row in dmpCollection">
+										<tbody ng-show="!isLoading"  ng-repeat="(key, value) in dmpCollection | groupBy: groupProperty">
+											<tr ng-if="key !== 'undefined'" class="text-center text-uppercase text-danger" >
+											  <td colspan="5">{{key}}</td>
+											</tr>
+										<tr st-select-row="row" ng-repeat="row in value">
 												<td>{{row.item.name}}</td>
 												<td>{{row.item.unit}}</td>
 												<td><div ng-model="minPrice" contentEditable ng-enter="updateMinPrice(minPrice,row)">{{row.minPrice}}</div></td>
@@ -73,6 +81,56 @@
 									</table>
 								 </div>       
 								
+								<div ng-class="getTabPaneClass(4)" id="dmph">    
+									<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="dmphsCollection" st-table="dmphCollection" st-group="market.name">
+										<thead>
+										<tr>
+												<th st-sort="item.name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
+												<th>UOM</th>
+												<th>Min Price</th>
+												<th>Max Price</th>
+												<th>DMP Date</th>
+												<th>Updated On</th>
+												<th>Market</th>
+											</tr>
+											<tr>
+												<th>
+													<input st-search="item.name" placeholder="search for item" class="input-sm form-control" type="search"/>
+												</th>
+												<th></th><th></th><th></th><th></th><th></th><th></th>
+											</tr>
+										</thead>
+										<tbody ng-show="!isLoading"  ng-repeat="(key, value) in dmphCollection | groupBy: groupProperty">
+											<tr ng-if="key !== 'undefined'" class="text-center text-uppercase text-danger" >
+											  <td colspan="7">{{key}}</td>
+											</tr>
+										<tr st-select-row="row" ng-repeat="row in value">
+												<td>{{row.item.name}}</td>
+												<td>{{row.item.unit}}</td>
+												<td>{{row.minPrice}}</td>
+												<td>{{row.maxPrice}}</td>
+												<td>{{row.dmpDate}}</td>
+												<td>{{row.updatedTimestamp}}</td>
+												<td>{{row.market.name}}</td>
+										</tr>
+										<tr ng-if="dmphCollection.length == 0">
+											<td colspan="7" class="text-center">{{error}}</td>
+										</tr>
+										</tbody>
+										<tbody ng-show="isLoading">
+										<tr>
+											<td colspan="7" class="text-center"><img src="./css/images/loading.gif"/></td>
+										</tr>
+										</tbody>
+										<tfoot>
+										<tr ng-show="!isLoading && dmphCollection.length != 0">
+											<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="7">
+											</td>
+										</tr>
+										</tfoot>
+									</table>
+								 </div> 
+								 
 								<div ng-class="getTabPaneClass(2)" id="cust_lck">     
 								  <table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="custPeriodsCollection" st-table="custpCollection">
 										<thead>

@@ -1,4 +1,4 @@
-app.controller('PriceController', function($scope,commonService, DailyMktPrice, CustLkdItemPrice, CustLkdPeriod, Hub, Market, Item, $filter){
+app.controller('PriceController', function($scope,commonService, DailyMktPrice, DailyMktPriceHistory, CustLkdItemPrice, CustLkdPeriod, Hub, Market, Item, $filter){
 	 $scope.dates = {
 	    today: new Date(),
 	    start: "",
@@ -29,7 +29,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		marketId : ""
 	};
   function initTabs() {
-    tabClasses = ["","",""];
+    tabClasses = ["","","",""];
   }
   
   $scope.getTabClass = function (tabNum) {
@@ -50,6 +50,8 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		$scope.fillCustLkdPeriods();
 	}else if(tabNum == 3){
 		$scope.fillCustLkdPrices();
+	}else if(tabNum == 4){
+		fillDMPHTab();
 	}
 	$scope.showForm = 0;
 	$scope.customers = null;
@@ -72,8 +74,9 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 	$scope.dmpsCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
+	$scope.groupProperty = 'item.itemCategory.name';
 	DailyMktPrice.find({
-		filter: { include: ['item',{market:'hub'}] }
+		filter: { include: [{item:'itemCategory'},{market:'hub'}] }
 	}).$promise
 		.then(function(response) { 
 		  $scope.dmpsCollection = [].concat(response);
@@ -86,7 +89,26 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		  $scope.isLoading = false;
    });
   };
-	$scope.fillCustLkdPrices = function(){
+  function fillDMPHTab(){
+	$scope.dmphsCollection = [];
+	$scope.itemsByPage = 10;
+	$scope.isLoading = true;
+	$scope.groupProperty = 'item.itemCategory.name';
+	DailyMktPriceHistory.find({
+		filter: { include: [{item:'itemCategory'},{market:'hub'}] }
+	}).$promise
+		.then(function(response) { 
+		  $scope.dmphsCollection = [].concat(response);
+		  if($scope.dmphsCollection.length==0){
+				 $scope.error = "No data found!!!";
+			 }
+			 $scope.isLoading = false;
+	  },function( errorMessage ) {
+		  $scope.error = "Error has occurred while loading prices history!";
+		  $scope.isLoading = false;
+   });
+  };
+	$scope.fillCustLkdPrices = function fillCustLkdPrices(){
 		$scope.custPricesCollection = [];
 		$scope.itemsByPage = 10;
 		$scope.isLoading = true;
@@ -104,7 +126,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			  $scope.isLoading = false;
 	   });
   };
-  $scope.fillCustLkdPeriods = function(){
+  $scope.fillCustLkdPeriods = function fillCustLkdPeriods(){
 		$scope.custPeriodsCollection = [];
 		$scope.itemsByPage = 10;
 		$scope.isLoading = true;
