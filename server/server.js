@@ -9,17 +9,17 @@ var app = module.exports = loopback();
 var passport = require('passport');
 
 // Get the MCA passport strategy to use
-//var MCABackendStrategy = require('bms-mca-token-validation-strategy').MCABackendStrategy;
+var MCABackendStrategy = require('bms-mca-token-validation-strategy').MCABackendStrategy;
 
 // Tell passport to use the MCA strategy
-//passport.use(new MCABackendStrategy())
+passport.use(new MCABackendStrategy())
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 // Tell application to use passport
-//app.use(passport.initialize());
+app.use(passport.initialize());
 
 
 // Protect Orders endpoint so it can only be accessed by agrub mobile
@@ -30,12 +30,12 @@ app.get('/api/TryAgain', passport.authenticate('mca-backend-strategy', {session:
 
 );
 
-app.get('/api/m/ItemCategories', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
-     var atts = JSON.parse(req.user.attributes);
+app.get('/api/m/Hubs/:hubId/ItemCategories', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+      var hubId = req.params.hubId;
       app.models.ItemCategory.find(
        { include:{
               relation:'items'
-              },where: {hubId:parseInt(atts.hubId)}
+              },where: {hubId:parseInt(hubId)}
             },
       function(err, itemCategories){
            if (err) { res.send(err);
@@ -49,42 +49,13 @@ app.get('/api/m/ItemCategories', passport.authenticate('mca-backend-strategy', {
 );
 
 
-app.get('/api/m/DailyMktPrices', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
-     var atts = JSON.parse(req.user.attributes);
-      app.models.DailyMktPrice.find(
-       { where: {hubId:parseInt(atts.hubId)}
-       },
-      function(err, dailyMktPrices){
-           if (err) { res.send(err);
-           }
-           if ( dailyMktPrices ) {
-             res.status(200).send(dailyMktPrices);
-           }
-         }
-    );
-  }
-);
-
-app.post('/api/m/DailyMktPrices',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
-  app.models.DailyMktPrice.uploadDMP(req.body,
-  function(err, dmps){
-       if (err) { res.send(err);
-       }
-       if ( dmps ) {
-         res.status(200).send(dmps);
-       }
-     }
-);
-}
-);
-
-app.get('/api/m/DeliveryChalans', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
-     var atts = JSON.parse(req.user.attributes);
+app.get('/api/m/Customers/:customerId/DeliveryChalans', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+     var customerId = req.params.customerId;
       app.models.DeliveryChalan.find(
        {
        include:[{'salesOrder':{'salesOrderLines':'item'}},'deliveryChalanStatus'],
 
-              where: {customerId:parseInt(atts.customerId)}
+              where: {customerId:parseInt(customerId)}
             },
       function(err, deliveryChalans){
            if (err) { res.send(err);
@@ -98,11 +69,10 @@ app.get('/api/m/DeliveryChalans', passport.authenticate('mca-backend-strategy', 
 );
 
 
-
-app.get('/api/m/Orders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
-     var atts = JSON.parse(req.user.attributes);
+app.get('/api/m/Customers/:customerId/Orders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+     var customerId = req.params.customerId;
       app.models.Order.find(
-       { where: {customerId:parseInt(atts.customerId)}
+       { where: {customerId:parseInt(customerId)}
        },
       function(err, orders){
            if (err) { res.send(err);
@@ -116,7 +86,6 @@ app.get('/api/m/Orders', passport.authenticate('mca-backend-strategy', {session:
 );
 
 app.get('/api/m/Orders/fullOrders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
-     var atts = JSON.parse(req.user.attributes);
       app.models.Order.fullOrders(
       function(err, orders){
            if (err) { res.send(err);
@@ -130,8 +99,7 @@ app.get('/api/m/Orders/fullOrders', passport.authenticate('mca-backend-strategy'
 );
 
 app.post('/api/m/Orders/placeOrder',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
-   //  var atts = JSON.parse(req.user.attributes);
-      app.models.Order.placeOrder(req.orderObj,
+      app.models.Order.placeOrder(req.body,
       function(err, order){
            if (err) { res.send(err);
            }
@@ -142,6 +110,7 @@ app.post('/api/m/Orders/placeOrder',passport.authenticate('mca-backend-strategy'
     );
   }
 );
+
 app.post('/api/m/DeliveryChalans/updateSO',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
       app.models.DeliveryChalan.updateSO(req.body,
       function(err, deliveryChalan){
@@ -155,110 +124,61 @@ app.post('/api/m/DeliveryChalans/updateSO',passport.authenticate('mca-backend-st
   }
 );
 
-app.post('/apps/:tenantID/agrub/startAuthorization', function(req, res) {
+app.get('/api/m/Profile/me', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+      app.models.User.m_profile(req.user.id,
+      function(err, profile){
+           if (err) { res.send(err);
+           }
+           if ( profile ) {
+             res.status(200).send(profile);
+           }
+         }
+    );
+  }
+);
+
+
+app.post('/apps/:tenantID/agrub-' + process.env.NODE_ENV + '/startAuthorization', function(req, res) {
          res.json({
              status: "challenge",
              challenge: {question: "userCredentials - email, password"}
          });
      });
 
-
-app.post('/apps/:tenantID/agrub/handleChallengeAnswer', function(req, res) {
-
-    app.models.user.login(
-      {  email: req.body.challengeAnswer.email,
-         password: req.body.challengeAnswer.password
-      },
-      'user',
-      function (err, token) {
-          // login fails
-          if (err) {
-            console.log("login fails");
-                     res.send({
-                     status: "failure",
-                     challenge: {
-                     message: "unknown credentials"
-                     }
-                     });
-                     return;
-          }
-          // login succeeds
-          console.log("login succeeds");
-          app.models.user.findOne(
-            { include:[{
-              relation:'customers',
-              scope:{include: {
-              relation:'hub'
-                 }
+     app.post('/apps/:tenantID/agrub-' + process.env.NODE_ENV + '/handleChallengeAnswer', function(req, res)
+     {
+         app.models.user.login(
+           {  email: req.body.challengeAnswer.email,
+              password: req.body.challengeAnswer.password
+           },
+           'user',
+           function (err, token) {
+               if (token) {
+                 console.log("success: sending back tken with userid = " + new String(token.userId));
+               res.send( {
+                  status: "success",
+                  userIdentity: {
+                  userName: new String(token.userId),
+                  displayName: "agrub-"+ process.env.NODE_ENV + "-user"
                 }
-              },
-              {
-              relation:'roles'
-            }]
-          ,
-              where: {email:req.body.challengeAnswer.email}
-            },
-          function(err, userM){
-             if (err) {
-                res.send({
-                status: "failure",
-                challenge: {
-                message: "unknown credentials"
-                 }
                });
                return;
              }
-              if ( userM ) {
-                 var userO = userM.toJSON();
-              //   console.log(JSON.stringify(userO));
-                  console.log(userO);
-                  var _rolesNames = "";
-                if ("roles" in userO){
-                 for (index = 0; index < userO.roles.length; ++index) {
-                   if (index >0) _rolesNames += ",";
-                     _rolesNames += userO.roles[index].name;
-                 }
-               }
-                 var _customerId = null;
-                 var _customerName = null;
-                 var _hubId = null;
-                 var _hubName = null;
-                 if (userO.customerId){
-                   _customerId = new String(userO.customer.id);
-                   _customerName = userO.customer.name;
-                   _hubId = new String(userO.customer.hub.id);
-                   _hubName = userO.customer.hub.name;
-                 }
-                 res.send( {
-                    status: "success",
-                    userIdentity: {
-                    userName: userO.email,
-                    displayName: userO.username,
-                    attributes: {
-                      customerId:_customerId,
-                      customerName: _customerName,
-                      hubId: _hubId,
-                      hubName:_hubName,
-                      roles:_rolesNames
-                    }
-                  }
-                 });
-               return;
-             }
-             res.send( {
+             else {
+               res.send({
                status: "failure",
                challenge: {
                message: "unknown credentials"
-              }
-              });
-             return;
-            }
-          );
+               }
+               });
+               return;
+             }
+             }
+           );
+         }
+       );
 
-      }
-    );
-     }
-);
+
 
 // ------------ Protecting backend APIs with Mobile Client Access end -----------------
 

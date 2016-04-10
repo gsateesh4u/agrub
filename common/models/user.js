@@ -8,6 +8,11 @@ User.profile = function(cb) {
 	  include:['hubs','roles','customers'],
 	}, cb);
 };
+User.m_profile = function(userId, cb) {
+	User.findById(userId,{
+	  include:['hubs','roles','customers'],
+	}, cb);
+};
 User.remoteMethod(
         'profile',
         {
