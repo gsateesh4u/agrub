@@ -5,7 +5,7 @@ var app = module.exports = loopback();
 
 // ------------ Protecting mobile backend with Mobile Client Access start -----------------
 
-// Load passport (http://passportjs.org)
+ //Load passport (http://passportjs.org)
 var passport = require('passport');
 
 // Get the MCA passport strategy to use
