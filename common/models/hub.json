@@ -44,11 +44,6 @@
       "model": "Market",
       "foreignKey": ""
     },
-    "dailyMktPrices": {
-      "type": "hasMany",
-      "model": "DailyMktPrice",
-      "foreignKey": ""
-    },
     "custLkdItemPrices": {
       "type": "hasMany",
       "model": "CustLkdItemPrice",

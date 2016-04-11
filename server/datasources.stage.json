@@ -1,0 +1,40 @@
+{
+  "db_cloudant": {
+    "url": "https://ade38f1d-182e-4382-bc35-62935dabf42d-bluemix:6157ca37e32de2fe7a3bfc0a04712f0dea5d0818914419bb2e769b77246d715e@ade38f1d-182e-4382-bc35-62935dabf42d-bluemix.cloudant.com",
+    "database": "agrub",
+    "name": "db_cloudant",
+    "connector": "cloudant"
+  },
+  "db": {
+    "url": "postgres://admin:OUQWNQRQEBEOTJMZ@aws-us-east-1-portal.4.dblayer.com:10977/agrub-stage",
+    "name": "db",
+    "connector": "postgresql",
+    "debug": true
+  },
+  "emailDataSource": {
+    "name": "emailDataSource",
+    "connector": "mail",
+    "transports": [
+      {
+        "type": "smtp",
+        "host": "smtp.gmail.com",
+        "secure": false,
+        "port": 587,
+        "tls": {
+          "rejectUnauthorized": false
+        },
+        "auth": {
+          "user": "agrubcare@gmail.com",
+          "pass": "P@$$W0rd"
+        }
+      }
+    ]
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage",
+    "maxFileSize": "52428800"
+  }
+}
