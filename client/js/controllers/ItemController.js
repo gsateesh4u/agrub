@@ -7,15 +7,7 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory){
 		unit: "",
 		available:"true",
 		itemCategoryId:"",
-		hubId: "",
-		hub:{
-			id:"",
-			name:""
-		},
-		itemCategory:{
-			id:"",
-			name:""
-		}
+		hubId: ""
 	};
 	$scope.addUpdateItem = {
 		name : "",
@@ -25,15 +17,7 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory){
 		unit: "",
 		available:"",
 		itemCategoryId:"",
-		hubId: "",
-		hub:{
-			id:"",
-			name:""
-		},
-		itemCategory:{
-			id:"",
-			name:""
-		}
+		hubId: ""
 	};
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
@@ -91,8 +75,9 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory){
 							  });
 						   }
 							$scope.showAddUpdateItem = true;
-							angular.copy(item,$scope.addUpdateItem);
-							$scope.item = $scope.addUpdateItem;
+							$scope.item = item;
+							//angular.copy(item,$scope.item);
+							//$scope.item = $scope.addUpdateItem;
 							
 						}
 					},function( errorMessage ) {
@@ -109,7 +94,7 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory){
 	   //}
    };
    $scope.cancel = function(){
-	   angular.copy($scope.tempItem,$scope.addUpdateItem);
+	   angular.copy($scope.tempItem,$scope.item);
 	   $scope.showAddUpdateItem = false;
    };
    $scope.deleteItem = function deleteItem(row){
@@ -144,7 +129,7 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory){
 		  //item.itemCategory.id = $scope.selectedItemCategory.id;
 	   if(operation == 'Add'){
 		  Item.create(item).$promise
-				.then(function(response) { 
+				.then(function(res) { 
 				 Item.find({
 						filter: { include: 'itemCategory' }
 					}).$promise
@@ -170,7 +155,7 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory){
 	   } 
 	   if(operation == 'Update'){
 		   Item.upsert(item).$promise
-				.then(function(response) { 
+				.then(function(res) { 
 				 Item.find({
 						filter: { include: 'itemCategory' }
 					}).$promise

@@ -52,6 +52,21 @@
       "model": "Role",
       "foreignKey": "principalId",
       "through": "RoleMapping"
+    },
+	 "roleMappings": {
+      "type": "hasMany",
+      "model": "RoleMapping",
+      "foreignKey": "principalId"
+    },
+	"customerMappings": {
+      "type": "hasMany",
+      "model": "CustomerUserMap",
+      "foreignKey": "userId"
+    },
+	"hubMappings": {
+      "type": "hasMany",
+      "model": "HubUserMap",
+      "foreignKey": "userId"
     }
   },
   "acls": [

@@ -80,41 +80,56 @@
 					</header>
 				</div>
 				<div class="col-md-12">
-					<!--<div class="col-md-12" ng-if="isSubLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Hubs&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>-->
-					<form name="UserForm" class="css-form" novalidate ng-show="!isSubLoading">
+					<div class="col-md-12" ng-if="isSubLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Hubs&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>
+					<form name="userForm" class="css-form" novalidate ng-show="!isSubLoading">
 						<div>
 						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
-							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="error" ng-bind-html="error"></div>
+							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
 							<div class="col-md-12">
 								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
 							</div>
-							<div class="form-group col-xs-6" ng-class="{ 'has-error': customerForm.name.$invalid }">
-								<label>Customer name<font color="red">*</font> :</label> <input type="text"
-									ng-model="customer.name" required ng-class="{'form-control':true, 'has-error': customerForm.name.$invalid }" name="name"/>
+							<div class="form-group col-xs-4">
+								<label>First Name<font color="red">*</font> :</label> <input type="text"
+									ng-model="user.firstname" required name="firstname" class="form-control"/>
 							</div>
-							<!--<div class="form-group col-xs-6">
-								<label>Hub:</label> <input type="text" ng-model="customer.hub.name" class="form-control" ng-disabled="true"/>
-							</div>-->
-							<div class="form-group col-xs-6" ng-class="{ 'has-error': customerForm.selectedHub.$invalid }">
-								<label>Hub <font color="red">*</font> :</label> 
-								<select name="selectedHub" class="form-control" name="selectedHub" ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-disabled="header=='Update'">
+							<div class="form-group col-xs-4">
+								<label>Middle Name:</label> <input type="text"
+									ng-model="user.middlename" name="middlename" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Last Name<font color="red">*</font> :</label> <input type="text"
+									ng-model="user.lastname" required name="lastname" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>User Name<font color="red">*</font> :</label> <input type="text"
+									ng-model="user.username" required name="username" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Email<font color="red">*</font> :</label> <input type="email" name="email" required ng-model="user.email" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Password <font color="red">*</font> :</label> <input type="password" required ng-model="user.password" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Role <font color="red">*</font> :</label> 
+								<select name="selectedRole" class="form-control" name="selectedRole" ng-model="selectedRole" required class="form-control" ng-options="role.name for role in roles track by role.id" ng-change="populateNextField()">
 								</select>
 							</div>
-							<div class="form-group col-xs-4" ng-class="{ 'has-error': customerForm.email.$invalid }">
-								<label>Email:</label> <input type="email" name="email" ng-model="customer.email" class="form-control"/>
+							<div class="form-group col-xs-4" ng-show="isHubRole">
+								<label>Hub <font color="red">*</font> :</label> 
+								<select name="selectedHub" class="form-control" name="selectedHub" ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id">
+								</select>
 							</div>
-							<div class="form-group col-xs-4">
-								<label>Phone:</label> <input type="text" ng-model="customer.phone" class="form-control"/>
+							<div class="form-group col-xs-4" ng-show="isCustomerRole">
+								<label>Customer <font color="red">*</font> :</label> 
+								<select name="selectedCustomer" class="form-control" name="selectedCustomer" ng-model="selectedCustomer" required class="form-control" ng-options="customer.name for customer in customers track by customer.id">
+								</select>
 							</div>
-							<div class="form-group col-xs-4">
-								<label>Fax:</label> <input type="text" ng-model="customer.fax" class="form-control"/>
-							</div>
-							<div class="form-group col-xs-12" ng-class="{ 'has-error': customerForm.address.$invalid }">
-								<label>Address<font color="red">*</font> :</label> <input type="textarea" name="address" ng-model="customer.address" class="form-control" required/>
+							<div class="form-group col-xs-4">&nbsp;
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-primary" ng-click="addOrUpdate(customer,header)" ng-disabled="customerForm.$invalid">OK</button>
+							<button class="btn btn-primary" ng-click="addOrUpdateUser1(user,header)" ng-disabled="userForm.$invalid">OK</button>
 							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 						</div>
 					</form>

@@ -59,12 +59,12 @@ Order.placeOrder= function(orderObj, cb) {
 										  console.log('email sent to !'+cust.name+' for order with orderId '+emailOderId);
 										});
 								});
+			cb(null,originalOrder);
 			})
 			.catch(function (err) {
 			 console.log('error while creating order '+err);
 			 cb(err);
 		});
-		cb(null,originalOrder);
 }
 
 Order.fullOrders = function(cb) {
