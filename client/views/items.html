@@ -13,65 +13,121 @@
 									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
 								</td>
 								<td align="right">
-									<button class="btn btn-primary" ng-click="showItem(tempItem,'Add')" align="right">Add Item</button>
+									<button class="btn btn-primary" ng-if="selectedTab==1" ng-click="showItem(tempItem,'Add')" align="right">Add Item</button>
+									<button class="btn btn-primary" ng-if="selectedTab==2" ng-click="showItemCategory(tempItemCategory,'Add')" align="right">Add Category</button>
 								</td>
 							</tr>
 						</table> 
-						<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="rowCollection" st-table="itemsCollection">
-							<thead>
-							<tr>
-									<th st-sort="name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item Name</th>
-									<th>Description</th>
-									<th st-sort="unit"><i class="glyphicon glyphicon-filter"></i>Unit</th>
-									<th st-sort="category"><i class="glyphicon glyphicon-filter"></i>Category</th>
-									<th width="50px">Actions</th>
-								</tr>
-								<tr>
-									<th>
-										<input st-search="name" placeholder="search for name" class="input-sm form-control" type="search"/>
-									</th>
-									<th>
-										<input st-search="description" placeholder="search for description" class="input-sm form-control" type="search"/>
-									</th>
-									<th>
-										<input st-search="unit" placeholder="search for unit" class="input-sm form-control" type="search"/>
-									</th>
-									<th>
-										<input st-search="itemCategory.name" placeholder="search for ItemCategory" class="input-sm form-control" type="search"/>
-									</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody ng-show="!isLoading">
-							<tr st-select-row="row" ng-repeat="row in itemsCollection">
-									<td>{{row.name}}</td>
-									<td>{{row.description}}</td>
-									<td>{{row.unit}}</td>
-									<td>{{row.itemCategory.name}}</td>
-									<td align="center">
-										<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer" ng-click="showItem(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
-										<span class="sprite sprite-delete" title="Delete Item" style="cursor:pointer" ng-click="deleteItem(row)"></span>
-									</td>
-							</tr>
-							<tr ng-if="itemsCollection.length == 0">
-						   		<td colspan="5" class="text-center">{{error}}</td>
-							</tr>
-							</tbody>
-							<tbody ng-show="isLoading">
-							<tr>
-								<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
-							</tr>
-							</tbody>
-							<tfoot>
-							<tr ng-show="!isLoading && itemsCollection.length != 0">
-								<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
-								</td>
-							</tr>
-							</tfoot>
-						</table>
+						<div class="tabbable">
+							<ul class="nav nav-tabs">
+								<li ng-class="getTabClass(1)" ng-click="setActiveTab(1)"><a href=""  data-toggle="tab">{{'menu_items' | xlat}}</a></li>
+								<li ng-class="getTabClass(2)" ng-click="setActiveTab(2)"><a href="" data-toggle="tab">{{'menu_item_cat' | xlat}}</a></li>
+							</ul>
+							<div class="tab-content">
+								<div ng-class="getTabPaneClass(1)" id="items">
+									<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="rowCollection" st-table="itemsCollection">
+										<thead>
+											<tr>
+												<th st-sort="name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item Name</th>
+												<th>Description</th>
+												<th st-sort="unit"><i class="glyphicon glyphicon-filter"></i>Unit</th>
+												<th st-sort="category"><i class="glyphicon glyphicon-filter"></i>Category</th>
+												<th width="50px">Actions</th>
+											</tr>
+											<tr>
+												<th>
+													<input st-search="name" placeholder="search for name" class="input-sm form-control" type="search"/>
+												</th>
+												<th>
+													<input st-search="description" placeholder="search for description" class="input-sm form-control" type="search"/>
+												</th>
+												<th>
+													<input st-search="unit" placeholder="search for unit" class="input-sm form-control" type="search"/>
+												</th>
+												<th>
+													<input st-search="itemCategory.name" placeholder="search for ItemCategory" class="input-sm form-control" type="search"/>
+												</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody ng-show="!isLoading">
+											<tr st-select-row="row" ng-repeat="row in itemsCollection">
+												<td>{{row.name}}</td>
+												<td>{{row.description}}</td>
+												<td>{{row.unit}}</td>
+												<td>{{row.itemCategory.name}}</td>
+												<td align="center">
+													<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer" ng-click="showItem(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
+													<span class="sprite sprite-delete" title="Delete Item" style="cursor:pointer" ng-click="deleteItem(row)"></span>
+												</td>
+											</tr>
+											<tr ng-if="itemsCollection.length == 0">
+												<td colspan="5" class="text-center">{{error}}</td>
+											</tr>
+										</tbody>
+										<tbody ng-show="isLoading">
+											<tr>
+												<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr ng-show="!isLoading && itemsCollection.length != 0">
+												<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
+												</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+								<!-- Item Categories-->
+								<div ng-class="getTabPaneClass(2)" id="itemCategories">
+									<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="itemsCatCollection" st-table="itemCategoriesCollection">
+										<thead>
+											<tr>
+												<th st-sort="name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Category Name</th>
+												<th st-sort="hub.name"><i class="glyphicon glyphicon-filter"></i>hub</th>
+												<th width="50px">Actions</th>
+											</tr>
+											<tr>
+												<th>
+													<input st-search="name" placeholder="search for name" class="input-sm form-control" type="search"/>
+												</th>
+												<th>
+													<input st-search="hub.name" placeholder="search for hub" class="input-sm form-control" type="search"/>
+												</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody ng-show="!isLoading">
+											<tr st-select-row="row" ng-repeat="row in itemCategoriesCollection">
+												<td>{{row.name}}</td>
+												<td>{{row.hub.name}}</td>
+												<td align="center">
+													<span class="sprite sprite-edit" title="Edit Item Category" style="cursor:pointer" ng-click="showItemCategory(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
+													<span class="sprite sprite-delete" title="Delete Item Category" style="cursor:pointer" ng-click="deleteItemCategory(row)"></span>
+												</td>
+											</tr>
+											<tr ng-if="itemCategoriesCollection.length == 0">
+												<td colspan="3" class="text-center">{{error}}</td>
+											</tr>
+										</tbody>
+										<tbody ng-show="isLoading">
+											<tr>
+												<td colspan="3" class="text-center"><img src="./css/images/loading.gif"/></td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr ng-show="!isLoading && itemsCollection.length != 0">
+												<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="3">
+												</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+						</div>
 			</div>
 			<!-- CRUD Item-->
-			<div class="row" ng-show="showAddUpdateItem">
+			<div class="row" ng-show="showForm==1">
 				<div class="col-md-12">
 					<header class="panel-heading">
 						<b>{{header}} Item</b>
@@ -120,7 +176,41 @@
 					</form>
 				</div>
               </div>
-              <!-- row end -->
+              <!-- CRUD Item end -->
+			  <!-- CRUD Item Category-->
+			<div class="row" ng-show="showForm==2">
+				<div class="col-md-12">
+					<header class="panel-heading">
+						<b>{{header}} Item Category</b>
+					</header>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-12" ng-if="isSubLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Hubs&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>
+					<form name="itemCatForm" class="css-form" novalidate ng-show="!isSubLoading">
+						<div>
+						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+							<div class="col-md-12">
+								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Category name<font color="red">*</font> :</label> <input type="text"
+									ng-model="itemCategory.name" required class="form-control" name="itemCategory.name"/>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Hub <font color="red">*</font> :</label> 
+								<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-disabled="header=='Update'">
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="addOrUpdateItemCategory(itemCategory,header)" ng-disabled="itemCatForm.$invalid">OK</button>
+							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+						</div>
+					</form>
+				</div>
+              </div>
+              <!-- CRUD Item end -->
 		</section>
 	</div>
 		</div>
