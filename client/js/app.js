@@ -163,8 +163,30 @@ var app = angular
 	            // Return public API.
 	            return({
 	                hasPermission : hasPermission,
-					getCurrentUser : getCurrentUser
+					getCurrentUser : getCurrentUser,
+					isRoleExist : isRoleExists,
+					getUserHubs : getUserHubs
 	            });
+				function isRoleExists(role){
+					if(currentUser == null || currentUser.roles == null || currentUser.roles.length == 0){
+	            		return false;
+	            	} else {
+						var flag = false;
+						angular.forEach(currentUser.roles, function (tempRole) {
+							 if(role === tempRole.name){
+								flag = true;
+							 }
+					     });
+						 return flag;
+					}
+				};
+				function getUserHubs(){
+					if(currentUser == null){
+	            		return null;
+	            	} else {
+						return currentUser.hubs;
+					}
+				};
 				//check for permission
 	            function hasPermission(accessFor){
 	            	var currentUser = $cookieStore.get("currentUser");

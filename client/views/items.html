@@ -96,21 +96,21 @@
 								</select>
 							</div>
 							<div class="form-group col-xs-6">
+								<label>Description<font color="red">*</font> :</label> <input type="textarea" ng-model="item.description" required class="form-control"/>
+							</div>
+							<div class="form-group col-xs-6">
 								<label>Category <font color="red">*</font> :</label> 
 								<select name="selectedItemCategory" class="form-control"  ng-model="selectedItemCategory" required class="form-control" ng-options="category.name for category in itemCategories track by category.id">
 								</select>
 							</div>
-							<div class="form-group col-xs-6">
-								<label>Description<font color="red">*</font> :</label> <input type="textarea" ng-model="item.description" required class="form-control"/>
-							</div>
-							<div class="form-group col-xs-6">
-								<label>Unit:</label> <input type="text" ng-model="item.unit" required class="form-control"/>
-							</div>
-							<div class="form-group col-xs-6">
+							<div class="form-group col-xs-5">
 								<label>Quality Param<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityParam" required class="form-control"/>
 							</div>
-							<div class="form-group col-xs-6">
+							<div class="form-group col-xs-5">
 								<label>Quality Variance<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityVariance" required class="form-control"/>
+							</div>
+							<div class="form-group col-xs-2">
+								<label>Unit:</label> <input type="text" ng-model="item.unit" required class="form-control"/>
 							</div>
 						</div>
 						<div class="modal-footer">

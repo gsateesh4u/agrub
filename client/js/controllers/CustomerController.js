@@ -129,7 +129,30 @@ app.controller('CustomerController', function($scope,Customer,Hub){
 		   });
 	   } 
 	   if(operation == 'Update'){
-		   
+		   Customer.upsert(cust).$promise
+				.then(function(response) { 
+				 Customer.find({
+						filter: { include: 'hub' }
+					}).$promise
+						.then(function(response) { $scope.rowCollection = [].concat(response);
+						  $scope.rowCollection = [].concat(response);
+						   $scope.displayedCollection = [].concat($scope.rowCollection);
+						  if($scope.rowCollection.length==0){
+								 $scope.error = "No data found!!!";
+							 }
+							 $scope.isLoading = false;
+							 $scope.showAddUpdateCustomer = false;
+					  },function( errorMessage ) {
+						  $scope.error = "Error has occurred while loading customers!";
+						  $scope.showAddUpdateCustomer = false;
+						  $scope.isLoading = false;
+				   });
+				   $scope.showAddUpdateCustomer = false;
+					 $scope.isLoading = false;
+			  },function( errorMessage ) {
+				  $scope.subError = "Error has occurred while creating customer!";
+				  $scope.isLoading = false;
+		   });
 	   }
    };
 });

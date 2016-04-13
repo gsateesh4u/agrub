@@ -30,11 +30,50 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 			  $scope.isLoading = false;
 	   });
    };
+   $scope.deleteUser = function deleteUser(user){
+		if(user.roles.length>0){
+			if(user.roles[0].name == 'SYSADMIN'){
+				deleteExUser(user);
+			} else if(user.roles[0].name == 'HUBADMIN' || user.roles[0].name == 'HUBOWNER'){
+				if(user.hubMappings.length>0){
+					HubUserMap.deleteById({id:user.hubMappings[0].id}).$promise.then(function(res){
+						deleteExUser(user);
+					});
+				}else{
+					deleteExUser(user);
+				}
+			} else if(user.roles[0].name == 'CUSTADMIN' || user.roles[0].name == 'CUSTOWNER' || user.roles[0].name == 'CUSTREP'){
+				if(user.customerMappings.length>0){
+					CustomerUserMap.deleteById({id:user.customerMappings[0].id}).$promise.then(function(res){
+						deleteExUser(user);
+					});
+				}else {
+					deleteExUser(user);
+				}
+			}
+		}else{
+			deleteExUser(user);
+		}
+   };
+   function deleteExUser(user){
+		User.deleteById({id:user.id}).$promise.then(function(res){
+			$scope.showAddUpdateUser = false;
+			loadUsers();
+		},function(err){
+			$scope.isSubLoading = false;
+			$scope.subError = 'Error Deleting User!!! Please try again';
+		});
+   };
    $scope.showUser = function showUser(user,operation){
 		$scope.showAddUpdateUser = true;
 		$scope.isSubLoading = true;
-		 $scope.header = operation;
-		 $scope.addUpdateUser = {};
+		$scope.header = operation;
+		$scope.addUpdateUser = {};
+		$scope.selectedHub = null;
+		$scope.selectedCustomer = null;
+		$scope.selectedRole = null;
+		$scope.isHubRole = false;
+		$scope.isCustomerRole = false;
 		 Role.find().$promise
 				.then(function(response) { 
 					$scope.roles = [].concat(response);
@@ -60,7 +99,6 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 										//angular.copy(user,$scope.user);
 										//$scope.user = $scope.addUpdateUser;
 										$scope.user = user;
-										 alert(angular.toJson($scope.user));
 										if($scope.user.hubs.length>0)
 										$scope.selectedHub = $scope.user.hubs[0];
 									}
@@ -82,7 +120,7 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 										//$scope.user = $scope.addUpdateUser;
 										$scope.user = user;
 										if($scope.user.customers.length>0)
-										$scope.selectedCustomer = $scope.customers.hubs[0];
+										$scope.selectedCustomer = $scope.user.customers[0];
 									}
 									$scope.isSubLoading = false;
 								},function( errorMessage ) {
@@ -94,7 +132,6 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 							$scope.isCustomerRole = false;
 							$scope.isHubRole = false;
 							$scope.user = user;
-							alert(angular.toJson($scope.user));
 							//angular.copy(user,$scope.user);
 						 }
 					   }
@@ -116,6 +153,7 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 			.then(function(response) { 
 				$scope.isHubRole = true;
 				$scope.selectedHub = null;
+				$scope.selectedCustomer = null;
 				$scope.isCustomerRole = false;
 				$scope.isSubLoading = false;
 				$scope.hubs = [].concat(response);
@@ -131,6 +169,7 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 			.then(function(response) { 
 				$scope.isCustomerRole = true;
 				$scope.selectedCustomer = null;
+				$scope.selectedHub = null;
 				$scope.isHubRole = false;
 				$scope.isSubLoading = false;
 				$scope.customers = [].concat(response);
@@ -144,12 +183,9 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 		} else {
 			$scope.isCustomerRole = false;
 			$scope.isHubRole = false;
-			$scope.selectedHub = {};
-			$scope.selectedCustomer = {};
+			$scope.selectedHub = null;
+			$scope.selectedCustomer = null;
 		}
-   };
-   $scope.addOrUpdateUser1 = function addOrUpdateUser1(user,operation){
-	alert(user.firstname);
    };
    $scope.addOrUpdateUser = function addOrUpdateUser(user,operation){
 		if($scope.selectedRole){
@@ -157,21 +193,20 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 				var tUser = {
 					id : user.id,
 					firstname : user.firstname,
-					password : user.password,
 					email : user.email,
 					middlename : user.middlename,
 					lastname : user.lastname,
 					username : user.username
 				};
-				User.update(tUser).$promise.then(function(updatedUser){
+				User.update({id:tUser.id},{data:tUser}).$promise.then(function(updatedUser){
 					if(user.roles[0].name !== $scope.selctedRole.name){
 						user.roleMappings[0].roleId = $scope.selectedRole.id;
-						RoleMapping.update(user.roleMappings[0]).$promise.then(function(updatedRM){
+						RoleMapping.update({id:user.roleMappings[0].id},{data:user.roleMappings[0]}).$promise.then(function(updatedRM){
 							if($scope.selectedRole.name == 'HUBADMIN' || $scope.selectedRole.name == 'HUBOWNER'){
 								if(user.hubMappings.length>0){
 									if(user.hubs[0].name!==$scope.selectedHub.name){
 										user.hubMappings[0].hubId = $scope.selectedHub.id;
-										HubUserMap.update(user.hubMappings[0]).$promise.then(function(updatedUserHub){
+										HubUserMap.update({id:user.hubMappings[0].id},{data:user.hubMappings[0]}).$promise.then(function(updatedUserHub){
 											if(user.customerMappings.length>0){
 												CustomerUserMap.delete({id:user.customerMappings[0].id}).$promise.then(function(dcum){
 													loadUsers();
@@ -200,7 +235,7 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 								if(user.customerMappings.length>0){
 									if(user.customers[0].name!==$scope.selectedCustomer.name){
 										user.customerMappings[0].hubId = $scope.selectedCustomer.id;
-										CustomerUserMap.update(user.customerMappings[0]).$promise.then(function(updatedUserCustomer){
+										CustomerUserMap.update({id:user.customerMappings[0].id},{data:user.customerMappings[0]}).$promise.then(function(updatedUserCustomer){
 											if(user.hubMappings.length>0){
 												HubUserMap.delete({id:user.hubMappings[0].id}).$promise.then(function(dcum){
 													loadUsers();
@@ -245,7 +280,7 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 						loadUsers();
 					}					
 				},function(err){
-					$scope.isLoading = false;
+					$scope.isSubLoading = false;
 					$scope.subError = 'Error Updating User!!! Please try again';
 				});
 			} else if(operation == 'Add'){

@@ -17,7 +17,7 @@ app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User','
 			}else{
 				var tokenId = response.id;
 				User.findById({id:response.user.id,
-					filter: {include:['roles']}
+					filter: {include:['roles','customers','hubs']}
 					}).$promise
 						.then(function(curUser) { 
 						  if(!curUser){

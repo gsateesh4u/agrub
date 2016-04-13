@@ -1,4 +1,4 @@
-app.controller('ItemController',function($scope,Item, Hub, ItemCategory){
+app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonService){
 	$scope.tempItem = {
 		name : "",
 		description: "",

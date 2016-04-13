@@ -107,8 +107,8 @@
 							<div class="form-group col-xs-4">
 								<label>Email<font color="red">*</font> :</label> <input type="email" name="email" required ng-model="user.email" class="form-control"/>
 							</div>
-							<div class="form-group col-xs-4">
-								<label>Password <font color="red">*</font> :</label> <input type="password" required ng-model="user.password" class="form-control"/>
+							<div class="form-group col-xs-4" ng-if="header=='Add'">
+								<label>Password <font color="red">*</font> :</label> <input type="password" ng-required="header=='Add'" ng-model="user.password" class="form-control"/>
 							</div>
 							<div class="form-group col-xs-4">
 								<label>Role <font color="red">*</font> :</label> 
@@ -117,19 +117,19 @@
 							</div>
 							<div class="form-group col-xs-4" ng-show="isHubRole">
 								<label>Hub <font color="red">*</font> :</label> 
-								<select name="selectedHub" class="form-control" name="selectedHub" ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id">
+								<select name="selectedHub" class="form-control" name="selectedHub" ng-model="selectedHub" ng-required="isHubRole==true" class="form-control" ng-options="hub.name for hub in hubs track by hub.id">
 								</select>
 							</div>
 							<div class="form-group col-xs-4" ng-show="isCustomerRole">
 								<label>Customer <font color="red">*</font> :</label> 
-								<select name="selectedCustomer" class="form-control" name="selectedCustomer" ng-model="selectedCustomer" required class="form-control" ng-options="customer.name for customer in customers track by customer.id">
+								<select name="selectedCustomer" class="form-control" name="selectedCustomer" ng-model="selectedCustomer" ng-required="isCustomerRole==true" class="form-control" ng-options="customer.name for customer in customers track by customer.id">
 								</select>
 							</div>
 							<div class="form-group col-xs-4">&nbsp;
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-primary" ng-click="addOrUpdateUser1(user,header)" ng-disabled="userForm.$invalid">OK</button>
+							<button class="btn btn-primary" ng-click="addOrUpdateUser(user,header)" ng-disabled="userForm.$invalid">OK</button>
 							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 						</div>
 					</form>
