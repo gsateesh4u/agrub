@@ -168,6 +168,18 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			 );
 		}
    };
+    $scope.deleteCustPrice = function deleteCustPrice(row){
+		 var flag = confirm("Do you really want to delete locked price for  "+row.customer.name+" ?");
+	   if(flag){
+		   CustLkdItemPrice.deleteById({id:row.id}).$promise
+				.then(function(response) { 
+				 $scope.showForm = 0;
+				$scope.setActiveTab(3);
+			  },function( errorMessage ) {
+				  $scope.error = "Error has occurred while deleting customer locked period!";
+		   });
+	   }
+   };
    $scope.showDMP = function(){
 		if(commonService.hasPermission('pricing')){
 			$scope.isDmpLoading = true;
@@ -194,9 +206,9 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			filter: { include: [{customer:'hub'}] }
 		}).$promise
 			.then(function(response) { 
-			  var existing = [].concat(response);
+			  $scope.custPeriodsCollection = [].concat(response);
 			  $scope.customers = [];
-			  angular.forEach(existing,function(ex){
+			  angular.forEach($scope.custPeriodsCollection,function(ex){
 				$scope.customers.push(ex.customer);
 			  });
 			  if($scope.customers.length==0){
@@ -278,9 +290,9 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
    };
    $scope.addNewCustomerItemPrice = function addNewCustomerItemPrice(){
 		var custLkdPeriodId = null;
-		angular.forEach($scope.custPricesCollection,function(custPrice){
+		angular.forEach($scope.custPeriodsCollection,function(custPrice){
 			if(custPrice.customerId == $scope.selectedCustomer.id){
-				custLkdPeriodId = custPrice.custLkdPeriodId;
+				custLkdPeriodId = custPrice.id;
 				return;
 			}
 		});
@@ -384,12 +396,12 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
    $scope.deleteCustLkdPeriod = function deleteCustLkdPeriod(row){
 		 var flag = confirm("Do you really want to delete locked period for  "+row.customer.name+" ?");
 	   if(flag){
-		   CustLkdPeriod.delete({id:row.id}).$promise
+		   CustLkdPeriod.deleteById({id:row.id}).$promise
 				.then(function(response) { 
 				 $scope.showForm = 0;
 				$scope.setActiveTab(2);
 			  },function( errorMessage ) {
-				  $scope.subError = "Error has occurred while deleting customer locked period!";
+				  $scope.error = "Error has occurred while deleting customer locked period!";
 		   });
 	   }
    };
@@ -412,5 +424,8 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		},function( errorMessage ) {
 				  $scope.subError = "Error has occurred while adding customer locked period!";
 		});
+   };
+   $scope.cancel = function(){
+	   $scope.showForm = 0;
    };
 });

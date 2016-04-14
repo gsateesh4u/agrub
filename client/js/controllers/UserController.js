@@ -318,4 +318,7 @@ app.controller('UserController',['$scope','User','Role','RoleMapping','Hub','Cus
 			}
 		}
    };
+   $scope.cancel = function(){
+	   $scope.showAddUpdateUser = false;
+   };
 }]);
