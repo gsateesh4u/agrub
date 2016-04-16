@@ -57,7 +57,7 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonS
 	$scope.isLoading = true;
 	function showItemsTab(){
 		Item.find({
-			filter: { include: 'itemCategory' }
+			filter: { include: ['itemCategory','hub']}
 		}).$promise
 			.then(function(response) { $scope.rowCollection = [].concat(response);
 			  $scope.displayedCollection = [].concat($scope.rowCollection);

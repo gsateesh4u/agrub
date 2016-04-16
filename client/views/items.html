@@ -29,7 +29,7 @@
 										<thead>
 											<tr>
 												<th st-sort="name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item Name</th>
-												<th>Description</th>
+												<th st-sort="hub.name"><i class="glyphicon glyphicon-filter"></i>Hub</th>
 												<th st-sort="unit"><i class="glyphicon glyphicon-filter"></i>Unit</th>
 												<th st-sort="category"><i class="glyphicon glyphicon-filter"></i>Category</th>
 												<th width="50px">Actions</th>
@@ -39,7 +39,7 @@
 													<input st-search="name" placeholder="search for name" class="input-sm form-control" type="search"/>
 												</th>
 												<th>
-													<input st-search="description" placeholder="search for description" class="input-sm form-control" type="search"/>
+													<input st-search="hub.name" placeholder="search for hub" class="input-sm form-control" type="search"/>
 												</th>
 												<th>
 													<input st-search="unit" placeholder="search for unit" class="input-sm form-control" type="search"/>
@@ -53,7 +53,7 @@
 										<tbody ng-show="!isLoading">
 											<tr st-select-row="row" ng-repeat="row in itemsCollection">
 												<td>{{row.name}}</td>
-												<td>{{row.description}}</td>
+												<td>{{row.hub.name}}</td>
 												<td>{{row.unit}}</td>
 												<td>{{row.itemCategory.name}}</td>
 												<td align="center">

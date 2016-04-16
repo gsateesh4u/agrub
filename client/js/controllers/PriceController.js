@@ -20,6 +20,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 	
 	var tabClasses;
   $scope.selectedTab = 1;
+  $scope.showPricesMenu = true;
   $scope.tempDMP = {
 		itemId : "",
 		minPrice : "",
@@ -131,7 +132,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		$scope.itemsByPage = 10;
 		$scope.isLoading = true;
 		CustLkdPeriod.find({
-			filter: { include: ['customer'] }
+			filter: { include: [{customer:'hub'}] }
 		}).$promise
 			.then(function(response) { 
 			  $scope.custPeriodsCollection = [].concat(response);
@@ -210,7 +211,12 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			  $scope.customers = [];
 			  angular.forEach($scope.custPeriodsCollection,function(ex){
 				$scope.customers.push(ex.customer);
+				if($scope.selectedCustomerId && $scope.selectedCustomerId == ex.customer.id){
+					$scope.selectedCustomer = ex.customer;
+					$scope.selectedHub.name = ex.hub.name;
+				}
 			  });
+			  
 			  if($scope.customers.length==0){
 					 $scope.subError = "No data found!!!";
 				 }
@@ -386,7 +392,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
    $scope.updateCustLkdPeriod = function updateCustLkdPeriod(){
 		$scope.selectedLkdPeriod.startDate = $filter('date')($scope.dates.start, "yyyy-MM-dd");
 		$scope.selectedLkdPeriod.endDate = $filter('date')($scope.dates.end, "yyyy-MM-dd");
-		CustLkdPeriod.update(insertLkdPeriod).$promise.then(function(response){
+		CustLkdPeriod.upsert($scope.selectedLkdPeriod).$promise.then(function(response){
 			$scope.showForm = 0;
 			$scope.setActiveTab(2);
 			},function( errorMessage ) {
@@ -428,4 +434,166 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
    $scope.cancel = function(){
 	   $scope.showForm = 0;
    };
+   $scope.$watch('custppCollection', function(row) {
+	   var flag = false;
+	   row.filter(function(r) {
+		  if (r.isSelected) {
+			  flag = true;
+			  $scope.selectedCustomerId = r.customerId;
+			  $scope.selectedHubId = r.hubId;
+			  $scope.selectedLkdPeriodId = r.custLkdPeriodId;
+		  }
+	   });
+	   if(!flag){
+		  $scope.selectedCustomerId = null;
+		  $scope.selectedHubId = null;
+		  $scope.selectedLkdPeriodId = null;
+	   }
+	 }, true);
+	 $scope.$watch('custpCollection', function(row) {
+	   var flag = false;
+	   row.filter(function(r) {
+		  if (r.isSelected) {
+			  flag = true;
+			  $scope.lktPId = r.id;
+			  $scope.lktPStDt = r.startDate;
+			  $scope.lktPEndDt = r.endDate;
+			  $scope.lkdPCustId = r.customerId;
+			  $scope.lkdPHubId = r.customer.hubId;
+			  $scope.lkdPHubName = r.customer.hub.name;
+			  $scope.lkdPCustName = r.customer.name;
+		  }
+	   });
+	   if(!flag){
+			  $scope.lktPId = null;
+			  $scope.lktPStDt = null;
+			  $scope.lktPEndDt = null;
+			  $scope.lkdPCustId = null;
+			  $scope.lkdPHubId = null;
+			  $scope.lkdPHubName = null;
+			  $scope.lkdPCustName = null;
+	   }
+	 }, true);
+	 $scope.showManageCustLkdPrices = function showManageCustLkdPrices(){
+		$scope.manageCustLkdPrices = [];
+		
+		CustLkdItemPrice.find({
+			filter: { 
+			include: [{item:'itemCategory'}] ,
+			where:{customerId: $scope.lkdPCustId}  
+			}
+		}).$promise
+			.then(function(response) { 
+			  $scope.dmpsCollection = [].concat(response);
+			  angular.forEach($scope.dmpsCollection, function(cp){
+				var t = {
+					id: cp.id,
+					price: cp.price,
+					hubId: $scope.lkdPHubId,
+					customerId: $scope.lkdPCustId,
+					custLkdPeriodId: $scope.lktPId,
+					itemId : cp.itemId,
+					itemName : cp.item.name,
+					itemCat : cp.item.itemCategory.name
+				};
+				$scope.manageCustLkdPrices.push(t);
+			  });
+			  Item.find({
+					filter: { 
+					include: ['itemCategory'] ,
+					where:{hubId: $scope.lkdPHubId} 
+					}
+				}).$promise
+					.then(function(response) { 
+						var items = [].concat(response);
+						var remainingItems = [];
+						 angular.forEach(items, function(it){
+							var flag = true;
+							angular.forEach($scope.manageCustLkdPrices,function(ex){
+								if(it.id==ex.itemId){
+									flag = false;
+									return;
+								}
+							});
+							if(flag){
+								var t = {
+										id: "",
+										price: "",
+										hubId: $scope.lkdPHubId,
+										customerId: $scope.lkdPCustId,
+										custLkdPeriodId: $scope.lktPId,
+										itemId : it.id,
+										itemName : it.name,
+										itemCat : it.itemCategory.name
+									};
+									remainingItems.push(t);
+							}
+						  });
+						  angular.forEach(remainingItems,function(rm){
+							$scope.manageCustLkdPrices.push(rm);
+						  }); 
+						  $scope.showPricesMenu = false;
+					});
+				
+				 
+		  },function( errorMessage ) {
+			  $scope.error = "Error has occurred while loading customer locked prices!";
+			  $scope.isLoading = false;
+	   });
+	 };
+	 $scope.backToMainMenu = function backToMainMenu(){
+		$scope.showPricesMenu = true;
+	 };
+	 $scope.saveMangeCustPrices = function saveMangeCustPrices(isClose){
+		var addCustomerPrices = [];
+		var updateCustomerPrices = [];
+		angular.forEach($scope.manageCustLkdPrices,function(entered){
+			if(entered.price!=null && entered.price!=""){
+				if(entered.id == null || entered.id == ""){
+					var act = {
+						price: entered.price,
+						hubId: $scope.lkdPHubId,
+						customerId: $scope.lkdPCustId,
+						custLkdPeriodId: $scope.lktPId,
+						itemId : entered.itemId
+					};
+					addCustomerPrices.push(act);
+				}else{
+					var samePrice = false;
+					angular.forEach($scope.dmpsCollection,function(dmp){
+						if(dmp.price == entered.price){
+							samePrice = true;
+							return;
+						}
+					});
+					if(!samePrice){
+						var act = {
+						id: entered.id,
+						price: entered.price,
+						hubId: $scope.lkdPHubId,
+						customerId: $scope.lkdPCustId,
+						custLkdPeriodId: $scope.lktPId,
+						itemId : entered.itemId
+					};
+					updateCustomerPrices.push(act);
+					}
+				}
+			}
+		});
+		if(addCustomerPrices.length>0){
+			angular.forEach(addCustomerPrices,function(add){
+				CustLkdItemPrice.create(add).$promise.then(function(response){
+				});
+			});
+		}
+		if(updateCustomerPrices.length>0){
+			angular.forEach(updateCustomerPrices,function(up){
+				CustLkdItemPrice.upsert(up).$promise.then(function(response){
+				});
+			});
+		}
+		if(isClose == true){
+			$scope.showPricesMenu = true;
+		}
+	 };
 });

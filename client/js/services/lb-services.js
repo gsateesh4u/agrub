@@ -548,6 +548,65 @@ module.factory(
           url: urlBase + "/Roles/:id/principals/count",
           method: "GET"
         },
+
+        // INTERNAL. Use User.roleMappings.findById() instead.
+        "::findById::user::roleMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/roleMappings/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.roleMappings.destroyById() instead.
+        "::destroyById::user::roleMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/roleMappings/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.roleMappings.updateById() instead.
+        "::updateById::user::roleMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/roleMappings/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use User.roleMappings() instead.
+        "::get::user::roleMappings": {
+          isArray: true,
+          url: urlBase + "/users/:id/roleMappings",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.roleMappings.create() instead.
+        "::create::user::roleMappings": {
+          url: urlBase + "/users/:id/roleMappings",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.roleMappings.createMany() instead.
+        "::createMany::user::roleMappings": {
+          isArray: true,
+          url: urlBase + "/users/:id/roleMappings",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.roleMappings.destroyAll() instead.
+        "::delete::user::roleMappings": {
+          url: urlBase + "/users/:id/roleMappings",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.roleMappings.count() instead.
+        "::count::user::roleMappings": {
+          url: urlBase + "/users/:id/roleMappings/count",
+          method: "GET"
+        },
       }
     );
 
@@ -3484,6 +3543,41 @@ module.factory(
         "createChangeStream": {
           url: urlBase + "/Items/change-stream",
           method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Item#getDefaultItems
+         * @methodOf lbServices.Item
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `items` – `{*=}` - 
+         */
+        "getDefaultItems": {
+          url: urlBase + "/Items/getDefaultItems",
+          method: "GET"
         },
 
         // INTERNAL. Use ItemCategory.items.findById() instead.
@@ -14039,33 +14133,6 @@ module.factory(
           method: "PUT"
         },
 
-        // INTERNAL. Use Hub.dailyMktPrices.findById() instead.
-        "prototype$__findById__dailyMktPrices": {
-          params: {
-          'fk': '@fk'
-          },
-          url: urlBase + "/Hubs/:id/dailyMktPrices/:fk",
-          method: "GET"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.destroyById() instead.
-        "prototype$__destroyById__dailyMktPrices": {
-          params: {
-          'fk': '@fk'
-          },
-          url: urlBase + "/Hubs/:id/dailyMktPrices/:fk",
-          method: "DELETE"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.updateById() instead.
-        "prototype$__updateById__dailyMktPrices": {
-          params: {
-          'fk': '@fk'
-          },
-          url: urlBase + "/Hubs/:id/dailyMktPrices/:fk",
-          method: "PUT"
-        },
-
         // INTERNAL. Use Hub.markets.findById() instead.
         "prototype$__findById__markets": {
           params: {
@@ -14271,31 +14338,6 @@ module.factory(
         // INTERNAL. Use Hub.transportOperators.count() instead.
         "prototype$__count__transportOperators": {
           url: urlBase + "/Hubs/:id/transportOperators/count",
-          method: "GET"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices() instead.
-        "prototype$__get__dailyMktPrices": {
-          isArray: true,
-          url: urlBase + "/Hubs/:id/dailyMktPrices",
-          method: "GET"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.create() instead.
-        "prototype$__create__dailyMktPrices": {
-          url: urlBase + "/Hubs/:id/dailyMktPrices",
-          method: "POST"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.destroyAll() instead.
-        "prototype$__delete__dailyMktPrices": {
-          url: urlBase + "/Hubs/:id/dailyMktPrices",
-          method: "DELETE"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.count() instead.
-        "prototype$__count__dailyMktPrices": {
-          url: urlBase + "/Hubs/:id/dailyMktPrices/count",
           method: "GET"
         },
 
@@ -16279,307 +16321,6 @@ module.factory(
         R.transportOperators.updateById = function() {
           var TargetResource = $injector.get("TransportOperator");
           var action = TargetResource["::updateById::Hub::transportOperators"];
-          return action.apply(R, arguments);
-        };
-    /**
-     * @ngdoc object
-     * @name lbServices.Hub.dailyMktPrices
-     * @header lbServices.Hub.dailyMktPrices
-     * @object
-     * @description
-     *
-     * The object `Hub.dailyMktPrices` groups methods
-     * manipulating `DailyMktPrice` instances related to `Hub`.
-     *
-     * Call {@link lbServices.Hub#dailyMktPrices Hub.dailyMktPrices()}
-     * to query all related instances.
-     */
-
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Hub#dailyMktPrices
-         * @methodOf lbServices.Hub
-         *
-         * @description
-         *
-         * Queries dailyMktPrices of Hub.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         *  - `filter` – `{object=}` - 
-         *
-         * @param {function(Array.<Object>,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DailyMktPrice` object.)
-         * </em>
-         */
-        R.dailyMktPrices = function() {
-          var TargetResource = $injector.get("DailyMktPrice");
-          var action = TargetResource["::get::Hub::dailyMktPrices"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Hub.dailyMktPrices#count
-         * @methodOf lbServices.Hub.dailyMktPrices
-         *
-         * @description
-         *
-         * Counts dailyMktPrices of Hub.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         *  - `where` – `{object=}` - Criteria to match model instances
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * Data properties:
-         *
-         *  - `count` – `{number=}` - 
-         */
-        R.dailyMktPrices.count = function() {
-          var TargetResource = $injector.get("DailyMktPrice");
-          var action = TargetResource["::count::Hub::dailyMktPrices"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Hub.dailyMktPrices#create
-         * @methodOf lbServices.Hub.dailyMktPrices
-         *
-         * @description
-         *
-         * Creates a new instance in dailyMktPrices of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DailyMktPrice` object.)
-         * </em>
-         */
-        R.dailyMktPrices.create = function() {
-          var TargetResource = $injector.get("DailyMktPrice");
-          var action = TargetResource["::create::Hub::dailyMktPrices"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Hub.dailyMktPrices#createMany
-         * @methodOf lbServices.Hub.dailyMktPrices
-         *
-         * @description
-         *
-         * Creates a new instance in dailyMktPrices of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {function(Array.<Object>,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Array.<Object>} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DailyMktPrice` object.)
-         * </em>
-         */
-        R.dailyMktPrices.createMany = function() {
-          var TargetResource = $injector.get("DailyMktPrice");
-          var action = TargetResource["::createMany::Hub::dailyMktPrices"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Hub.dailyMktPrices#destroyAll
-         * @methodOf lbServices.Hub.dailyMktPrices
-         *
-         * @description
-         *
-         * Deletes all dailyMktPrices of this model.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
-        R.dailyMktPrices.destroyAll = function() {
-          var TargetResource = $injector.get("DailyMktPrice");
-          var action = TargetResource["::delete::Hub::dailyMktPrices"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Hub.dailyMktPrices#destroyById
-         * @methodOf lbServices.Hub.dailyMktPrices
-         *
-         * @description
-         *
-         * Delete a related item by id for dailyMktPrices.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         *  - `fk` – `{*}` - Foreign key for dailyMktPrices
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * This method returns no data.
-         */
-        R.dailyMktPrices.destroyById = function() {
-          var TargetResource = $injector.get("DailyMktPrice");
-          var action = TargetResource["::destroyById::Hub::dailyMktPrices"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Hub.dailyMktPrices#findById
-         * @methodOf lbServices.Hub.dailyMktPrices
-         *
-         * @description
-         *
-         * Find a related item by id for dailyMktPrices.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         *  - `fk` – `{*}` - Foreign key for dailyMktPrices
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DailyMktPrice` object.)
-         * </em>
-         */
-        R.dailyMktPrices.findById = function() {
-          var TargetResource = $injector.get("DailyMktPrice");
-          var action = TargetResource["::findById::Hub::dailyMktPrices"];
-          return action.apply(R, arguments);
-        };
-
-        /**
-         * @ngdoc method
-         * @name lbServices.Hub.dailyMktPrices#updateById
-         * @methodOf lbServices.Hub.dailyMktPrices
-         *
-         * @description
-         *
-         * Update a related item by id for dailyMktPrices.
-         *
-         * @param {Object=} parameters Request parameters.
-         *
-         *  - `id` – `{*}` - PersistedModel id
-         *
-         *  - `fk` – `{*}` - Foreign key for dailyMktPrices
-         *
-         * @param {Object} postData Request data.
-         *
-         * This method expects a subset of model properties as request parameters.
-         *
-         * @param {function(Object,Object)=} successCb
-         *   Success callback with two arguments: `value`, `responseHeaders`.
-         *
-         * @param {function(Object)=} errorCb Error callback with one argument:
-         *   `httpResponse`.
-         *
-         * @returns {Object} An empty reference that will be
-         *   populated with the actual data once the response is returned
-         *   from the server.
-         *
-         * <em>
-         * (The remote method definition does not provide any description.
-         * This usually means the response is a `DailyMktPrice` object.)
-         * </em>
-         */
-        R.dailyMktPrices.updateById = function() {
-          var TargetResource = $injector.get("DailyMktPrice");
-          var action = TargetResource["::updateById::Hub::dailyMktPrices"];
           return action.apply(R, arguments);
         };
     /**
@@ -23907,6 +23648,33 @@ module.factory(
           method: "HEAD"
         },
 
+        // INTERNAL. Use User.roleMappings.findById() instead.
+        "prototype$__findById__roleMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/roleMappings/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.roleMappings.destroyById() instead.
+        "prototype$__destroyById__roleMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/roleMappings/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.roleMappings.updateById() instead.
+        "prototype$__updateById__roleMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/roleMappings/:fk",
+          method: "PUT"
+        },
+
         // INTERNAL. Use User.customers.findById() instead.
         "prototype$__findById__customers": {
           params: {
@@ -23959,6 +23727,33 @@ module.factory(
           },
           url: urlBase + "/users/:id/customers/rel/:fk",
           method: "HEAD"
+        },
+
+        // INTERNAL. Use User.customerMappings.findById() instead.
+        "prototype$__findById__customerMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/customerMappings/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.customerMappings.destroyById() instead.
+        "prototype$__destroyById__customerMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/customerMappings/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.customerMappings.updateById() instead.
+        "prototype$__updateById__customerMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/customerMappings/:fk",
+          method: "PUT"
         },
 
         // INTERNAL. Use User.hubs.findById() instead.
@@ -24015,6 +23810,33 @@ module.factory(
           method: "HEAD"
         },
 
+        // INTERNAL. Use User.hubMappings.findById() instead.
+        "prototype$__findById__hubMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/hubMappings/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.hubMappings.destroyById() instead.
+        "prototype$__destroyById__hubMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/hubMappings/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.hubMappings.updateById() instead.
+        "prototype$__updateById__hubMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/hubMappings/:fk",
+          method: "PUT"
+        },
+
         // INTERNAL. Use User.roles() instead.
         "prototype$__get__roles": {
           isArray: true,
@@ -24037,6 +23859,31 @@ module.factory(
         // INTERNAL. Use User.roles.count() instead.
         "prototype$__count__roles": {
           url: urlBase + "/users/:id/roles/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.roleMappings() instead.
+        "prototype$__get__roleMappings": {
+          isArray: true,
+          url: urlBase + "/users/:id/roleMappings",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.roleMappings.create() instead.
+        "prototype$__create__roleMappings": {
+          url: urlBase + "/users/:id/roleMappings",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.roleMappings.destroyAll() instead.
+        "prototype$__delete__roleMappings": {
+          url: urlBase + "/users/:id/roleMappings",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.roleMappings.count() instead.
+        "prototype$__count__roleMappings": {
+          url: urlBase + "/users/:id/roleMappings/count",
           method: "GET"
         },
 
@@ -24065,6 +23912,31 @@ module.factory(
           method: "GET"
         },
 
+        // INTERNAL. Use User.customerMappings() instead.
+        "prototype$__get__customerMappings": {
+          isArray: true,
+          url: urlBase + "/users/:id/customerMappings",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.customerMappings.create() instead.
+        "prototype$__create__customerMappings": {
+          url: urlBase + "/users/:id/customerMappings",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.customerMappings.destroyAll() instead.
+        "prototype$__delete__customerMappings": {
+          url: urlBase + "/users/:id/customerMappings",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.customerMappings.count() instead.
+        "prototype$__count__customerMappings": {
+          url: urlBase + "/users/:id/customerMappings/count",
+          method: "GET"
+        },
+
         // INTERNAL. Use User.hubs() instead.
         "prototype$__get__hubs": {
           isArray: true,
@@ -24087,6 +23959,31 @@ module.factory(
         // INTERNAL. Use User.hubs.count() instead.
         "prototype$__count__hubs": {
           url: urlBase + "/users/:id/hubs/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.hubMappings() instead.
+        "prototype$__get__hubMappings": {
+          isArray: true,
+          url: urlBase + "/users/:id/hubMappings",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.hubMappings.create() instead.
+        "prototype$__create__hubMappings": {
+          url: urlBase + "/users/:id/hubMappings",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.hubMappings.destroyAll() instead.
+        "prototype$__delete__hubMappings": {
+          url: urlBase + "/users/:id/hubMappings",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.hubMappings.count() instead.
+        "prototype$__count__hubMappings": {
+          url: urlBase + "/users/:id/hubMappings/count",
           method: "GET"
         },
 
@@ -24692,7 +24589,8 @@ module.factory(
          *
          * @param {Object=} parameters Request parameters.
          *
-         *  - `userId` – `{string=}` - 
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
          *
          * @param {function(Object,Object)=} successCb
          *   Success callback with two arguments: `value`, `responseHeaders`.
@@ -24709,7 +24607,7 @@ module.factory(
          *  - `user` – `{object=}` - 
          */
         "profile": {
-          url: urlBase + "/users/:userId/profile",
+          url: urlBase + "/users/profile/me",
           method: "GET"
         },
 
@@ -25530,6 +25428,307 @@ module.factory(
         };
     /**
      * @ngdoc object
+     * @name lbServices.User.roleMappings
+     * @header lbServices.User.roleMappings
+     * @object
+     * @description
+     *
+     * The object `User.roleMappings` groups methods
+     * manipulating `RoleMapping` instances related to `User`.
+     *
+     * Call {@link lbServices.User#roleMappings User.roleMappings()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#roleMappings
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Queries roleMappings of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `RoleMapping` object.)
+         * </em>
+         */
+        R.roleMappings = function() {
+          var TargetResource = $injector.get("RoleMapping");
+          var action = TargetResource["::get::user::roleMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.roleMappings#count
+         * @methodOf lbServices.User.roleMappings
+         *
+         * @description
+         *
+         * Counts roleMappings of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.roleMappings.count = function() {
+          var TargetResource = $injector.get("RoleMapping");
+          var action = TargetResource["::count::user::roleMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.roleMappings#create
+         * @methodOf lbServices.User.roleMappings
+         *
+         * @description
+         *
+         * Creates a new instance in roleMappings of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `RoleMapping` object.)
+         * </em>
+         */
+        R.roleMappings.create = function() {
+          var TargetResource = $injector.get("RoleMapping");
+          var action = TargetResource["::create::user::roleMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.roleMappings#createMany
+         * @methodOf lbServices.User.roleMappings
+         *
+         * @description
+         *
+         * Creates a new instance in roleMappings of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `RoleMapping` object.)
+         * </em>
+         */
+        R.roleMappings.createMany = function() {
+          var TargetResource = $injector.get("RoleMapping");
+          var action = TargetResource["::createMany::user::roleMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.roleMappings#destroyAll
+         * @methodOf lbServices.User.roleMappings
+         *
+         * @description
+         *
+         * Deletes all roleMappings of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.roleMappings.destroyAll = function() {
+          var TargetResource = $injector.get("RoleMapping");
+          var action = TargetResource["::delete::user::roleMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.roleMappings#destroyById
+         * @methodOf lbServices.User.roleMappings
+         *
+         * @description
+         *
+         * Delete a related item by id for roleMappings.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for roleMappings
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.roleMappings.destroyById = function() {
+          var TargetResource = $injector.get("RoleMapping");
+          var action = TargetResource["::destroyById::user::roleMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.roleMappings#findById
+         * @methodOf lbServices.User.roleMappings
+         *
+         * @description
+         *
+         * Find a related item by id for roleMappings.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for roleMappings
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `RoleMapping` object.)
+         * </em>
+         */
+        R.roleMappings.findById = function() {
+          var TargetResource = $injector.get("RoleMapping");
+          var action = TargetResource["::findById::user::roleMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.roleMappings#updateById
+         * @methodOf lbServices.User.roleMappings
+         *
+         * @description
+         *
+         * Update a related item by id for roleMappings.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for roleMappings
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `RoleMapping` object.)
+         * </em>
+         */
+        R.roleMappings.updateById = function() {
+          var TargetResource = $injector.get("RoleMapping");
+          var action = TargetResource["::updateById::user::roleMappings"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
      * @name lbServices.User.customers
      * @header lbServices.User.customers
      * @object
@@ -25940,6 +26139,307 @@ module.factory(
         };
     /**
      * @ngdoc object
+     * @name lbServices.User.customerMappings
+     * @header lbServices.User.customerMappings
+     * @object
+     * @description
+     *
+     * The object `User.customerMappings` groups methods
+     * manipulating `CustomerUserMap` instances related to `User`.
+     *
+     * Call {@link lbServices.User#customerMappings User.customerMappings()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#customerMappings
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Queries customerMappings of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `CustomerUserMap` object.)
+         * </em>
+         */
+        R.customerMappings = function() {
+          var TargetResource = $injector.get("CustomerUserMap");
+          var action = TargetResource["::get::user::customerMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.customerMappings#count
+         * @methodOf lbServices.User.customerMappings
+         *
+         * @description
+         *
+         * Counts customerMappings of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.customerMappings.count = function() {
+          var TargetResource = $injector.get("CustomerUserMap");
+          var action = TargetResource["::count::user::customerMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.customerMappings#create
+         * @methodOf lbServices.User.customerMappings
+         *
+         * @description
+         *
+         * Creates a new instance in customerMappings of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `CustomerUserMap` object.)
+         * </em>
+         */
+        R.customerMappings.create = function() {
+          var TargetResource = $injector.get("CustomerUserMap");
+          var action = TargetResource["::create::user::customerMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.customerMappings#createMany
+         * @methodOf lbServices.User.customerMappings
+         *
+         * @description
+         *
+         * Creates a new instance in customerMappings of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `CustomerUserMap` object.)
+         * </em>
+         */
+        R.customerMappings.createMany = function() {
+          var TargetResource = $injector.get("CustomerUserMap");
+          var action = TargetResource["::createMany::user::customerMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.customerMappings#destroyAll
+         * @methodOf lbServices.User.customerMappings
+         *
+         * @description
+         *
+         * Deletes all customerMappings of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.customerMappings.destroyAll = function() {
+          var TargetResource = $injector.get("CustomerUserMap");
+          var action = TargetResource["::delete::user::customerMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.customerMappings#destroyById
+         * @methodOf lbServices.User.customerMappings
+         *
+         * @description
+         *
+         * Delete a related item by id for customerMappings.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for customerMappings
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.customerMappings.destroyById = function() {
+          var TargetResource = $injector.get("CustomerUserMap");
+          var action = TargetResource["::destroyById::user::customerMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.customerMappings#findById
+         * @methodOf lbServices.User.customerMappings
+         *
+         * @description
+         *
+         * Find a related item by id for customerMappings.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for customerMappings
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `CustomerUserMap` object.)
+         * </em>
+         */
+        R.customerMappings.findById = function() {
+          var TargetResource = $injector.get("CustomerUserMap");
+          var action = TargetResource["::findById::user::customerMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.customerMappings#updateById
+         * @methodOf lbServices.User.customerMappings
+         *
+         * @description
+         *
+         * Update a related item by id for customerMappings.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for customerMappings
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `CustomerUserMap` object.)
+         * </em>
+         */
+        R.customerMappings.updateById = function() {
+          var TargetResource = $injector.get("CustomerUserMap");
+          var action = TargetResource["::updateById::user::customerMappings"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
      * @name lbServices.User.hubs
      * @header lbServices.User.hubs
      * @object
@@ -26346,6 +26846,307 @@ module.factory(
         R.hubs.updateById = function() {
           var TargetResource = $injector.get("Hub");
           var action = TargetResource["::updateById::user::hubs"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
+     * @name lbServices.User.hubMappings
+     * @header lbServices.User.hubMappings
+     * @object
+     * @description
+     *
+     * The object `User.hubMappings` groups methods
+     * manipulating `HubUserMap` instances related to `User`.
+     *
+     * Call {@link lbServices.User#hubMappings User.hubMappings()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#hubMappings
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Queries hubMappings of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `HubUserMap` object.)
+         * </em>
+         */
+        R.hubMappings = function() {
+          var TargetResource = $injector.get("HubUserMap");
+          var action = TargetResource["::get::user::hubMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.hubMappings#count
+         * @methodOf lbServices.User.hubMappings
+         *
+         * @description
+         *
+         * Counts hubMappings of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.hubMappings.count = function() {
+          var TargetResource = $injector.get("HubUserMap");
+          var action = TargetResource["::count::user::hubMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.hubMappings#create
+         * @methodOf lbServices.User.hubMappings
+         *
+         * @description
+         *
+         * Creates a new instance in hubMappings of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `HubUserMap` object.)
+         * </em>
+         */
+        R.hubMappings.create = function() {
+          var TargetResource = $injector.get("HubUserMap");
+          var action = TargetResource["::create::user::hubMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.hubMappings#createMany
+         * @methodOf lbServices.User.hubMappings
+         *
+         * @description
+         *
+         * Creates a new instance in hubMappings of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `HubUserMap` object.)
+         * </em>
+         */
+        R.hubMappings.createMany = function() {
+          var TargetResource = $injector.get("HubUserMap");
+          var action = TargetResource["::createMany::user::hubMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.hubMappings#destroyAll
+         * @methodOf lbServices.User.hubMappings
+         *
+         * @description
+         *
+         * Deletes all hubMappings of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.hubMappings.destroyAll = function() {
+          var TargetResource = $injector.get("HubUserMap");
+          var action = TargetResource["::delete::user::hubMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.hubMappings#destroyById
+         * @methodOf lbServices.User.hubMappings
+         *
+         * @description
+         *
+         * Delete a related item by id for hubMappings.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for hubMappings
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.hubMappings.destroyById = function() {
+          var TargetResource = $injector.get("HubUserMap");
+          var action = TargetResource["::destroyById::user::hubMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.hubMappings#findById
+         * @methodOf lbServices.User.hubMappings
+         *
+         * @description
+         *
+         * Find a related item by id for hubMappings.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for hubMappings
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `HubUserMap` object.)
+         * </em>
+         */
+        R.hubMappings.findById = function() {
+          var TargetResource = $injector.get("HubUserMap");
+          var action = TargetResource["::findById::user::hubMappings"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.hubMappings#updateById
+         * @methodOf lbServices.User.hubMappings
+         *
+         * @description
+         *
+         * Update a related item by id for hubMappings.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for hubMappings
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `HubUserMap` object.)
+         * </em>
+         */
+        R.hubMappings.updateById = function() {
+          var TargetResource = $injector.get("HubUserMap");
+          var action = TargetResource["::updateById::user::hubMappings"];
           return action.apply(R, arguments);
         };
 
@@ -28233,65 +29034,6 @@ module.factory(
         // INTERNAL. Use Item.dailyMktPrices.count() instead.
         "::count::Item::dailyMktPrices": {
           url: urlBase + "/Items/:id/dailyMktPrices/count",
-          method: "GET"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.findById() instead.
-        "::findById::Hub::dailyMktPrices": {
-          params: {
-          'fk': '@fk'
-          },
-          url: urlBase + "/Hubs/:id/dailyMktPrices/:fk",
-          method: "GET"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.destroyById() instead.
-        "::destroyById::Hub::dailyMktPrices": {
-          params: {
-          'fk': '@fk'
-          },
-          url: urlBase + "/Hubs/:id/dailyMktPrices/:fk",
-          method: "DELETE"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.updateById() instead.
-        "::updateById::Hub::dailyMktPrices": {
-          params: {
-          'fk': '@fk'
-          },
-          url: urlBase + "/Hubs/:id/dailyMktPrices/:fk",
-          method: "PUT"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices() instead.
-        "::get::Hub::dailyMktPrices": {
-          isArray: true,
-          url: urlBase + "/Hubs/:id/dailyMktPrices",
-          method: "GET"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.create() instead.
-        "::create::Hub::dailyMktPrices": {
-          url: urlBase + "/Hubs/:id/dailyMktPrices",
-          method: "POST"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.createMany() instead.
-        "::createMany::Hub::dailyMktPrices": {
-          isArray: true,
-          url: urlBase + "/Hubs/:id/dailyMktPrices",
-          method: "POST"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.destroyAll() instead.
-        "::delete::Hub::dailyMktPrices": {
-          url: urlBase + "/Hubs/:id/dailyMktPrices",
-          method: "DELETE"
-        },
-
-        // INTERNAL. Use Hub.dailyMktPrices.count() instead.
-        "::count::Hub::dailyMktPrices": {
-          url: urlBase + "/Hubs/:id/dailyMktPrices/count",
           method: "GET"
         },
 
@@ -34017,6 +34759,65 @@ module.factory(
           url: urlBase + "/CustomerUserMaps/change-stream",
           method: "POST"
         },
+
+        // INTERNAL. Use User.customerMappings.findById() instead.
+        "::findById::user::customerMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/customerMappings/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.customerMappings.destroyById() instead.
+        "::destroyById::user::customerMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/customerMappings/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.customerMappings.updateById() instead.
+        "::updateById::user::customerMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/customerMappings/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use User.customerMappings() instead.
+        "::get::user::customerMappings": {
+          isArray: true,
+          url: urlBase + "/users/:id/customerMappings",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.customerMappings.create() instead.
+        "::create::user::customerMappings": {
+          url: urlBase + "/users/:id/customerMappings",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.customerMappings.createMany() instead.
+        "::createMany::user::customerMappings": {
+          isArray: true,
+          url: urlBase + "/users/:id/customerMappings",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.customerMappings.destroyAll() instead.
+        "::delete::user::customerMappings": {
+          url: urlBase + "/users/:id/customerMappings",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.customerMappings.count() instead.
+        "::count::user::customerMappings": {
+          url: urlBase + "/users/:id/customerMappings/count",
+          method: "GET"
+        },
       }
     );
 
@@ -34692,6 +35493,65 @@ module.factory(
         "createChangeStream": {
           url: urlBase + "/HubUserMaps/change-stream",
           method: "POST"
+        },
+
+        // INTERNAL. Use User.hubMappings.findById() instead.
+        "::findById::user::hubMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/hubMappings/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.hubMappings.destroyById() instead.
+        "::destroyById::user::hubMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/hubMappings/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.hubMappings.updateById() instead.
+        "::updateById::user::hubMappings": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/hubMappings/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use User.hubMappings() instead.
+        "::get::user::hubMappings": {
+          isArray: true,
+          url: urlBase + "/users/:id/hubMappings",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.hubMappings.create() instead.
+        "::create::user::hubMappings": {
+          url: urlBase + "/users/:id/hubMappings",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.hubMappings.createMany() instead.
+        "::createMany::user::hubMappings": {
+          isArray: true,
+          url: urlBase + "/users/:id/hubMappings",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.hubMappings.destroyAll() instead.
+        "::delete::user::hubMappings": {
+          url: urlBase + "/users/:id/hubMappings",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.hubMappings.count() instead.
+        "::count::user::hubMappings": {
+          url: urlBase + "/users/:id/hubMappings/count",
+          method: "GET"
         },
       }
     );

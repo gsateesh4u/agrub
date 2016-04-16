@@ -2,7 +2,7 @@
 		<!-- Main row -->
 		<div class="row">
 			<div class="col-md-12">
-				<section class="panel">
+				<section class="panel" ng-show="showPricesMenu">
 					<header class="panel-heading">
 					  {{'tbl_head_prices' | xlat}}
 					</header>
@@ -19,6 +19,7 @@
 									</select>&nbsp;&nbsp;&nbsp;&nbsp;  
 									<button class="btn btn-primary" ng-if="selectedTab==1" ng-click="showDMP()" align="right">Add New Item Price</button>
 									<button class="btn btn-primary" ng-if="selectedTab==2" ng-click="showLokedPeriods()" align="right">Add Customer Locked Period</button>
+									<button class="btn btn-primary" ng-if="selectedTab==2 && lktPId" ng-click="showManageCustLkdPrices()" align="right">Manage Customer Locked Prices</button>
 									<button class="btn btn-primary" ng-if="selectedTab==3" ng-click="showCLP()" align="right">Add Customer Locked Item</button>
 								</td>
 							</tr>
@@ -153,7 +154,7 @@
 												<td>{{row.customer.name}}</td>
 												<td>{{row.startDate | date:'yyyy-MM-dd'}}</td>
 												<td>{{row.endDate | date:'yyyy-MM-dd'}}</td>
-												<td></td>
+												<td>Expires in <b>{{row.endDate | dateDiff}}</b> day(s)</td>
 												<td align="center">
 													<span class="sprite sprite-edit" title="Edit CLP" style="cursor:pointer" ng-click="showUpdateCustLkdPeriod(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
 													<span class="sprite sprite-delete" title="Delete CLP" style="cursor:pointer" ng-click="deleteCustLkdPeriod(row)"></span>
@@ -366,6 +367,52 @@
 							</div>
 						  </div>
 						  <!-- row end -->
+			</div>
+		</section>
+		<section class="panel" ng-show="!showPricesMenu">
+			<header class="panel-heading">
+			  Managing locked prices for cusomer <b>{{lkdPCustName}}</b> for period (<b>{{lktPStDt | date:'yyyy-MM-dd'}} - {{lktPEndDt | date:'yyyy-MM-dd'}}</b>) for hub <b>{{lkdPHubName}}</b>
+			  <button class="btn btn-primary" ng-click="saveMangeCustPrices(false)" style="margin-left:5%">Save</button>&nbsp;&nbsp;<button class="btn btn-primary" ng-click="saveMangeCustPrices(true)">Save And Close</button>&nbsp;&nbsp;<button class="btn btn-warning" ng-click="backToMainMenu()">Cancel</button>
+			</header>
+			<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+			<div class="panel-body table-responsive">
+				<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="manageCustLkdPrices" st-table="mcustpCollection">
+					<thead>
+					<tr>
+							<th st-sort="itemName" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
+							<th st-sort="itemCat"><i class="glyphicon glyphicon-filter"></i>Category</th>
+							<th st-sort="price"><i class="glyphicon glyphicon-filter"></i>price</th>
+						</tr>
+						<tr>
+							<th>
+								<input st-search="itemName" placeholder="search for item" class="input-sm form-control" type="search"/>
+							</th>
+							<th><input st-search="itemCat" placeholder="search for item" class="input-sm form-control" type="search"/></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody ng-show="!isLoading">
+					<tr st-select-row="row" ng-repeat="row in mcustpCollection">
+							<td>{{row.itemName}}</td>
+							<td>{{row.itemCat}}</td>
+							<td><input type="text" ng-model="row.price"></td>
+					</tr>
+					<tr ng-if="mcustpCollection.length == 0">
+						<td colspan="3" class="text-center">{{error}}</td>
+					</tr>
+					</tbody>
+					<tbody ng-show="isLoading">
+					<tr>
+						<td colspan="3" class="text-center"><img src="./css/images/loading.gif"/></td>
+					</tr>
+					</tbody>
+					<tfoot>
+					<tr ng-show="!isLoading && mcustpCollection.length != 0">
+						<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="3">
+						</td>
+					</tr>
+					</tfoot>
+				</table>
 			</div>
 		</section>
 	</div>

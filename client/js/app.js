@@ -164,10 +164,11 @@ var app = angular
 	            return({
 	                hasPermission : hasPermission,
 					getCurrentUser : getCurrentUser,
-					isRoleExist : isRoleExists,
+					isRoleExists : isRoleExists,
 					getUserHubs : getUserHubs
 	            });
 				function isRoleExists(role){
+					var currentUser = $cookieStore.get("currentUser");
 					if(currentUser == null || currentUser.roles == null || currentUser.roles.length == 0){
 	            		return false;
 	            	} else {
@@ -181,6 +182,7 @@ var app = angular
 					}
 				};
 				function getUserHubs(){
+					var currentUser = $cookieStore.get("currentUser");
 					if(currentUser == null){
 	            		return null;
 	            	} else {
@@ -251,5 +253,17 @@ var app = angular
 	        });           
         }
     };
+}).filter('dateDiff', function () {
+  var magicNumber = (1000 * 60 * 60 * 24);
+  return function (toDate) {
+    if(toDate){
+		 var utc1 = new Date(toDate);
+		var utc2 = new Date();
+      var dayDiff = Math.floor((utc1 - utc2) / magicNumber);
+      if (angular.isNumber(dayDiff)){
+        return dayDiff + 1;
+      }
+    }
+  };
 });
 				
