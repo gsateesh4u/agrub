@@ -146,20 +146,30 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 	   });
   };
    $scope.updateMinPrice = function updateMinPrice(updatedPrice, row){
-		if(updatedPrice!=row.minPrice){
-			DailyMktPrice.prototype$updateAttributes(
-			   { id: row.id }, 
-			   { minPrice: updatedPrice }
-			 );
-		}
+	   if(commonService.getCurrentUser() == null || commonService.getCurrentUser().id == null){
+		   alert("Not a valid user");
+	   }else{
+		   if(updatedPrice!="" && updatedPrice!=null && updatedPrice!=row.minPrice){
+				DailyMktPrice.prototype$updateAttributes(
+				   { id: row.id }, 
+				   { minPrice: updatedPrice, userId : commonService.getCurrentUser().id }
+				 );
+			}
+	   }
+		
    };
     $scope.updateMaxPrice = function updateMaxPrice(updatedPrice, row){
-		if(updatedPrice!=row.maxPrice){
-			DailyMktPrice.prototype$updateAttributes(
-			   { id: row.id }, 
-			   { maxPrice: updatedPrice }
-			 );
-		}
+    	if(commonService.getCurrentUser() == null || commonService.getCurrentUser().id == null){
+ 		   alert("Not a valid user");
+ 	   }else{
+ 		  if(updatedPrice!="" && updatedPrice!=null && updatedPrice!=row.maxPrice){
+ 				DailyMktPrice.prototype$updateAttributes(
+ 				   { id: row.id }, 
+ 				   { maxPrice: updatedPrice, userId : commonService.getCurrentUser().id }
+ 				 );
+ 			}
+ 	   }
+		
    };
    $scope.updateCustPrice = function updateCustPrice(updatedPrice, row){
 		if(updatedPrice!=row.price){
@@ -364,21 +374,30 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		}
    };
    $scope.addNewItemPrice = function addNewItemPrice(){
+	   if (commonService.getCurrentUser() == null
+			|| commonService.getCurrentUser().id == null) {
+		alert("Not a valid user");
+	} else {
 		var insertDMP = {
-		itemId : $scope.selectedItem.id,
-		minPrice : $scope.minPrice,
-		maxPrice : $scope.maxPrice,
-		dmpDate : new Date(),
-		updatedTimestamp : new Date().getTime(),
-		marketId : $scope.selectedMarket.id
-	};
-		
-		DailyMktPrice.create(insertDMP).$promise.then(function(response){
-			$scope.showForm = 0;
-			$scope.setActiveTab(1);
-		},function( errorMessage ) {
-				  $scope.subError = "Error has occurred while adding dmp!";
-		});
+			itemId : $scope.selectedItem.id,
+			minPrice : $scope.minPrice,
+			maxPrice : $scope.maxPrice,
+			dmpDate : new Date(),
+			updatedTimestamp : new Date().getTime(),
+			marketId : $scope.selectedMarket.id,
+			userId : commonService.getCurrentUser().id
+		};
+
+		DailyMktPrice.create(insertDMP).$promise
+				.then(
+						function(response) {
+							$scope.showForm = 0;
+							$scope.setActiveTab(1);
+						},
+						function(errorMessage) {
+							$scope.subError = "Error has occurred while adding dmp!";
+						});
+	}
    };
    $scope.showUpdateCustLkdPeriod = function showUpdateCustLkdPeriod(custLkdPeriod, header){
 		$scope.header = header;

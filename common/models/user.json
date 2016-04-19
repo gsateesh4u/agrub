@@ -32,6 +32,16 @@
 		"model": "Hub",
 		"through": "HubUserMap"
     },
+    "dailyMktPrices": {
+		"type": "hasMany",
+		"model": "DailyMktPrice",
+		"foreignKey": "userId"
+    },
+    "dailyMktPriceHistory": {
+		"type": "hasMany",
+		"model": "DailyMktPriceHistory",
+		"foreignKey": "userId"
+    },
     "accessTokens": {
       "type": "hasMany",
       "model": "accessToken",

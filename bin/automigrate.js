@@ -23,9 +23,12 @@ ds.automigrate('CustLkdItemPrice', function(err) {
 ds.automigrate('CustLkdPeriod', function(err) {
   if (err) throw err;
 });
-ds.automigrate('Customer', function(err) {
+ds.automigrate('CustomerUserMap', function(err) {
   if (err) throw err;
 });
+ds.automigrate('Customer', function(err) {
+	  if (err) throw err;
+	});
 ds.automigrate('DailyMktPriceHistory', function(err) {
   if (err) throw err;
 });

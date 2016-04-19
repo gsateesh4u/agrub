@@ -34,7 +34,12 @@
       "type": "belongsTo",
       "model": "Market",
       "foreignKey": ""
-    }
+    },
+    "user": {
+        "type": "belongsTo",
+        "model": "User",
+        "foreignKey": ""
+      }
   },
   "acls": [],
   "methods": {}

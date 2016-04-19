@@ -229,8 +229,8 @@ var app = angular
             // view -> model
             elm.bind('blur', function() {
                 scope.$apply(function() {
-                    ctrl.$setViewValue(elm.html());
-					scope.$eval(attrs.ngEnter);
+                    //ctrl.$setViewValue(elm.html());
+					//scope.$eval(attrs.ngEnter);
                 });
             });
 
@@ -243,9 +243,10 @@ var app = angular
            // ctrl.$setViewValue(elm.html());
 			 elm.bind("keydown keypress", function (event) {
 	            if(event.which === 13) {
-					ctrl.$setViewValue(elm.html());
+	            	ctrl.$setViewValue(elm.html());
 	                scope.$apply(function (){
 	                    scope.$eval(attrs.ngEnter);
+	                    elm.blur();
 	                });
 	 
 	                event.preventDefault();

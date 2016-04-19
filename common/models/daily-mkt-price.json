@@ -29,6 +29,11 @@
       "model": "Market",
       "foreignKey": ""
     },
+    "user": {
+        "type": "belongsTo",
+        "model": "User",
+        "foreignKey": ""
+      },
     "item": {
       "type": "belongsTo",
       "model": "Item",
