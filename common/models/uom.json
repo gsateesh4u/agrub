@@ -13,15 +13,14 @@
     },
     "description": {
       "type": "string"
-    }
+    },
+    "quantity": {
+        "type": "number",
+        "required": true
+      }
   },
   "validations": [],
   "relations": {
-	  "items": {
-	      "type": "hasMany",
-	      "model": "Item",
-	      "through": "ItemUomMap"
-	    }
   },
   "acls": [],
   "methods": {}
