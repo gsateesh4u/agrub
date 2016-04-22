@@ -1,0 +1,28 @@
+{
+  "name": "Uom",
+  "plural": "Uoms",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+  "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+	  "items": {
+	      "type": "hasMany",
+	      "model": "Item",
+	      "through": "ItemUomMap"
+	    }
+  },
+  "acls": [],
+  "methods": {}
+}
