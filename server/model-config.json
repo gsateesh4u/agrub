@@ -143,5 +143,13 @@
   "HubUserMap": {
     "dataSource": "db",
     "public": true
+  },
+  "Uom": {
+    "dataSource": "db",
+    "public": true
+  },
+  "ItemUomMap": {
+    "dataSource": "db",
+    "public": true
   }
 }

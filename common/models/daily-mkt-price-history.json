@@ -15,6 +15,10 @@
       "type": "number",
       "required": true
     },
+    "uomQty": {
+  	  "type": "number",
+  	  "required": true
+  	},
     "dmpDate": {
       "type": "date",
       "required": true
@@ -35,6 +39,11 @@
       "model": "Market",
       "foreignKey": ""
     },
+    "uom": {
+      "type": "belongsTo",
+      "model": "Uom",
+      "foreignKey": ""
+     },
     "user": {
         "type": "belongsTo",
         "model": "User",

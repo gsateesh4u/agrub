@@ -54,7 +54,7 @@
 											<tr st-select-row="row" ng-repeat="row in itemsCollection">
 												<td>{{row.name}}</td>
 												<td>{{row.hub.name}}</td>
-												<td>{{row.unit}}</td>
+												<td>{{(row.uomMaps | filter:{isDefault: true}:true | limitTo:1 ) [0].uom.name}}</td>
 												<td>{{row.itemCategory.name}}</td>
 												<td align="center">
 													<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer" ng-click="showItem(row,'Update')"></span>&nbsp;&nbsp;&nbsp;

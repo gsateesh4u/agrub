@@ -21,9 +21,6 @@
     "qualityVariance": {
       "type": "string"
     },
-    "unit": {
-      "type": "string"
-    },
     "available": {
       "type": "boolean"
     }
@@ -45,6 +42,16 @@
       "model": "ItemPrice",
       "foreignKey": ""
     },
+    "uoms": {
+        "type": "hasMany",
+        "model": "Uom",
+        "through": "ItemUomMap"
+      },
+      "uomMaps": {
+          "type": "hasMany",
+          "model": "ItemUomMap",
+          "foreignKey": ""
+        },
     "dailyMktPrices": {
       "type": "hasMany",
       "model": "DailyMktPrice",

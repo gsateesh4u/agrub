@@ -14,6 +14,10 @@
       "type": "number",
       "required": true
     },
+    "uomQty": {
+	  "type": "number",
+	  "required": true
+	},
     "dmpDate": {
       "type": "date",
       "required": true
@@ -30,10 +34,15 @@
       "foreignKey": ""
     },
     "user": {
-        "type": "belongsTo",
-        "model": "User",
-        "foreignKey": ""
-      },
+      "type": "belongsTo",
+       "model": "User",
+       "foreignKey": ""
+    },
+    "uom": {
+      "type": "belongsTo",
+      "model": "Uom",
+      "foreignKey": ""
+    },
     "item": {
       "type": "belongsTo",
       "model": "Item",

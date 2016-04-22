@@ -32,7 +32,6 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonS
 		description: "",
 		qualityParam: "",
 		qualityVariance: "",
-		unit: "",
 		available:"true",
 		itemCategoryId:"",
 		hubId: ""
@@ -46,7 +45,6 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonS
 		description: "",
 		qualityParam: "",
 		qualityVariance: "",
-		unit: "",
 		available:"",
 		itemCategoryId:"",
 		hubId: ""
@@ -57,7 +55,7 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonS
 	$scope.isLoading = true;
 	function showItemsTab(){
 		Item.find({
-			filter: { include: ['itemCategory','hub']}
+			filter: { include: ['itemCategory','hub',{uomMaps:'uom'}]}
 		}).$promise
 			.then(function(response) { $scope.rowCollection = [].concat(response);
 			  $scope.displayedCollection = [].concat($scope.rowCollection);

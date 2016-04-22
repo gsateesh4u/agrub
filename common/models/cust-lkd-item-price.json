@@ -9,13 +9,22 @@
     "price": {
       "type": "string",
       "required": true
-    }
+    },
+    "uomQty": {
+	  "type": "number",
+	  "required": true
+	}
   },
   "validations": [],
   "relations": {
     "hub": {
       "type": "belongsTo",
       "model": "Hub",
+      "foreignKey": ""
+    },
+    "uom": {
+      "type": "belongsTo",
+      "model": "Uom",
       "foreignKey": ""
     },
     "item": {
