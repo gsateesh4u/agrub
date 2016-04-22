@@ -143,7 +143,7 @@ app.controller('HubController', function($scope,Hub, Item, ItemCategory, commonS
    };
    $scope.selectAllItems = function selectAllItems(){
 		angular.forEach($scope.defaultItems,function(item){
-			item.selected = true;
+			item.selected = $scope.all;
 		});
    };
     $scope.$watch('hubsCollection', function(row) {
