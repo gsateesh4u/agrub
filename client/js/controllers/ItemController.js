@@ -1,4 +1,4 @@
-app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonService){
+app.controller('ItemController',function($scope,Item, Hub,Uom, ItemCategory, commonService){
 	var tabClasses;
 	$scope.selectedTab = 1;
 	function initTabs() {
@@ -34,7 +34,8 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonS
 		qualityVariance: "",
 		available:"true",
 		itemCategoryId:"",
-		hubId: ""
+		hubId: "",
+		uomId:""
 	};
 	$scope.tempItemCategory = {
 		name : "",
@@ -47,7 +48,8 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonS
 		qualityVariance: "",
 		available:"",
 		itemCategoryId:"",
-		hubId: ""
+		hubId: "",
+		uomId: ""
 	};
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
@@ -96,33 +98,50 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonS
 					 $scope.showAddUpdateItem = false;
 					  $scope.isSubLoading = false;
 				}else {
-					ItemCategory.find().$promise.then(function(res){
-						 $scope.isSubLoading = false;
-						$scope.itemCategories = [].concat(res);
-						$scope.isSubLoading = false;
-						if($scope.itemCategories ==null || $scope.itemCategories.length==0){
+					Uom.find().$promise.then(function(uomList){
+						$scope.uoms = [].concat(uomList);
+						if($scope.uoms == null || $scope.uoms.length == 0){
 							 $scope.errorMessage = "No item categories found!!!";
 							 $scope.showAddUpdateItem = false;
-						}else {
-						if(operation == 'Update'){
-							   angular.forEach($scope.hubs, function (tempHub) {
-								 if(tempHub.id == item.hubId){
-									$scope.selectedHub = tempHub;
-								 }
-							  });
-							   angular.forEach($scope.itemCategories, function (tempCat) {
-								 if(tempCat.id == item.itemCategoryId){
-									$scope.selectedItemCategory = tempCat;
-								 }
-							  });
-						   }
-							$scope.showAddUpdateItem = true;
-							$scope.item = item;						
+						}else{
+							ItemCategory.find().$promise.then(function(res){
+								 $scope.isSubLoading = false;
+								$scope.itemCategories = [].concat(res);
+								$scope.isSubLoading = false;
+								if($scope.itemCategories ==null || $scope.itemCategories.length==0){
+									 $scope.errorMessage = "No item categories found!!!";
+									 $scope.showAddUpdateItem = false;
+								}else {
+								if(operation == 'Update'){
+									   angular.forEach($scope.hubs, function (tempHub) {
+										 if(tempHub.id == item.hubId){
+											$scope.selectedHub = tempHub;
+										 }
+									  });
+									   angular.forEach($scope.uoms, function (tempUom) {
+											 if(tempUom.id == item.uomId){
+												$scope.selectedUom = tempUom;
+											 }
+										  });
+									   angular.forEach($scope.itemCategories, function (tempCat) {
+										 if(tempCat.id == item.itemCategoryId){
+											$scope.selectedItemCategory = tempCat;
+										 }
+									  });
+								   }
+									$scope.showAddUpdateItem = true;
+									$scope.item = item;						
+								}
+							},function( errorMessage ) {
+							  $scope.errorMessage = "Error has occurred while loading item categories!";
+							  $scope.isSubLoading = false;
+							  $scope.showAddUpdateItem = false;
+							});
 						}
-					},function( errorMessage ) {
-					  $scope.errorMessage = "Error has occurred while loading item categories!";
-					  $scope.isSubLoading = false;
-					  $scope.showAddUpdateItem = false;
+					},function(err){
+						$scope.errorMessage = 'Error while fetching UOMs';
+						$scope.isSubLoading = false;
+						  $scope.showAddUpdateItem = false;
 					});
 				}
 			},function( errorMessage ) {
@@ -190,6 +209,7 @@ app.controller('ItemController',function($scope,Item, Hub, ItemCategory, commonS
     item.hubId = $scope.selectedHub.id;
 		  //item.hub.id = $scope.selectedHub.id;
 		  item.itemCategoryId = $scope.selectedItemCategory.id;
+		  item.uomId = $scope.selectedUom.id;
 		  //item.itemCategory.id = $scope.selectedItemCategory.id;
 	   if(operation == 'Add'){
 		  Item.create(item).$promise

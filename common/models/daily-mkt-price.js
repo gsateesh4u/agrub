@@ -19,7 +19,9 @@ DailyMktPrice.uploadDMP = function(dmps, callback) {
 								updatedTimestamp : new Date().getTime(),
 								itemId : dmps[j].itemId,
 								marketId : dmps[j].marketId,
-								userId : dmps[j].userId
+								userId : dmps[j].userId,
+								uomId : dmps[j].uomId,
+								uomQty : dmps[j].uomQty
 							};
 							found.push(tempDmp);
 						} else {
@@ -31,7 +33,9 @@ DailyMktPrice.uploadDMP = function(dmps, callback) {
 								itemId : ex.itemId,
 								marketId : ex.marketId,
 								id : ex.id,
-								userId : dmps[j].userId
+								userId : dmps[j].userId,
+								uomId : dmps[j].uomId,
+								uomQty : dmps[j].uomQty
 							};
 							found.push(tempDmp);
 						}
@@ -63,7 +67,9 @@ DailyMktPrice.observe('after save', function(ctx, next){
 		updatedTimestamp : mdl.updatedTimestamp,
 		itemId : mdl.itemId,
 		marketId : mdl.marketId,
-		userId : mdl.userId
+		userId : mdl.userId,
+		uomId : mdl.uomId,
+		uomQty : mdl.uomQty
 	};
 	DailyMktPriceHistory.create(dmpHistory, function(err, dmp){
 		

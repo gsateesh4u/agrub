@@ -159,14 +159,16 @@
 								<select name="selectedItemCategory" class="form-control"  ng-model="selectedItemCategory" required class="form-control" ng-options="category.name for category in itemCategories track by category.id">
 								</select>
 							</div>
-							<div class="form-group col-xs-5">
+							<div class="form-group col-xs-4">
 								<label>Quality Param<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityParam" required class="form-control"/>
 							</div>
-							<div class="form-group col-xs-5">
+							<div class="form-group col-xs-4">
 								<label>Quality Variance<font color="red">*</font> :</label> <input type="textarea" ng-model="item.qualityVariance" required class="form-control"/>
 							</div>
-							<div class="form-group col-xs-2">
-								<label>Unit:</label> <input type="text" ng-model="item.unit" required class="form-control"/>
+							<div class="form-group col-xs-4">
+								<label>Unit <font color="red">*</font> :</label> 
+								<select name="selectedUom" class="form-control"  ng-model="selectedUom" required class="form-control" ng-options="uom.name for uom in uoms track by uom.id">
+								</select>
 							</div>
 						</div>
 						<div class="modal-footer">

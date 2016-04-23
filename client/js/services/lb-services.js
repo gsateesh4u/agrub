@@ -3023,6 +3023,12 @@ module.factory(
           method: "PUT"
         },
 
+        // INTERNAL. Use Item.uom() instead.
+        "prototype$__get__uom": {
+          url: urlBase + "/Items/:id/uom",
+          method: "GET"
+        },
+
         // INTERNAL. Use Item.itemPrices() instead.
         "prototype$__get__itemPrices": {
           isArray: true,
@@ -5137,6 +5143,42 @@ module.factory(
         R.dailyMktPriceHistory.updateById = function() {
           var TargetResource = $injector.get("DailyMktPriceHistory");
           var action = TargetResource["::updateById::Item::dailyMktPriceHistory"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Item#uom
+         * @methodOf lbServices.Item
+         *
+         * @description
+         *
+         * Fetches belongsTo relation uom.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        R.uom = function() {
+          var TargetResource = $injector.get("Uom");
+          var action = TargetResource["::get::Item::uom"];
           return action.apply(R, arguments);
         };
 
@@ -23675,6 +23717,60 @@ module.factory(
           method: "PUT"
         },
 
+        // INTERNAL. Use User.dailyMktPrices.findById() instead.
+        "prototype$__findById__dailyMktPrices": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPrices/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.destroyById() instead.
+        "prototype$__destroyById__dailyMktPrices": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPrices/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.updateById() instead.
+        "prototype$__updateById__dailyMktPrices": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPrices/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.findById() instead.
+        "prototype$__findById__dailyMktPriceHistory": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPriceHistory/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.destroyById() instead.
+        "prototype$__destroyById__dailyMktPriceHistory": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPriceHistory/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.updateById() instead.
+        "prototype$__updateById__dailyMktPriceHistory": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPriceHistory/:fk",
+          method: "PUT"
+        },
+
         // INTERNAL. Use User.customers.findById() instead.
         "prototype$__findById__customers": {
           params: {
@@ -23884,6 +23980,56 @@ module.factory(
         // INTERNAL. Use User.roleMappings.count() instead.
         "prototype$__count__roleMappings": {
           url: urlBase + "/users/:id/roleMappings/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices() instead.
+        "prototype$__get__dailyMktPrices": {
+          isArray: true,
+          url: urlBase + "/users/:id/dailyMktPrices",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.create() instead.
+        "prototype$__create__dailyMktPrices": {
+          url: urlBase + "/users/:id/dailyMktPrices",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.destroyAll() instead.
+        "prototype$__delete__dailyMktPrices": {
+          url: urlBase + "/users/:id/dailyMktPrices",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.count() instead.
+        "prototype$__count__dailyMktPrices": {
+          url: urlBase + "/users/:id/dailyMktPrices/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory() instead.
+        "prototype$__get__dailyMktPriceHistory": {
+          isArray: true,
+          url: urlBase + "/users/:id/dailyMktPriceHistory",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.create() instead.
+        "prototype$__create__dailyMktPriceHistory": {
+          url: urlBase + "/users/:id/dailyMktPriceHistory",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.destroyAll() instead.
+        "prototype$__delete__dailyMktPriceHistory": {
+          url: urlBase + "/users/:id/dailyMktPriceHistory",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.count() instead.
+        "prototype$__count__dailyMktPriceHistory": {
+          url: urlBase + "/users/:id/dailyMktPriceHistory/count",
           method: "GET"
         },
 
@@ -24780,6 +24926,18 @@ module.factory(
         // INTERNAL. Use Hub.users.count() instead.
         "::count::Hub::users": {
           url: urlBase + "/Hubs/:id/users/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DailyMktPrice.user() instead.
+        "::get::DailyMktPrice::user": {
+          url: urlBase + "/DailyMktPrices/:id/user",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DailyMktPriceHistory.user() instead.
+        "::get::DailyMktPriceHistory::user": {
+          url: urlBase + "/DailyMktPricesHistory/:id/user",
           method: "GET"
         },
 
@@ -25725,6 +25883,608 @@ module.factory(
         R.roleMappings.updateById = function() {
           var TargetResource = $injector.get("RoleMapping");
           var action = TargetResource["::updateById::user::roleMappings"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
+     * @name lbServices.User.dailyMktPrices
+     * @header lbServices.User.dailyMktPrices
+     * @object
+     * @description
+     *
+     * The object `User.dailyMktPrices` groups methods
+     * manipulating `DailyMktPrice` instances related to `User`.
+     *
+     * Call {@link lbServices.User#dailyMktPrices User.dailyMktPrices()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#dailyMktPrices
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Queries dailyMktPrices of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPrice` object.)
+         * </em>
+         */
+        R.dailyMktPrices = function() {
+          var TargetResource = $injector.get("DailyMktPrice");
+          var action = TargetResource["::get::user::dailyMktPrices"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPrices#count
+         * @methodOf lbServices.User.dailyMktPrices
+         *
+         * @description
+         *
+         * Counts dailyMktPrices of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.dailyMktPrices.count = function() {
+          var TargetResource = $injector.get("DailyMktPrice");
+          var action = TargetResource["::count::user::dailyMktPrices"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPrices#create
+         * @methodOf lbServices.User.dailyMktPrices
+         *
+         * @description
+         *
+         * Creates a new instance in dailyMktPrices of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPrice` object.)
+         * </em>
+         */
+        R.dailyMktPrices.create = function() {
+          var TargetResource = $injector.get("DailyMktPrice");
+          var action = TargetResource["::create::user::dailyMktPrices"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPrices#createMany
+         * @methodOf lbServices.User.dailyMktPrices
+         *
+         * @description
+         *
+         * Creates a new instance in dailyMktPrices of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPrice` object.)
+         * </em>
+         */
+        R.dailyMktPrices.createMany = function() {
+          var TargetResource = $injector.get("DailyMktPrice");
+          var action = TargetResource["::createMany::user::dailyMktPrices"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPrices#destroyAll
+         * @methodOf lbServices.User.dailyMktPrices
+         *
+         * @description
+         *
+         * Deletes all dailyMktPrices of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.dailyMktPrices.destroyAll = function() {
+          var TargetResource = $injector.get("DailyMktPrice");
+          var action = TargetResource["::delete::user::dailyMktPrices"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPrices#destroyById
+         * @methodOf lbServices.User.dailyMktPrices
+         *
+         * @description
+         *
+         * Delete a related item by id for dailyMktPrices.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for dailyMktPrices
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.dailyMktPrices.destroyById = function() {
+          var TargetResource = $injector.get("DailyMktPrice");
+          var action = TargetResource["::destroyById::user::dailyMktPrices"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPrices#findById
+         * @methodOf lbServices.User.dailyMktPrices
+         *
+         * @description
+         *
+         * Find a related item by id for dailyMktPrices.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for dailyMktPrices
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPrice` object.)
+         * </em>
+         */
+        R.dailyMktPrices.findById = function() {
+          var TargetResource = $injector.get("DailyMktPrice");
+          var action = TargetResource["::findById::user::dailyMktPrices"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPrices#updateById
+         * @methodOf lbServices.User.dailyMktPrices
+         *
+         * @description
+         *
+         * Update a related item by id for dailyMktPrices.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for dailyMktPrices
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPrice` object.)
+         * </em>
+         */
+        R.dailyMktPrices.updateById = function() {
+          var TargetResource = $injector.get("DailyMktPrice");
+          var action = TargetResource["::updateById::user::dailyMktPrices"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
+     * @name lbServices.User.dailyMktPriceHistory
+     * @header lbServices.User.dailyMktPriceHistory
+     * @object
+     * @description
+     *
+     * The object `User.dailyMktPriceHistory` groups methods
+     * manipulating `DailyMktPriceHistory` instances related to `User`.
+     *
+     * Call {@link lbServices.User#dailyMktPriceHistory User.dailyMktPriceHistory()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User#dailyMktPriceHistory
+         * @methodOf lbServices.User
+         *
+         * @description
+         *
+         * Queries dailyMktPriceHistory of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPriceHistory` object.)
+         * </em>
+         */
+        R.dailyMktPriceHistory = function() {
+          var TargetResource = $injector.get("DailyMktPriceHistory");
+          var action = TargetResource["::get::user::dailyMktPriceHistory"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPriceHistory#count
+         * @methodOf lbServices.User.dailyMktPriceHistory
+         *
+         * @description
+         *
+         * Counts dailyMktPriceHistory of user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.dailyMktPriceHistory.count = function() {
+          var TargetResource = $injector.get("DailyMktPriceHistory");
+          var action = TargetResource["::count::user::dailyMktPriceHistory"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPriceHistory#create
+         * @methodOf lbServices.User.dailyMktPriceHistory
+         *
+         * @description
+         *
+         * Creates a new instance in dailyMktPriceHistory of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPriceHistory` object.)
+         * </em>
+         */
+        R.dailyMktPriceHistory.create = function() {
+          var TargetResource = $injector.get("DailyMktPriceHistory");
+          var action = TargetResource["::create::user::dailyMktPriceHistory"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPriceHistory#createMany
+         * @methodOf lbServices.User.dailyMktPriceHistory
+         *
+         * @description
+         *
+         * Creates a new instance in dailyMktPriceHistory of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPriceHistory` object.)
+         * </em>
+         */
+        R.dailyMktPriceHistory.createMany = function() {
+          var TargetResource = $injector.get("DailyMktPriceHistory");
+          var action = TargetResource["::createMany::user::dailyMktPriceHistory"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPriceHistory#destroyAll
+         * @methodOf lbServices.User.dailyMktPriceHistory
+         *
+         * @description
+         *
+         * Deletes all dailyMktPriceHistory of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.dailyMktPriceHistory.destroyAll = function() {
+          var TargetResource = $injector.get("DailyMktPriceHistory");
+          var action = TargetResource["::delete::user::dailyMktPriceHistory"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPriceHistory#destroyById
+         * @methodOf lbServices.User.dailyMktPriceHistory
+         *
+         * @description
+         *
+         * Delete a related item by id for dailyMktPriceHistory.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for dailyMktPriceHistory
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.dailyMktPriceHistory.destroyById = function() {
+          var TargetResource = $injector.get("DailyMktPriceHistory");
+          var action = TargetResource["::destroyById::user::dailyMktPriceHistory"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPriceHistory#findById
+         * @methodOf lbServices.User.dailyMktPriceHistory
+         *
+         * @description
+         *
+         * Find a related item by id for dailyMktPriceHistory.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for dailyMktPriceHistory
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPriceHistory` object.)
+         * </em>
+         */
+        R.dailyMktPriceHistory.findById = function() {
+          var TargetResource = $injector.get("DailyMktPriceHistory");
+          var action = TargetResource["::findById::user::dailyMktPriceHistory"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.User.dailyMktPriceHistory#updateById
+         * @methodOf lbServices.User.dailyMktPriceHistory
+         *
+         * @description
+         *
+         * Update a related item by id for dailyMktPriceHistory.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - User id
+         *
+         *  - `fk` – `{*}` - Foreign key for dailyMktPriceHistory
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `DailyMktPriceHistory` object.)
+         * </em>
+         */
+        R.dailyMktPriceHistory.updateById = function() {
+          var TargetResource = $injector.get("DailyMktPriceHistory");
+          var action = TargetResource["::updateById::user::dailyMktPriceHistory"];
           return action.apply(R, arguments);
         };
     /**
@@ -28505,6 +29265,12 @@ module.factory(
       { 'id': '@id' },
       {
 
+        // INTERNAL. Use DailyMktPrice.user() instead.
+        "prototype$__get__user": {
+          url: urlBase + "/DailyMktPrices/:id/user",
+          method: "GET"
+        },
+
         // INTERNAL. Use DailyMktPrice.item() instead.
         "prototype$__get__item": {
           url: urlBase + "/DailyMktPrices/:id/item",
@@ -28514,6 +29280,12 @@ module.factory(
         // INTERNAL. Use DailyMktPrice.market() instead.
         "prototype$__get__market": {
           url: urlBase + "/DailyMktPrices/:id/market",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DailyMktPrice.uom() instead.
+        "prototype$__get__uom": {
+          url: urlBase + "/DailyMktPrices/:id/uom",
           method: "GET"
         },
 
@@ -29037,6 +29809,65 @@ module.factory(
           method: "GET"
         },
 
+        // INTERNAL. Use User.dailyMktPrices.findById() instead.
+        "::findById::user::dailyMktPrices": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPrices/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.destroyById() instead.
+        "::destroyById::user::dailyMktPrices": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPrices/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.updateById() instead.
+        "::updateById::user::dailyMktPrices": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPrices/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices() instead.
+        "::get::user::dailyMktPrices": {
+          isArray: true,
+          url: urlBase + "/users/:id/dailyMktPrices",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.create() instead.
+        "::create::user::dailyMktPrices": {
+          url: urlBase + "/users/:id/dailyMktPrices",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.createMany() instead.
+        "::createMany::user::dailyMktPrices": {
+          isArray: true,
+          url: urlBase + "/users/:id/dailyMktPrices",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.destroyAll() instead.
+        "::delete::user::dailyMktPrices": {
+          url: urlBase + "/users/:id/dailyMktPrices",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.dailyMktPrices.count() instead.
+        "::count::user::dailyMktPrices": {
+          url: urlBase + "/users/:id/dailyMktPrices/count",
+          method: "GET"
+        },
+
         // INTERNAL. Use Market.dailyMktPrices.findById() instead.
         "::findById::Market::dailyMktPrices": {
           params: {
@@ -29240,6 +30071,42 @@ module.factory(
 
         /**
          * @ngdoc method
+         * @name lbServices.DailyMktPrice#user
+         * @methodOf lbServices.DailyMktPrice
+         *
+         * @description
+         *
+         * Fetches belongsTo relation user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.user = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::get::DailyMktPrice::user"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
          * @name lbServices.DailyMktPrice#item
          * @methodOf lbServices.DailyMktPrice
          *
@@ -29307,6 +30174,42 @@ module.factory(
         R.market = function() {
           var TargetResource = $injector.get("Market");
           var action = TargetResource["::get::DailyMktPrice::market"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DailyMktPrice#uom
+         * @methodOf lbServices.DailyMktPrice
+         *
+         * @description
+         *
+         * Fetches belongsTo relation uom.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        R.uom = function() {
+          var TargetResource = $injector.get("Uom");
+          var action = TargetResource["::get::DailyMktPrice::uom"];
           return action.apply(R, arguments);
         };
 
@@ -32560,6 +33463,12 @@ module.factory(
           method: "GET"
         },
 
+        // INTERNAL. Use CustLkdItemPrice.uom() instead.
+        "prototype$__get__uom": {
+          url: urlBase + "/CustLkdItemPrices/:id/uom",
+          method: "GET"
+        },
+
         /**
          * @ngdoc method
          * @name lbServices.CustLkdItemPrice#create
@@ -33504,6 +34413,42 @@ module.factory(
           return action.apply(R, arguments);
         };
 
+        /**
+         * @ngdoc method
+         * @name lbServices.CustLkdItemPrice#uom
+         * @methodOf lbServices.CustLkdItemPrice
+         *
+         * @description
+         *
+         * Fetches belongsTo relation uom.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        R.uom = function() {
+          var TargetResource = $injector.get("Uom");
+          var action = TargetResource["::get::CustLkdItemPrice::uom"];
+          return action.apply(R, arguments);
+        };
+
     return R;
   }]);
 
@@ -33541,6 +34486,18 @@ module.factory(
         // INTERNAL. Use DailyMktPriceHistory.market() instead.
         "prototype$__get__market": {
           url: urlBase + "/DailyMktPricesHistory/:id/market",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DailyMktPriceHistory.user() instead.
+        "prototype$__get__user": {
+          url: urlBase + "/DailyMktPricesHistory/:id/user",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DailyMktPriceHistory.uom() instead.
+        "prototype$__get__uom": {
+          url: urlBase + "/DailyMktPricesHistory/:id/uom",
           method: "GET"
         },
 
@@ -34025,6 +34982,65 @@ module.factory(
           method: "GET"
         },
 
+        // INTERNAL. Use User.dailyMktPriceHistory.findById() instead.
+        "::findById::user::dailyMktPriceHistory": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPriceHistory/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.destroyById() instead.
+        "::destroyById::user::dailyMktPriceHistory": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPriceHistory/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.updateById() instead.
+        "::updateById::user::dailyMktPriceHistory": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/users/:id/dailyMktPriceHistory/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory() instead.
+        "::get::user::dailyMktPriceHistory": {
+          isArray: true,
+          url: urlBase + "/users/:id/dailyMktPriceHistory",
+          method: "GET"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.create() instead.
+        "::create::user::dailyMktPriceHistory": {
+          url: urlBase + "/users/:id/dailyMktPriceHistory",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.createMany() instead.
+        "::createMany::user::dailyMktPriceHistory": {
+          isArray: true,
+          url: urlBase + "/users/:id/dailyMktPriceHistory",
+          method: "POST"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.destroyAll() instead.
+        "::delete::user::dailyMktPriceHistory": {
+          url: urlBase + "/users/:id/dailyMktPriceHistory",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use User.dailyMktPriceHistory.count() instead.
+        "::count::user::dailyMktPriceHistory": {
+          url: urlBase + "/users/:id/dailyMktPriceHistory/count",
+          method: "GET"
+        },
+
         // INTERNAL. Use Market.dailyMktPriceHistory.findById() instead.
         "::findById::Market::dailyMktPriceHistory": {
           params: {
@@ -34295,6 +35311,78 @@ module.factory(
         R.market = function() {
           var TargetResource = $injector.get("Market");
           var action = TargetResource["::get::DailyMktPriceHistory::market"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DailyMktPriceHistory#user
+         * @methodOf lbServices.DailyMktPriceHistory
+         *
+         * @description
+         *
+         * Fetches belongsTo relation user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.user = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::get::DailyMktPriceHistory::user"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.DailyMktPriceHistory#uom
+         * @methodOf lbServices.DailyMktPriceHistory
+         *
+         * @description
+         *
+         * Fetches belongsTo relation uom.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        R.uom = function() {
+          var TargetResource = $injector.get("Uom");
+          var action = TargetResource["::get::DailyMktPriceHistory::uom"];
           return action.apply(R, arguments);
         };
 
@@ -35767,6 +36855,622 @@ module.factory(
           var action = TargetResource["::get::HubUserMap::hub"];
           return action.apply(R, arguments);
         };
+
+    return R;
+  }]);
+
+/**
+ * @ngdoc object
+ * @name lbServices.Uom
+ * @header lbServices.Uom
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `Uom` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+module.factory(
+  "Uom",
+  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
+    var R = Resource(
+      urlBase + "/Uoms/:id",
+      { 'id': '@id' },
+      {
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#create
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        "create": {
+          url: urlBase + "/Uoms",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#createMany
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
+          url: urlBase + "/Uoms",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#upsert
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        "upsert": {
+          url: urlBase + "/Uoms",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#exists
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Check whether a model instance exists in the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `exists` – `{boolean=}` - 
+         */
+        "exists": {
+          url: urlBase + "/Uoms/:id/exists",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#findById
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Find a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         *  - `filter` – `{object=}` - Filter defining fields and include
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        "findById": {
+          url: urlBase + "/Uoms/:id",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#find
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Find all instances of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        "find": {
+          isArray: true,
+          url: urlBase + "/Uoms",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#findOne
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Find first instance of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        "findOne": {
+          url: urlBase + "/Uoms/findOne",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#updateAll
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * The number of instances updated
+         */
+        "updateAll": {
+          url: urlBase + "/Uoms/update",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#deleteById
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        "deleteById": {
+          url: urlBase + "/Uoms/:id",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#count
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Count instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "count": {
+          url: urlBase + "/Uoms/count",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#prototype$updateAttributes
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Update attributes for a model instance and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        "prototype$updateAttributes": {
+          url: urlBase + "/Uoms/:id",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#createChangeStream
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/Uoms/change-stream",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Item.uom() instead.
+        "::get::Item::uom": {
+          url: urlBase + "/Items/:id/uom",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DailyMktPrice.uom() instead.
+        "::get::DailyMktPrice::uom": {
+          url: urlBase + "/DailyMktPrices/:id/uom",
+          method: "GET"
+        },
+
+        // INTERNAL. Use CustLkdItemPrice.uom() instead.
+        "::get::CustLkdItemPrice::uom": {
+          url: urlBase + "/CustLkdItemPrices/:id/uom",
+          method: "GET"
+        },
+
+        // INTERNAL. Use DailyMktPriceHistory.uom() instead.
+        "::get::DailyMktPriceHistory::uom": {
+          url: urlBase + "/DailyMktPricesHistory/:id/uom",
+          method: "GET"
+        },
+      }
+    );
+
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#updateOrCreate
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        R["updateOrCreate"] = R["upsert"];
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#update
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * The number of instances updated
+         */
+        R["update"] = R["updateAll"];
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#destroyById
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        R["destroyById"] = R["deleteById"];
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Uom#removeById
+         * @methodOf lbServices.Uom
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Uom` object.)
+         * </em>
+         */
+        R["removeById"] = R["deleteById"];
+
+
+    /**
+    * @ngdoc property
+    * @name lbServices.Uom#modelName
+    * @propertyOf lbServices.Uom
+    * @description
+    * The name of the model represented by this $resource,
+    * i.e. `Uom`.
+    */
+    R.modelName = "Uom";
+
 
     return R;
   }]);

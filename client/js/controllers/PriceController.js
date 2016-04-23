@@ -1,4 +1,5 @@
-app.controller('PriceController', function($scope,commonService, DailyMktPrice, DailyMktPriceHistory, CustLkdItemPrice, CustLkdPeriod, Hub, Market, Item, $filter){
+app.controller('PriceController', function($scope,commonService, DailyMktPrice, DailyMktPriceHistory, CustLkdItemPrice, 
+		CustLkdPeriod, Hub, Market, Item, $filter, Uom){
 	 $scope.dates = {
 	    today: new Date(),
 	    start: "",
@@ -71,13 +72,17 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
   initTabs();
   $scope.setActiveTab(1);
   
+  Uom.find().$promise.then(function(uoms){
+	  $scope.uoms = [].concat(uoms);
+  });
+  
   function fillDMPTab(){
 	$scope.dmpsCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
 	$scope.groupProperty = 'item.itemCategory.name';
 	DailyMktPrice.find({
-		filter: { include: [{item:'itemCategory'},{market:'hub'}] }
+		filter: { include: [{item:['itemCategory','uom']},{market:'hub'},'uom'] }
 	}).$promise
 		.then(function(response) { 
 		  $scope.dmpsCollection = [].concat(response);
@@ -96,7 +101,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 	$scope.isLoading = true;
 	$scope.groupProperty = 'item.itemCategory.name';
 	DailyMktPriceHistory.find({
-		filter: { include: [{item:'itemCategory'},{market:'hub'}] }
+		filter: { include: [{item:['itemCategory','uom']},{market:'hub'},'uom'] }
 	}).$promise
 		.then(function(response) { 
 		  $scope.dmphsCollection = [].concat(response);
@@ -114,7 +119,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		$scope.itemsByPage = 10;
 		$scope.isLoading = true;
 		CustLkdItemPrice.find({
-			filter: { include: ['customer','item','custLkdPeriod','hub'] }
+			filter: { include: ['customer','item','custLkdPeriod','hub','uom'] }
 		}).$promise
 			.then(function(response) { 
 			  $scope.custPricesCollection = [].concat(response);
@@ -191,9 +196,46 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		   });
 	   }
    };
+   $scope.deleteDMP = function deleteDMP(row){
+	   if(commonService.hasPermission('pricing')){
+		   var flag = confirm("Do you really want to delete daily market price for  "+row.item.name+" ?");
+		   if(flag){
+			   DailyMktPrice.deleteById({id:row.id}).$promise
+					.then(function(response) { 
+					 $scope.showForm = 0;
+					$scope.setActiveTab(1);
+				  },function( errorMessage ) {
+					  $scope.error = "Error has occurred while deleting daily market price!";
+			   });
+		   }  
+	   }
+   };
+   $scope.showUpdateDMP = function showUpdateDMP(row){
+	   if(commonService.hasPermission('pricing')){
+		  $scope.hubs = [].concat(row.market.hub);
+		  $scope.markets = [].concat(row.market);
+		  $scope.items = [].concat(row.item);
+		  $scope.selectedHub = row.market.hub;
+		  $scope.selectedMarket = row.market;
+		  $scope.selectedItem = row.item;
+		  $scope.selectedUom = row.uom;
+		  $scope.uomQty = row.uomQty;
+		  $scope.minPrice = row.minPrice;
+		  $scope.maxPrice = row.maxPrice;
+		  $scope.dmpHeader = 'Update';
+		  $scope.isDmpLoading = false;
+		  $scope.showForm = 1;
+		  $scope.dmpToUpdate = row;
+	   }
+   };
    $scope.showDMP = function(){
+	   $scope.dmpHeader = 'Add';
 		if(commonService.hasPermission('pricing')){
 			$scope.isDmpLoading = true;
+			$scope.selectedMarket = null;
+			$scope.selectedItem = null;
+			$scope.selectedHub = null;
+			$scope.markets = [];$scope.items = []; $scope.hubs = [];
 			Hub.find().$promise
 				.then(function(response) { 
 					$scope.hubs  = [].concat(response);
@@ -205,10 +247,6 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 				  $scope.isDmpLoading = false;
 			});
 		}
-		/*else if(commonService.hasPermission('hubadmin')){
-			$scope.showForm = 1;
-			$scope.hubs = [commonService.getCurrentUser().hub];
-		}*/
    };
    $scope.showCLP = function(){
 		$scope.showForm = 3;
@@ -350,6 +388,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			$scope.isDmpLoading = true;
 			Item.find({
 			   filter:{
+				   include:['uom'],
 				  where:{hubId: $scope.selectedHub.id}  
 			   }
 		   }).$promise
@@ -373,7 +412,14 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			});
 		}
    };
-   $scope.addNewItemPrice = function addNewItemPrice(){
+   $scope.populateUom = function populateUom(){
+	if($scope.selectedItem && $scope.selectedItem.uomId){
+		$scope.selectedUom = $scope.selectedItem.uom;
+		//$scope.selectedUom.id = $scope.selectedItem.uomId;
+		$scope.uomQty = $scope.selectedItem.uom.quantity;
+	}
+   };
+   $scope.addUpdateItemPrice = function addUpdateItemPrice(){
 	   if (commonService.getCurrentUser() == null
 			|| commonService.getCurrentUser().id == null) {
 		alert("Not a valid user");
@@ -385,18 +431,34 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 			dmpDate : new Date(),
 			updatedTimestamp : new Date().getTime(),
 			marketId : $scope.selectedMarket.id,
-			userId : commonService.getCurrentUser().id
+			userId : commonService.getCurrentUser().id,
+			uomId : $scope.selectedUom.id,
+			uomQty : $scope.uomQty
 		};
-
-		DailyMktPrice.create(insertDMP).$promise
-				.then(
-						function(response) {
-							$scope.showForm = 0;
-							$scope.setActiveTab(1);
-						},
-						function(errorMessage) {
-							$scope.subError = "Error has occurred while adding dmp!";
-						});
+		if($scope.dmpHeader == 'Add'){
+			DailyMktPrice.create(insertDMP).$promise
+			.then(
+					function(response) {
+						$scope.showForm = 0;
+						$scope.setActiveTab(1);
+					},
+					function(errorMessage) {
+						$scope.subError = "Error has occurred while adding dmp!";
+					});
+		}
+		if($scope.dmpHeader == 'Update'){
+			insertDMP.id = $scope.dmpToUpdate.id;
+			DailyMktPrice.upsert(insertDMP).$promise
+			.then(
+					function(response) {
+						$scope.showForm = 0;
+						$scope.setActiveTab(1);
+					},
+					function(errorMessage) {
+						$scope.subError = "Error has occurred while adding dmp!";
+					});	
+		};
+		
 	}
    };
    $scope.showUpdateCustLkdPeriod = function showUpdateCustLkdPeriod(custLkdPeriod, header){
@@ -498,7 +560,7 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 		
 		CustLkdItemPrice.find({
 			filter: { 
-			include: [{item:'itemCategory'}] ,
+			include: [{item:'itemCategory'},'uom'] ,
 			where:{customerId: $scope.lkdPCustId}  
 			}
 		}).$promise
@@ -511,15 +573,18 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 					hubId: $scope.lkdPHubId,
 					customerId: $scope.lkdPCustId,
 					custLkdPeriodId: $scope.lktPId,
+					uomQty: cp.uomQty,
+					uomId : cp.uomId,
 					itemId : cp.itemId,
 					itemName : cp.item.name,
-					itemCat : cp.item.itemCategory.name
+					itemCat : cp.item.itemCategory.name,
+					uom : cp.uom
 				};
 				$scope.manageCustLkdPrices.push(t);
 			  });
 			  Item.find({
 					filter: { 
-					include: ['itemCategory'] ,
+					include: ['itemCategory','uom'] ,
 					where:{hubId: $scope.lkdPHubId} 
 					}
 				}).$promise
@@ -543,7 +608,10 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 										custLkdPeriodId: $scope.lktPId,
 										itemId : it.id,
 										itemName : it.name,
-										itemCat : it.itemCategory.name
+										uomQty : it.uom.quantity,
+										uomId : it.uomId,
+										itemCat : it.itemCategory.name,
+										uom : it.uom
 									};
 									remainingItems.push(t);
 							}
@@ -573,8 +641,10 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 						price: entered.price,
 						hubId: $scope.lkdPHubId,
 						customerId: $scope.lkdPCustId,
+						uomQty : entered.uomQty,
 						custLkdPeriodId: $scope.lktPId,
-						itemId : entered.itemId
+						itemId : entered.itemId,
+						uomId : entered.uom.id
 					};
 					addCustomerPrices.push(act);
 				}else{
@@ -592,7 +662,9 @@ app.controller('PriceController', function($scope,commonService, DailyMktPrice, 
 						hubId: $scope.lkdPHubId,
 						customerId: $scope.lkdPCustId,
 						custLkdPeriodId: $scope.lktPId,
-						itemId : entered.itemId
+						itemId : entered.itemId,
+						uomQty : entered.uomQty,
+						uomId : entered.uom.id
 					};
 					updateCustomerPrices.push(act);
 					}

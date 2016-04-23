@@ -125,7 +125,8 @@ app.controller('HubController', function($scope,Hub, Item, ItemCategory, commonS
 								unit : tempItem.unit,
 								available : tempItem.available,
 								itemCategoryId : res.id,
-								hubId : $scope.selHubId
+								hubId : $scope.selHubId,
+								uomId : tempItem.uomId
 							};
 							Item.create(it).$promise.then(function(newitem){
 							});

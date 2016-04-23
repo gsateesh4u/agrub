@@ -20,7 +20,7 @@
 									<button class="btn btn-primary" ng-if="selectedTab==1" ng-click="showDMP()" align="right">Add New Item Price</button>
 									<button class="btn btn-primary" ng-if="selectedTab==2" ng-click="showLokedPeriods()" align="right">Add Customer Locked Period</button>
 									<button class="btn btn-primary" ng-if="selectedTab==2 && lktPId" ng-click="showManageCustLkdPrices()" align="right">Manage Customer Locked Prices</button>
-									<button class="btn btn-primary" ng-if="selectedTab==3" ng-click="showCLP()" align="right">Add Customer Locked Item</button>
+									<!-- <button class="btn btn-primary" ng-if="selectedTab==3" ng-click="showCLP()" align="right">Add Customer Locked Item</button> -->
 								</td>
 							</tr>
 						</table> 
@@ -41,41 +41,42 @@
 												<th>Min Price</th>
 												<th>Max Price</th>
 												<th>Market</th>
+												<th>Actions</th>
 											</tr>
 											<tr>
 												<th>
 													<input st-search="item.name" placeholder="search for item" class="input-sm form-control" type="search"/>
 												</th>
-												<th></th><th></th><th></th><th></th>
+												<th></th><th></th><th></th><th></th><th></th>
 											</tr>
 										</thead>
 										<tbody ng-show="!isLoading"  ng-repeat="(key, value) in dmpCollection | groupBy: groupProperty">
 											<tr ng-if="key !== 'undefined'" class="text-center text-uppercase text-danger" >
-											  <td colspan="5">{{key}}</td>
+											  <td colspan="6">{{key}}</td>
 											</tr>
 										<tr st-select-row="row" ng-repeat="row in value">
 												<td>{{row.item.name}}</td>
-												<td>{{row.item.unit}}</td>
+												<td>{{row.uom.name}}</td>
 												<td><div ng-model="minPrice" contentEditable ng-enter="updateMinPrice(minPrice,row)">{{row.minPrice}}</div></td>
 												<td><div ng-model="maxPrice" contentEditable ng-enter="updateMaxPrice(maxPrice,row)">{{row.maxPrice}}</div></td>
 												<td>{{row.market.name}}</td>
-												<!--<td align="center">
-													<span class="sprite sprite-edit" title="Edit DMP" style="cursor:pointer"></span>&nbsp;&nbsp;&nbsp;
-													<span class="sprite sprite-delete" title="Delete DMP" style="cursor:pointer"></span>
-												</td>-->
+												<td align="center">
+													<span class="sprite sprite-edit" title="Edit DMP" style="cursor:pointer" ng-click="showUpdateDMP(row)"></span>&nbsp;&nbsp;&nbsp;
+													<span class="sprite sprite-delete" title="Delete DMP" style="cursor:pointer" ng-click="deleteDMP(row)"></span>
+												</td>
 										</tr>
 										<tr ng-if="dmpCollection.length == 0">
-											<td colspan="5" class="text-center">{{error}}</td>
+											<td colspan="6" class="text-center">{{error}}</td>
 										</tr>
 										</tbody>
 										<tbody ng-show="isLoading">
 										<tr>
-											<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
+											<td colspan="6" class="text-center"><img src="./css/images/loading.gif"/></td>
 										</tr>
 										</tbody>
 										<tfoot>
 										<tr ng-show="!isLoading && dmpCollection.length != 0">
-											<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
+											<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="6">
 											</td>
 										</tr>
 										</tfoot>
@@ -107,7 +108,7 @@
 											</tr>
 										<tr st-select-row="row" ng-repeat="row in value">
 												<td>{{row.item.name}}</td>
-												<td>{{row.item.unit}}</td>
+												<td>{{row.uom.name}}</td>
 												<td>{{row.minPrice}}</td>
 												<td>{{row.maxPrice}}</td>
 												<td>{{row.dmpDate}}</td>
@@ -187,7 +188,7 @@
 												<th>Price</th>
 												<th>Start Date</th>
 												<th>End Date</th>
-												<th>Status</th>
+												<th>UOM</th>
 												<th>Actions</th>
 											</tr>
 											<tr>
@@ -207,7 +208,7 @@
 												<td><div ng-model="custPrice" contentEditable ng-enter="updateCustPrice(custPrice,row)">{{row.price}}</div></td>
 												<td>{{row.custLkdPeriod.startDate | date:'yyyy-MM-dd'}}</td>
 												<td>{{row.custLkdPeriod.endDate | date:'yyyy-MM-dd'}}</td>
-												<td></td>
+												<td>{{row.uomQty}} &nbsp; {{row.uom.name}}</td>
 												<td align="center">
 													<span class="sprite sprite-delete" title="Delete Customer Item Price" style="cursor:pointer" ng-click="deleteCustPrice(row)"></span>
 												</td>
@@ -235,7 +236,7 @@
 						<div class="row" ng-show="showForm ==1">
 							<div class="col-md-12">
 								<header class="panel-heading">
-									<b>Add New Item Price</b>
+									<b>{{dmpHeader}} Item Price</b>
 								</header>
 							</div>
 							<div class="col-md-12">
@@ -247,20 +248,28 @@
 										<div class="col-md-12">
 											<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
 										</div>
-										<div class="form-group col-xs-6">
+										<div class="form-group col-xs-4">
 											<label>Hub <font color="red">*</font> :</label> 
-											<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-change="populateMarkets()">
+											<select name="selectedHub" class="form-control" ng-disabled="dmpHeader=='Update'" ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id" ng-change="populateMarkets()">
 											</select>
 										</div>
-										<div class="form-group col-xs-6">
+										<div class="form-group col-xs-4">
 											<label>Market <font color="red">*</font> :</label> 
-											<select name="selectedMarket" class="form-control"  ng-model="selectedMarket" required class="form-control" ng-options="market.name for market in markets track by market.id" ng-change="populateItems()">
+											<select name="selectedMarket" class="form-control"  ng-disabled="dmpHeader=='Update'" ng-model="selectedMarket" required class="form-control" ng-options="market.name for market in markets track by market.id" ng-change="populateItems()">
 											</select>
 										</div>
-										<div class="form-group col-xs-6">
+										<div class="form-group col-xs-4">
 											<label>Item <font color="red">*</font> :</label> 
-											<select name="selectedItem" class="form-control"  ng-model="selectedItem" required class="form-control" ng-options="item.name for item in items track by item.id">
+											<select name="selectedItem" class="form-control"  ng-disabled="dmpHeader=='Update'" ng-model="selectedItem" required class="form-control" ng-options="item.name for item in items track by item.id" ng-change="populateUom()">
 											</select>
+										</div>
+										<div class="form-group col-xs-3">
+											<label>Unit <font color="red">*</font> :</label> 
+											<select name="selectedUom" class="form-control"  ng-model="selectedUom" required class="form-control" ng-options="uom.name for uom in uoms track by uom.id">
+											</select>
+										</div>
+										<div class="form-group col-xs-3">
+											<label>Unit Qty<font color="red">*</font> :</label> <input type="number" ng-model="uomQty" required class="form-control" name="uomQty"/>
 										</div>
 										<div class="form-group col-xs-3">
 											<label>Min Price<font color="red">*</font> :</label> <input type="text" ng-model="minPrice" required class="form-control" name="minPrice"/>
@@ -270,7 +279,7 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button class="btn btn-primary" ng-click="addNewItemPrice()" ng-disabled="dmpForm.$invalid">OK</button>
+										<button class="btn btn-primary" ng-click="addUpdateItemPrice()" ng-disabled="dmpForm.$invalid">OK</button>
 										<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 									</div>
 								</form>
@@ -381,34 +390,41 @@
 					<tr>
 							<th st-sort="itemName" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
 							<th st-sort="itemCat"><i class="glyphicon glyphicon-filter"></i>Category</th>
-							<th st-sort="price"><i class="glyphicon glyphicon-filter"></i>price</th>
+							<th st-sort="price"><i class="glyphicon glyphicon-filter"></i>Price</th>
+							<th>UOM</th>
+							<th>UOM Qty</th>
 						</tr>
 						<tr>
 							<th>
 								<input st-search="itemName" placeholder="search for item" class="input-sm form-control" type="search"/>
 							</th>
 							<th><input st-search="itemCat" placeholder="search for item" class="input-sm form-control" type="search"/></th>
-							<th></th>
+							<th></th><th></th><th></th>
 						</tr>
 					</thead>
 					<tbody ng-show="!isLoading">
 					<tr st-select-row="row" ng-repeat="row in mcustpCollection">
 							<td>{{row.itemName}}</td>
 							<td>{{row.itemCat}}</td>
-							<td><input type="text" ng-model="row.price"></td>
+							<td><input type="number" ng-model="row.price" class="form-control"></td>
+							<td>
+								<select name="row.uom" class="form-control"  ng-model="row.uom" required class="form-control" ng-options="uom.name for uom in uoms track by uom.id">
+											</select>
+							</td>
+							<td><input type="number" ng-model="row.uomQty" class="form-control"></td>
 					</tr>
 					<tr ng-if="mcustpCollection.length == 0">
-						<td colspan="3" class="text-center">{{error}}</td>
+						<td colspan="5" class="text-center">{{error}}</td>
 					</tr>
 					</tbody>
 					<tbody ng-show="isLoading">
 					<tr>
-						<td colspan="3" class="text-center"><img src="./css/images/loading.gif"/></td>
+						<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
 					</tr>
 					</tbody>
 					<tfoot>
 					<tr ng-show="!isLoading && mcustpCollection.length != 0">
-						<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="3">
+						<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
 						</td>
 					</tr>
 					</tfoot>

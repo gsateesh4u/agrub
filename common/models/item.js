@@ -1,7 +1,7 @@
 module.exports = function(Item) {
 	Item.getDefaultItems = function(cb) {
 		Item.find({
-			include:['itemCategory'],
+			include:['itemCategory','uom'],
 			where:{'hubId':1},
 		}, cb);
 	};
