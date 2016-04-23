@@ -145,7 +145,7 @@ var app = angular
 		  };
 	
 	  $scope.toggleSideBar = function(){
-		   if ($window.width <= 992) {
+		   if ($window.innerWidth <= 992) {
 			   angular.element(document.getElementsByClassName("row-offcanvas")[0]).toggleClass("active");
 			   angular.element(document.getElementsByClassName("left-side")[0]).removeClass("collapse-left");
 			   angular.element(document.getElementsByClassName("right-side")[0]).removeClass("strech");
