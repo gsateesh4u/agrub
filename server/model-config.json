@@ -51,7 +51,7 @@
   },
   "SalesOrderLine": {
     "dataSource": "db",
-    "public": true
+    "public": false
   },
   "DeliveryChalan": {
     "dataSource": "db",
