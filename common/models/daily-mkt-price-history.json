@@ -11,13 +11,13 @@
       "type": "number",
       "required": true
     },
-	"maxPrice": {
+    "maxPrice": {
       "type": "number",
       "required": true
     },
     "uomQty": {
-  	  "type": "number"
-  	},
+      "type": "number"
+    },
     "dmpDate": {
       "type": "date",
       "required": true
@@ -33,7 +33,7 @@
       "model": "Item",
       "foreignKey": ""
     },
-	"market": {
+    "market": {
       "type": "belongsTo",
       "model": "Market",
       "foreignKey": ""
@@ -42,12 +42,12 @@
       "type": "belongsTo",
       "model": "Uom",
       "foreignKey": ""
-     },
+    },
     "user": {
-        "type": "belongsTo",
-        "model": "User",
-        "foreignKey": ""
-      }
+      "type": "belongsTo",
+      "model": "User",
+      "foreignKey": ""
+    }
   },
   "acls": [],
   "methods": {}

@@ -24,9 +24,19 @@
       "model": "Invoice",
       "foreignKey": ""
     },
-    "customer": {
+    "transportOperator": {
       "type": "belongsTo",
-      "model": "Customer",
+      "model": "TransportOperator",
+      "foreignKey": ""
+    },
+    "vendor": {
+      "type": "belongsTo",
+      "model": "Vendor",
+      "foreignKey": ""
+    },
+    "consumer": {
+      "type": "belongsTo",
+      "model": "Consumer",
       "foreignKey": ""
     }
   },

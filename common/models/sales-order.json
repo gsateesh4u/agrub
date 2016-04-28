@@ -45,6 +45,11 @@
       "type": "belongsTo",
       "model": "SalesOrderStatus",
       "foreignKey": ""
+    },
+    "consumer": {
+      "type": "belongsTo",
+      "model": "Consumer",
+      "foreignKey": ""
     }
   },
   "acls": [],

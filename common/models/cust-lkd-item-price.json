@@ -11,9 +11,9 @@
       "required": true
     },
     "uomQty": {
-	  "type": "number",
-	  "required": true
-	}
+      "type": "number",
+      "required": true
+    }
   },
   "validations": [],
   "relations": {

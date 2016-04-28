@@ -10,13 +10,13 @@
       "type": "number",
       "required": true
     },
-	"maxPrice": {
+    "maxPrice": {
       "type": "number",
       "required": true
     },
     "uomQty": {
-	  "type": "number"
-	},
+      "type": "number"
+    },
     "dmpDate": {
       "type": "date",
       "required": true
@@ -34,8 +34,8 @@
     },
     "user": {
       "type": "belongsTo",
-       "model": "User",
-       "foreignKey": ""
+      "model": "User",
+      "foreignKey": ""
     },
     "uom": {
       "type": "belongsTo",

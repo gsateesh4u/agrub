@@ -1,31 +1,35 @@
 {
-  "name": "Market",
+  "name": "PurchaseOrder",
+  "plural": "PurchaseOrders",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
-      "type": "string",
+    "deliveryDate": {
+      "type": "date",
       "required": true
+    },
+    "generatedDate": {
+      "type": "date"
     }
   },
   "validations": [],
   "relations": {
-    "hub": {
+    "vendor": {
       "type": "belongsTo",
-      "model": "Hub",
+      "model": "Vendor",
       "foreignKey": ""
     },
-    "dailyMktPrices": {
-      "type": "hasMany",
-      "model": "DailyMktPrice",
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
       "foreignKey": ""
     },
-    "dailyMktPriceHistory": {
+    "purchaseOrderLines": {
       "type": "hasMany",
-      "model": "DailyMktPriceHistory",
+      "model": "PurchaseOrderLine",
       "foreignKey": ""
     }
   },

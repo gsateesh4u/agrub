@@ -10,10 +10,10 @@
       "type": "string",
       "required": true
     },
-	"currencyISO": {
+    "currencyISO": {
       "type": "string"
     },
-	"timezone": {
+    "timezone": {
       "type": "string"
     }
   },
@@ -49,10 +49,15 @@
       "model": "CustLkdItemPrice",
       "foreignKey": ""
     },
-	"users": {
-		"type": "hasMany",
-		"model": "User",
-		"through": "HubUserMap"
+    "users": {
+      "type": "hasMany",
+      "model": "User",
+      "through": "HubUserMap"
+    },
+    "vendors": {
+      "type": "hasMany",
+      "model": "Vendor",
+      "foreignKey": ""
     }
   },
   "acls": [],

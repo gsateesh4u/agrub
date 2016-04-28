@@ -1,21 +1,28 @@
 {
-  "name": "HubUserMap",
+  "name": "PurchaseOrderLine",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "quantity": {
+      "type": "number"
+    },
+    "comments": {
+      "type": "string"
+    }
+  },
   "validations": [],
   "relations": {
-    "user": {
+    "purchaseOrder": {
       "type": "belongsTo",
-      "model": "user",
+      "model": "PurchaseOrder",
       "foreignKey": ""
     },
-    "hub": {
+    "uom": {
       "type": "belongsTo",
-      "model": "Hub",
+      "model": "Uom",
       "foreignKey": ""
     }
   },

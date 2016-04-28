@@ -59,11 +59,6 @@
       "model": "Consumer",
       "foreignKey": ""
     },
-    "deliveryChalans": {
-      "type": "hasMany",
-      "model": "DeliveryChalan",
-      "foreignKey": ""
-    },
     "custLkdItemPrices": {
       "type": "hasMany",
       "model": "CustLkdItemPrice",
@@ -74,11 +69,11 @@
       "model": "CustLkdPeriod",
       "foreignKey": ""
     },
-	"users": {
-		"type": "hasMany",
-		"model": "user",
-		"through": "CustomerUserMap"
-	  }
+    "users": {
+      "type": "hasMany",
+      "model": "user",
+      "through": "CustomerUserMap"
+    }
   },
   "acls": [],
   "methods": {}

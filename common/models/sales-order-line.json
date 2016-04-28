@@ -28,6 +28,11 @@
       "type": "belongsTo",
       "model": "Item",
       "foreignKey": ""
+    },
+    "uom": {
+      "type": "belongsTo",
+      "model": "Uom",
+      "foreignKey": ""
     }
   },
   "acls": [],

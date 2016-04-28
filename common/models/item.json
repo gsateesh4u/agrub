@@ -43,10 +43,10 @@
       "foreignKey": ""
     },
     "uom": {
-        "type": "belongsTo",
-        "model": "Uom",
-        "foreignKey": ""
-      },
+      "type": "belongsTo",
+      "model": "Uom",
+      "foreignKey": ""
+    },
     "dailyMktPrices": {
       "type": "hasMany",
       "model": "DailyMktPrice",
@@ -57,7 +57,7 @@
       "model": "CustLkdItemPrice",
       "foreignKey": ""
     },
-	 "dailyMktPriceHistory": {
+    "dailyMktPriceHistory": {
       "type": "hasMany",
       "model": "DailyMktPriceHistory",
       "foreignKey": ""

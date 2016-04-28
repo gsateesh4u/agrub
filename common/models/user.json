@@ -23,24 +23,24 @@
   "validations": [],
   "relations": {
     "customers": {
-		"type": "hasMany",
-		"model": "Customer",
-		"through": "CustomerUserMap"
+      "type": "hasMany",
+      "model": "Customer",
+      "through": "CustomerUserMap"
     },
-	"hubs": {
-		"type": "hasMany",
-		"model": "Hub",
-		"through": "HubUserMap"
+    "hubs": {
+      "type": "hasMany",
+      "model": "Hub",
+      "through": "HubUserMap"
     },
     "dailyMktPrices": {
-		"type": "hasMany",
-		"model": "DailyMktPrice",
-		"foreignKey": "userId"
+      "type": "hasMany",
+      "model": "DailyMktPrice",
+      "foreignKey": "userId"
     },
     "dailyMktPriceHistory": {
-		"type": "hasMany",
-		"model": "DailyMktPriceHistory",
-		"foreignKey": "userId"
+      "type": "hasMany",
+      "model": "DailyMktPriceHistory",
+      "foreignKey": "userId"
     },
     "accessTokens": {
       "type": "hasMany",
@@ -63,19 +63,24 @@
       "foreignKey": "principalId",
       "through": "RoleMapping"
     },
-	 "roleMappings": {
+    "roleMappings": {
       "type": "hasMany",
       "model": "RoleMapping",
       "foreignKey": "principalId"
     },
-	"customerMappings": {
+    "customerMappings": {
       "type": "hasMany",
       "model": "CustomerUserMap",
       "foreignKey": "userId"
     },
-	"hubMappings": {
+    "hubMappings": {
       "type": "hasMany",
       "model": "HubUserMap",
+      "foreignKey": "userId"
+    },
+    "purchaseOrders": {
+      "type": "hasMany",
+      "model": "PurchaseOrder",
       "foreignKey": "userId"
     }
   },

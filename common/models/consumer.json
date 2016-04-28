@@ -59,6 +59,11 @@
       "type": "belongsTo",
       "model": "Customer",
       "foreignKey": ""
+    },
+    "salesOrders": {
+      "type": "hasMany",
+      "model": "SalesOrder",
+      "foreignKey": ""
     }
   },
   "acls": [],

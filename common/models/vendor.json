@@ -48,6 +48,16 @@
       "type": "belongsTo",
       "model": "Hub",
       "foreignKey": ""
+    },
+    "deliveryChalans": {
+      "type": "hasMany",
+      "model": "DeliveryChalan",
+      "foreignKey": ""
+    },
+    "purchaseOrders": {
+      "type": "hasMany",
+      "model": "PurchaseOrder",
+      "foreignKey": ""
     }
   },
   "acls": [],

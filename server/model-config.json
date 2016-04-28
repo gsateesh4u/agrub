@@ -147,5 +147,13 @@
   "Uom": {
     "dataSource": "db",
     "public": true
+  },
+  "PurchaseOrder": {
+    "dataSource": "db",
+    "public": true
+  },
+  "PurchaseOrderLine": {
+    "dataSource": "db",
+    "public": false
   }
 }

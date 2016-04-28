@@ -52,6 +52,12 @@
       "model": "Hub",
       "foreignKey": ""
     }
+    ,
+    "deliveryChalans": {
+      "type": "hasMany",
+      "model": "DeliveryChalan",
+      "foreignKey": ""
+    }
   },
   "acls": [],
   "methods": {}
