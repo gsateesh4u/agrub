@@ -1,5 +1,6 @@
 {
   "name": "Customer",
+  "plural": "Customers",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -44,19 +45,9 @@
       "model": "Order",
       "foreignKey": ""
     },
-    "salesOrders": {
-      "type": "hasMany",
-      "model": "SalesOrder",
-      "foreignKey": ""
-    },
     "invoices": {
       "type": "hasMany",
       "model": "Invoice",
-      "foreignKey": ""
-    },
-    "consumers": {
-      "type": "hasMany",
-      "model": "Consumer",
       "foreignKey": ""
     },
     "custLkdItemPrices": {
@@ -73,7 +64,18 @@
       "type": "hasMany",
       "model": "user",
       "through": "CustomerUserMap"
-    }
+    },
+    "billingAddresses": {
+	  "type": "hasMany",
+	  "model": "BillingAddress",
+	  "foreignKey": ""
+	 },
+    "shippingAddresses": {
+  	  "type": "hasMany",
+  	  "model": "ShippingAddress",
+  	  "foreignKey": ""
+  	 }
+	 
   },
   "acls": [],
   "methods": {}

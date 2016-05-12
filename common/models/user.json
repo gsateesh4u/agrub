@@ -82,7 +82,13 @@
       "type": "hasMany",
       "model": "PurchaseOrder",
       "foreignKey": "userId"
-    }
+    },
+    "orders": {
+	    "type": "hasMany",
+	    "model": "Order",
+	    "foreignKey": "userId",
+	    "through": "OrderTracking"
+	  }
   },
   "acls": [
     {

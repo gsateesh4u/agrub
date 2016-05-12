@@ -1,0 +1,41 @@
+{
+  "name": "LineItem",
+  "plural": "LineItems",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "lineItemQuantity": {
+      "type": "number",
+      "required": false
+    },
+    "custUpdatedItemQuantity": {
+      "type": "number"
+    },
+    "custUpdatedDate": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "item": {
+      "type": "belongsTo",
+      "model": "Item",
+      "foreignKey": ""
+    },
+    "uom": {
+      "type": "belongsTo",
+      "model": "Uom",
+      "foreignKey": ""
+    },
+    "order": {
+        "type": "belongsTo",
+        "model": "Order",
+        "foreignKey": ""
+      }
+  },
+  "acls": [],
+  "methods": {}
+}

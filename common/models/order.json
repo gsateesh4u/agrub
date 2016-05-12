@@ -7,23 +7,44 @@
     "validateUpsert": true
   },
   "properties": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "startDate": {
+    "deliveryDate": {
       "type": "date",
       "required": true
     },
-    "endDate": {
-      "type": "date"
+    "cardDate": {
+      "type": "date",
+      "required": true
+    },
+    "deliveryTime": {
+      "type": "string"
     }
   },
   "validations": [],
   "relations": {
-    "salesOrders": {
+    "lineItems": {
       "type": "hasMany",
-      "model": "SalesOrder",
+      "model": "LineItem",
+      "foreignKey":""
+    },
+    "participants": {
+        "type": "hasMany",
+        "model": "User",
+        "foreignKey": "orderId",
+        "through": "OrderTracking"
+     },
+    "invoice": {
+      "type": "hasOne",
+      "model": "Invoice",
+      "foreignKey": ""
+    },
+    "user": {
+        "type": "belongsTo",
+        "model": "user",
+        "foreignKey": ""
+      },
+    "orderStatus": {
+      "type": "belongsTo",
+      "model": "OrderStatus",
       "foreignKey": ""
     },
     "customer": {
@@ -31,11 +52,14 @@
       "model": "Customer",
       "foreignKey": ""
     },
-    "orderStatus": {
-      "type": "belongsTo",
-      "model": "OrderStatus",
-      "foreignKey": ""
-    }
+	"shippingAddess": {
+      "type": "embedsOne",
+      "model": "ShippingAddress"
+    },
+    "billingAddess": {
+        "type": "embedsOne",
+        "model": "BillingAddress"
+     }
   },
   "acls": [],
   "methods": {}

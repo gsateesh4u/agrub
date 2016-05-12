@@ -1,141 +1,73 @@
+var loopback = require('loopback');
 module.exports = function(Order) {
-// remote method before hook
- Order.beforeRemote('placeOrder', function(context, order, next) {
-    next();
-  });
-Order.placeOrder= function(orderObj, cb) {
-	var app = Order.app;
-	var SalesOrder = app.models.SalesOrder;
-	var SalesOrderLine = app.models.SalesOrderLine;
-	var originalOrder = orderObj;
-	var salesOrders = orderObj.salesOrders;
-	var customerId = orderObj.customerId;
-	var dataSource = app.datasources.db;
-	orderObj.orderStatusId = 1;
-	var newOrderId;
-	return Order
-			.create(orderObj)
-			.then(function createSalesOrders (newOrder) {
-				newOrderId = newOrder.id;
-				originalOrder.id = newOrder.id;
-				if (salesOrders) {
-				var itr = 0;
-					for(var i=0;i<salesOrders.length;i++){
-						salesOrders[i].orderId = newOrder.id;
-						salesOrders[i].customerId = customerId;
-						var salesOrderTemp = salesOrders[i];
-						salesOrderTemp.salesOrderStatusId = 1;
-						SalesOrder.create(salesOrderTemp).then(function createSalesOrderLines(newSalesOrder){
-							salesOrderTemp.id=newSalesOrder.id;
-							var salesOrderLines = orderObj.salesOrders[itr++].salesOrderLines;
-							for(var j=0;j<salesOrderLines.length;j++)
-							{
-								salesOrderLines[j].salesOrderId = newSalesOrder.id;
-								var salesOrderLineTemp = salesOrderLines[j];
-								SalesOrderLine.create(salesOrderLineTemp).then(function createSalesOrderLineItem(newSalesOrderLineIte){
-									salesOrderLineTemp.id=newSalesOrderLineIte.id;
-								}).catch(function (err) {
-								  console.log('error while creating order '+err);
-									cb(err);
-								});
-							}
-						}).catch(function (err) {
-								  console.log('error while creating order '+err);
-									cb(err);
-								});
-					}
-					originalOrder.salesOrders = salesOrders;
-				}
-				Order.app.models.Customer.findById(customerId, function (err, cust) {
-									var email = cust.email;
-									var emailOderId = newOrderId;
-									 Order.app.models.Email.send({
-										  to: email,
-										  from: 'agrubcare@gmail.com',
-										  subject: 'Order Received #'+emailOderId,
-										  text: 'New Order',
-										  html: 'Hi '+cust.name+' , Your Order with reference number <b> '+emailOderId+' </b> has been received. We will inform you once we confirm your order. Thank you for placing order with us.'
-										}, function(err, mail) {
-										  console.log('email sent to !'+cust.name+' for order with orderId '+emailOderId);
-										});
-								});
-			cb(null,originalOrder);
-			})
-			.catch(function (err) {
-			 console.log('error while creating order '+err);
-			 cb(err);
-		});
-}
-
-Order.fullOrders = function(cb) {
-	Order.find({
-	  include:['orderStatus',{salesOrders:['salesOrderStatus',{salesOrderLines:'item'}]}],
-	}, cb);
-};
-
-Order.fullOrder = function(orderId, cb) {
-	Order.findById(orderId,{
-	  include:['orderStatus',{salesOrders:['salesOrderStatus',{salesOrderLines:'item'}]}],
-	}, cb);
-};
-
-Order.acceptOrder = function(orderId, cb) {
-	Order.findById(orderId,{
-	  include:[{salesOrders:{salesOrderLines:'item'}}]
-	},function(err,exOrder){
-		if(err){
+	Order.validatesPresenceOf('billingAddress');
+	Order.validatesPresenceOf('shippingAddress');
+	Order.validatesPresenceOf('lineItems');
+	Order.observe('after save', function(ctx, next){
+		var app = Order.app;
+		if(ctx.isNewInstance){
+			
+		}else{
+			
+		}
+		next();
+	});
+	Order.placeOrder= function(orders, cb) {
+		var app = Order.app;
+		var OrderStatus = app.models.OrderStatus;
+		var LineItem = app.models.LineItem;
+		var validOrders = [];
+		var validIds = [];
+		var ctx = loopback.getCurrentContext();
+		var accessToken = ctx.get('accessToken');
+		if(accessToken == null || accessToken.userId == null){
+			var err = new Error('Forbidden');
+			err.statusCode = 403;
 			cb(err);
-		}
-		var ordObj = exOrder.toJSON();;
-		if(ordObj.salesOrders == null || ordObj.salesOrders.length == 0){
-			cb(null,'no sales orders exist for this order');
-		}
-	
-		for(var j=0;j<ordObj.salesOrders.length;j++)
-		{
-			var tempDC = {
-							"purchaseOrderId": ordObj.salesOrders[j].id,
-							"salesOrderId": ordObj.salesOrders[j].id,
-							"customerId": ordObj.customerId
-						};
-			Order.app.models.DeliveryChalan.create(tempDC).then(function createDeliverChallan(newDeliveryChallan){
-				console.log(newDeliveryChallan);
-			}).catch(function (err){
-			 console.log('error while creating DeliveryChallan '+err);
-				cb(err);
+		}else{
+			//loopback.getCurrentContext().set("accessToken",accessToken);
+			for(var i = 0;i<orders.length;i++){
+				if(orders[i].lineItems && orders[i].lineItems.length > 0){
+					validOrders.push(orders[i]);
+				}
+			}
+			var len = validOrders.length;
+			var newOrders = [];
+			OrderStatus.findOne({where:{name:'PO'}}).then(function (orderSt){
+				for(var i=0;i<validOrders.length;i++){
+					var tempOrder = validOrders[i];
+					tempOrder.orderStatusId = orderSt.id;
+					tempOrder.userId = accessToken.userId;
+					Order.create(tempOrder).then(function(newOrder){
+						newOrders.push(newOrder);
+						if(--len == 0){
+							var allLineItems = [];
+							newOrders.forEach(function(ex,j){
+								validOrders[j].lineItems.forEach(function(ex1,j1){
+									ex1.orderId = ex.id;
+									validIds.push(ex.id);
+									allLineItems.push(ex1);
+								});
+							});
+							allLineItems.forEach(function(ex,j){
+									LineItem.create(ex).then(function(newLineItem){
+									});
+							});
+							Order.find({ where: {id: {inq:validIds}},include:[{lineItems:'item'},'orderStatus','customer']}).then(function(data){
+								cb(null,data);
+							});
+						}
+					});
+				}
 			});
 		}
-		cb(null, 'success');
-	});
-};
-Order.remoteMethod(
+	}
+	Order.remoteMethod(
         'placeOrder', 
         {
-          accepts: {arg: 'orderObj', type: 'object'},
-          returns: {arg: 'orderObj', type: 'object'}
-        }
-    );
-Order.remoteMethod(
-        'fullOrders', 
-        {
+          accepts: {arg: 'orders', type: 'array'},
           returns: {arg: 'orders', type: 'array'},
-		  http: {path:'/fullOrders', verb: 'get'}
-        }
-    );
-Order.remoteMethod(
-        'fullOrder', 
-        {
-		  accepts: {arg: 'orderId', type: 'string'},
-          returns: {arg: 'order', type: 'object'},
-		  http: {path:'/fullOrders/:orderId', verb: 'get'}
-        }
-    );
-Order.remoteMethod(
-        'acceptOrder', 
-        {
-		  accepts: {arg: 'orderId', type: 'string'},
-          returns: {arg: 'status', type: 'object'},
-		  http: {path:'/accept', verb: 'get'}
+          http: {path:'/placeOrder', verb: 'post'}
         }
     );
 };

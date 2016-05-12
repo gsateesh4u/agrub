@@ -14,8 +14,14 @@ ds.automigrate('RoleMapping', function(err) {
 ds.automigrate('AccessToken', function(err) {
   if (err) throw err;
 });
-ds.automigrate('Consumer', function(err) {
-  if (err) throw err;
+ds.automigrate('Address', function(err) {
+	  if (err) throw err;
+});
+ds.automigrate('ShippingAddress', function(err) {
+	  if (err) throw err;
+});
+ds.automigrate('BillingAddress', function(err) {
+	  if (err) throw err;
 });
 ds.automigrate('CustLkdItemPrice', function(err) {
   if (err) throw err;
@@ -33,12 +39,6 @@ ds.automigrate('DailyMktPriceHistory', function(err) {
   if (err) throw err;
 });
 ds.automigrate('DailyMktPrice', function(err) {
-  if (err) throw err;
-});
-ds.automigrate('DeliveryChalanStatus', function(err) {
-  if (err) throw err;
-});
-ds.automigrate('DeliveryChalan', function(err) {
   if (err) throw err;
 });
 ds.automigrate('Hub', function(err) {
@@ -71,17 +71,20 @@ ds.automigrate('Order', function(err) {
 ds.automigrate('Pricing', function(err) {
   if (err) throw err;
 });
-ds.automigrate('SalesOrderLine', function(err) {
+ds.automigrate('LineItem', function(err) {
   if (err) throw err;
 });
-ds.automigrate('SalesOrderStatus', function(err) {
-  if (err) throw err;
+ds.automigrate('PurchaseOrder', function(err) {
+	  if (err) throw err;
 });
-ds.automigrate('SalesOrder', function(err) {
-  if (err) throw err;
+ds.automigrate('PurchaseOrderLine', function(err) {
+	  if (err) throw err;
 });
 ds.automigrate('TransportOperator', function(err) {
   if (err) throw err;
+});
+ds.automigrate('Uom', function(err) {
+	  if (err) throw err;
 });
 ds.automigrate('user', function(err) {
   if (err) throw err;
@@ -92,6 +95,6 @@ ds.automigrate('Vendor', function(err) {
 ds.automigrate('HubUserMap', function(err) {
   if (err) throw err;
 });
-ds.automigrate('CustomerUserMap', function(err) {
-  if (err) throw err;
+ds.automigrate('OrderTracking', function(err) {
+	  if (err) throw err;
 });

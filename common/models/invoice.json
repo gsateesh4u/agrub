@@ -19,19 +19,14 @@
       "model": "InvoiceStatus",
       "foreignKey": ""
     },
-    "deliveryChalan": {
+    "order": {
       "type": "belongsTo",
-      "model": "DeliveryChalan",
+      "model": "Order",
       "foreignKey": ""
     },
     "customer": {
       "type": "belongsTo",
       "model": "Customer",
-      "foreignKey": ""
-    },
-    "salesOrder": {
-      "type": "belongsTo",
-      "model": "SalesOrder",
       "foreignKey": ""
     }
   },

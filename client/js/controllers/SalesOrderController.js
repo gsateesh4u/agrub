@@ -1,21 +1,24 @@
-app.controller('OrderController', function($scope,Order, OrderStatus, Email, $filter){
+app.controller('SalesOrderController', function($scope,Order, OrderStatus, Email, $filter){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
-	Order.find({
-		filter: { include: ['customer','lineItems','orderStatus','user'] }
-	}).$promise
-		.then(function(response) { 
-		  $scope.rowCollection = [].concat(response);
-		   $scope.displayedCollection = [].concat($scope.rowCollection);
-		  if($scope.rowCollection.length==0){
-				 $scope.error = "No data found!!!";
-			 }
-			 $scope.isLoading = false;
-	  },function( errorMessage ) {
-		  $scope.error = "Error has occurred while loading orders!";
-		  $scope.isLoading = false;
-   });
+	OrderStatus.findOne({filter: {where : {name : 'SO'}}}).$promise.then(function(poStatus){
+		Order.find({
+			filter: { include: ['customer','lineItems','orderStatus','user'] ,
+				where:{orderStatusId: poStatus.id}
+		}
+		}).$promise
+			.then(function(response) { 
+			  $scope.soCollection = [].concat(response);
+			  if($scope.soCollection.length==0){
+					 $scope.error = "No data found!!!";
+				 }
+				 $scope.isLoading = false;
+		  },function( errorMessage ) {
+			  $scope.error = "Error has occurred while loading sales orders!";
+			  $scope.isLoading = false;
+	   });
+	});
    $scope.showOrderDetails = function showOrderDetails(ord){
 	$scope.foundOrder = ord;
    Order.findById({id:ord.id,

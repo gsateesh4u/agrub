@@ -28,6 +28,8 @@
     <script src="js/appMessages.js"></script>
 	<script src="js/controllers/CustomerController.js"></script>
 	<script src="js/controllers/OrderController.js"></script>
+	<script src="js/controllers/PurchaseOrderController.js"></script>
+	<script src="js/controllers/SalesOrderController.js"></script>
 	<script src="js/controllers/DeliveryChalanController.js"></script>
 	<script src="js/controllers/UserController.js"></script>
 	<script src="js/controllers/HubController.js"></script>
@@ -93,55 +95,72 @@
                             <ul class="sidebar-menu">
                                 <li id="customers" ng-if="hasPermission('customers')">
                                     <a href="#customers">
-                                        <i class="fa fa-dashboard"></i> <span>{{'menu_customers' | xlat}}</span>
+                                        <i class="fa fa-dashboard"></i><span class="glyphicon glyphicon-briefcase"></span> <span>{{'menu_customers' | xlat}}</span>
                                     </a>
                                 </li>
-								<li id="orders" ng-if="hasPermission('orders')">
+								<!-- <li id="orders" ng-if="hasPermission('orders')">
                                     <a href="#orders">
-                                        <i class="fa fa-dashboard"></i> <span>{{'menu_orders' | xlat}}</span>
+                                        <i class="fa fa-dashboard"></i><span class="glyphicon glyphicon-shopping-cart"></span> <span>{{'menu_orders' | xlat}}</span>
                                     </a>
-                                </li>
-								<li id="deliveryChalans" ng-if="hasPermission('dcs')">
-                                    <a href="#deliveryChalans">
-                                        <i class="fa fa-dashboard"></i> <span>{{'menu_DC' | xlat}}</span>
-                                    </a>
+                                </li> -->
+                                <li ng-if="hasPermission('orders')">
+						            <a ng-click="showSubMenu = !showSubMenu">
+						            	<i class="fa fa-dashboard"></i><span class="glyphicon glyphicon-shopping-cart"></span> <span>{{'menu_orders' | xlat}}</span>
+						            	<b class="caret"></b>
+						            </a>
+						            <ul class="treeview-menu" ng-show="showSubMenu">
+						              <li id="orders">
+						                <a href="#orders"><span class="glyphicon glyphicon-triangle-right"></span> <span>All</span></a>
+						              </li>
+						              <li id="purchaseOrders">
+						                <a href="#purchaseOrders"><span class="glyphicon glyphicon-triangle-right"></span> <span>{{'menu_PO' | xlat}}</span></a>
+						              </li>
+						              <li id="salesOrders">
+						                <a href="#salesOrders"><span class="glyphicon glyphicon-triangle-right"></span> <span>{{'menu_SO' | xlat}}</span></a>
+						              </li>
+						              <li id="deliveryChalans">
+						               	<a href="#deliveryChalans">
+                                        	<span class="glyphicon glyphicon-triangle-right"></span> <span>{{'menu_DC' | xlat}}</span>
+                                    	</a>
+						              </li>
+						            </ul>
                                 </li>
                                 <li id="users" ng-if="hasPermission('users')">
                                     <a href="#users">
-                                        <i class="fa fa-gavel"></i> <span>{{'menu_users' | xlat}}</span>
+                                        <i class="fa fa-gavel"></i> <span class="glyphicon glyphicon-user"></span><span>{{'menu_users' | xlat}}</span>
                                     </a>
                                 </li>
 
                                 <li id="hubs" ng-if="hasPermission('hubs')">
                                     <a href="#hubs">
-                                        <i class="fa fa-globe"></i> <span>{{'menu_hubs' | xlat}}</span>
+                                        <i class="fa fa-globe"></i><span class="glyphicon glyphicon-globe"></span> <span>{{'menu_hubs' | xlat}}</span>
                                     </a>
                                 </li>
 								
 								 <li id="markets" ng-if="hasPermission('markets')">
                                     <a href="#markets">
-                                        <i class="fa fa-globe"></i> <span>{{'menu_markets' | xlat}}</span>
+                                        <i class="fa fa-globe"></i><span class="glyphicon glyphicon-tent"></span> <span>{{'menu_markets' | xlat}}</span>
                                     </a>
                                 </li>
 
                                 <li id="items" ng-if="hasPermission('items')">
                                     <a href="#items">
-                                        <i class="fa fa-glass"></i> <span>{{'menu_items' | xlat}}</span>
+                                        <i class="fa fa-glass"></i><span class="glyphicon glyphicon-list-alt"></span> <span>{{'menu_items' | xlat}}</span>
                                     </a>
                                 </li>
 								 <li id="prices" ng-if="hasPermission('pricing')">
                                     <a href="#prices">
-                                        <i class="fa fa-glass"></i> <span>{{'menu_prices' | xlat}}</span>
+                                        <i class="fa fa-glass"></i><span class="glyphicon glyphicon-eur"></span> <span>{{'menu_prices' | xlat}}</span>
                                     </a>
                                 </li>
 								<li id="reports" ng-if="hasPermission('reports')">
                                     <a href="#reports">
-                                        <i class="fa fa-glass"></i> <span>{{'menu_reports' | xlat}}</span>
+                                        <i class="fa fa-glass"></i><span class="glyphicon glyphicon-stats"></span> <span>{{'menu_reports' | xlat}}</span>
                                     </a>
                                 </li>
 								<li id="uploadOrder" ng-if="hasPermission('uploadOrder')">
                                     <a href="#uploadOrder">
-                                        <i class="fa fa-glass"></i> <span>{{'menu_upload_order' | xlat}}</span>
+                                        <i class="fa fa-glass"></i><span class="glyphicon glyphicon-upload"></span> <span>{{'menu_upload_order' | xlat}}</span>
                                     </a>
                                 </li>
 

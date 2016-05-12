@@ -13,8 +13,9 @@ xlat.factory('xlatService', function() {
   // rather than just refer to it.)
   var tables = {
 		    'en': { 'appLogo':'AGRUB','lbl_toggle_nav':'Toggle Navigation','menu_customers':'Customers','menu_users':'Users','menu_items':'Items','menu_item_cat':'Item Categories','menu_hubs':'Hubs','menu_reports':'Reports','menu_orders':'Orders','menu_prices':'Pricing','menu_DMPH':'DMP History',
-				'menu_upload_order':'Upload Order', 'menu_DC':'Delivery Chalans','menu_DMP':'Daily Market Prices','menu_Cust_Lock_Periods':'Customer Lock Periods','menu_Cust_Prices':'Customer Prices','menu_markets':'Markets',
-		    	'copyright':'Copyright \xA9 1010 Labs, 2016','tbl_head_users':'All Users','tbl_head_customers':'All Customers','tbl_head_hubs':'All Hubs','tbl_head_items':'All Items','tbl_head_reports':'Reports','tbl_head_orders':'All Orders',
+				'menu_upload_order':'Upload Order', 'menu_SO':'Sales Orders', 'menu_PO':'Purchase Orders', 'menu_DC':'Delivery Chalans','menu_DMP':'Daily Market Prices','menu_Cust_Lock_Periods':'Customer Lock Periods','menu_Cust_Prices':'Customer Prices','menu_markets':'Markets',
+		    	'copyright':'Copyright \xA9 1010 Labs, 2016','tbl_head_users':'All Users','tbl_head_customers':'All Customers','tbl_head_hubs':'All Hubs','tbl_head_items':'All Items','tbl_head_reports':'Reports',
+		    	'tbl_head_orders':'All Orders','tbl_head_SO' : 'All Sales Orders','tbl_head_PO':'All Purchase Orders',
 				'tbl_head_prices':'Pricing','tbl_head_upload_order':'Upload Order','tbl_head_DC':'All Delivery Chalans','tbl_head_Markets':'Markets'}
               };
   // We return the service object that will be injected into

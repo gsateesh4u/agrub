@@ -1,37 +1,32 @@
 {
-  "name": "SalesOrderLine",
+  "name": "OrderTracking",
+  "plural": "OrderTrackings",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "soLineItemsQuantity": {
-      "type": "number",
-      "required": false
-    },
-    "custUpdatedItemQuantity": {
-      "type": "number"
-    },
-    "custUpdatedDate": {
-      "type": "date"
+    "timestamp": {
+      "type": "date",
+      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "salesOrder": {
+    "order": {
       "type": "belongsTo",
-      "model": "SalesOrder",
+      "model": "Order",
       "foreignKey": ""
     },
-    "item": {
+    "user": {
       "type": "belongsTo",
-      "model": "Item",
+      "model": "user",
       "foreignKey": ""
     },
-    "uom": {
+    "orderStatus": {
       "type": "belongsTo",
-      "model": "Uom",
+      "model": "OrderStatus",
       "foreignKey": ""
     }
   },

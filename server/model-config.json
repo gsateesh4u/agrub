@@ -45,15 +45,7 @@
     "dataSource": "db",
     "public": true
   },
-  "SalesOrder": {
-    "dataSource": "db",
-    "public": true
-  },
-  "SalesOrderLine": {
-    "dataSource": "db",
-    "public": false
-  },
-  "DeliveryChalan": {
+  "LineItem": {
     "dataSource": "db",
     "public": true
   },
@@ -66,14 +58,6 @@
     "public": true
   },
   "OrderStatus": {
-    "dataSource": "db",
-    "public": true
-  },
-  "SalesOrderStatus": {
-    "dataSource": "db",
-    "public": true
-  },
-  "DeliveryChalanStatus": {
     "dataSource": "db",
     "public": true
   },
@@ -116,10 +100,6 @@
     "dataSource": "db",
     "public": true
   },
-  "Consumer": {
-    "dataSource": "db",
-    "public": true
-  },
   "Market": {
     "dataSource": "db",
     "public": true
@@ -154,6 +134,22 @@
   },
   "PurchaseOrderLine": {
     "dataSource": "db",
+    "public": true
+  },
+  "Address": {
+    "dataSource": "db",
     "public": false
+  },
+  "BillingAddress": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ShippingAddress": {
+    "dataSource": "db",
+    "public": false
+  },
+  "OrderTracking": {
+    "dataSource": "db",
+    "public": true
   }
 }

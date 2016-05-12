@@ -1,5 +1,5 @@
 {
-  "name": "Consumer",
+  "name": "Address",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -50,21 +50,6 @@
   },
   "validations": [],
   "relations": {
-    "hub": {
-      "type": "belongsTo",
-      "model": "Hub",
-      "foreignKey": ""
-    },
-    "customer": {
-      "type": "belongsTo",
-      "model": "Customer",
-      "foreignKey": ""
-    },
-    "salesOrders": {
-      "type": "hasMany",
-      "model": "SalesOrder",
-      "foreignKey": ""
-    }
   },
   "acls": [],
   "methods": {}
