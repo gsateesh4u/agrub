@@ -19,6 +19,20 @@ app.controller('SalesOrderController', function($scope,Order, OrderStatus, Email
 			  $scope.isLoading = false;
 	   });
 	});
+	$scope.selectAllOrders = function selectAllOrders(){
+		angular.forEach($scope.soCollection,function(so){
+			so.selected = $scope.all;
+		});
+   };
+   $scope.disableAssignPOButton = function disableAssignPOButton(){
+	   var flag = true;
+	   angular.forEach($scope.soCollection,function(so){
+			if(so.selected){
+				flag = false;
+			}
+		});
+	  return flag;
+   }; 
    $scope.showOrderDetails = function showOrderDetails(ord){
 	$scope.foundOrder = ord;
    Order.findById({id:ord.id,

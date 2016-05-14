@@ -171,14 +171,17 @@ var app = angular
   }).service(
 	        "commonService",
 	        function($cookieStore) {
-			
 	            // Return public API.
 	            return({
 	                hasPermission : hasPermission,
 					getCurrentUser : getCurrentUser,
 					isRoleExists : isRoleExists,
-					getUserHubs : getUserHubs
+					getUserHubs : getUserHubs,
+					getExistingUoms : getExistingUoms
 	            });
+	            function getExistingUoms(){
+	            	return $cookieStore.get("uoms");
+	            };
 				function isRoleExists(role){
 					var currentUser = $cookieStore.get("currentUser");
 					if(currentUser == null || currentUser.roles == null || currentUser.roles.length == 0){

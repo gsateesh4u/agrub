@@ -13,6 +13,7 @@
 									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
 								</td>
 								<td align="right">
+									<button class="btn btn-primary" ng-disabled="!selPO" ng-click="showCustomerInfo(selPO[0])" align="right">Customer Info</button>
 									<button class="btn btn-primary" ng-disabled="!selPO" ng-click="showPO()" align="right">Accept PO</button>
 								</td>
 							</tr>
@@ -78,8 +79,9 @@
 		<section class="panel" ng-show="showPOForm">
 			<header class="panel-heading">
 			  <div class="row">
-			  	<div class="col-md-8"><span>Purchase Order <b>#{{selectedPO.id}}</b></span></div>
-			  	<div class="col-md-4" style="text-align: right;">
+			  	<div class="col-md-4"><span>Purchase Order <b>#{{selectedPO.id}}</b></span></div>
+			  	<div class="col-md-8" style="text-align: right;">
+			  		<button class="btn btn-primary" ng-click="showCustomerInfo(selectedPO)">Customer Info</button>&nbsp;&nbsp;&nbsp;
 			  		<button class="btn btn-primary" ng-click="acceptPO()">Accept And Close</button>&nbsp;&nbsp;&nbsp;
 			  		<button class="btn btn-warning" ng-click="backToMainMenu()">Cancel</button>
 			  	</div>
@@ -111,8 +113,8 @@
 							<td>{{row.lineItemQuantity}}</td>
 							<td>{{row.uom.name}}</td>
 							<td align="center">
-										<span class="sprite sprite-edit" title="Edit Order" style="cursor:pointer"></span>&nbsp;&nbsp;&nbsp;
-										<span class="sprite sprite-delete" title="Delete Order" style="cursor:pointer"></span>
+								<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer" ng-click="editItemQtyAndUom(row)"></span>&nbsp;&nbsp;&nbsp;
+								<span class="sprite sprite-delete" title="Delete Item" style="cursor:pointer"></span>
 							</td>
 					</tr>
 					<tr ng-if="poLineItemsCollection.length == 0">

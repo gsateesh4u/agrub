@@ -1,4 +1,5 @@
-app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User','$cookieStore',  function($scope, $rootScope, $state, User, $cookieStore){
+app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User', 'Uom','$cookieStore',  
+                                      function($scope, $rootScope, $state, User, Uom, $cookieStore){
 	$scope.loginError = "";
 	$scope.signIn = function signIn() {
 	$scope.loginError = "";
@@ -21,7 +22,7 @@ app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User','
 					}).$promise
 						.then(function(curUser) { 
 						  if(!curUser){
-								 $scope.loginError = "Unable to find you!!!1";
+								 $scope.loginError = "Unable to find you!!!";
 							 }
 							 else{
 								$rootScope.currentUser = curUser;
@@ -29,6 +30,9 @@ app.controller('AuthLoginController',['$scope', '$rootScope', '$state', 'User','
 								var currentUser = {};
 								angular.copy($rootScope.currentUser, currentUser);
 								$cookieStore.put("currentUser",currentUser);
+								Uom.find().$promise.then(function(uoms){
+									$cookieStore.put("uoms",uoms);
+								});
 							 }
 					  },function( errorMessage ) {
 						  $scope.loginError = "Unable to process your request";

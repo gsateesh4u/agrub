@@ -1,4 +1,4 @@
-app.controller('PurchaseOrderController', function($scope,Order,commonService, OrderStatus, OrderTracking, Email, $filter){
+app.controller('PurchaseOrderController', function($scope,Order,commonService, OrderStatus, OrderTracking, Email, $filter, $modal){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
@@ -78,4 +78,72 @@ app.controller('PurchaseOrderController', function($scope,Order,commonService, O
 		$scope.selectedOrder = null;
 		$scope.salesOrders = null;
    }
+   $scope.editItemQtyAndUom = function editItemQtyAndUom(item){
+	 $scope.itemToEdit = item;
+	 //$scope.exUoms = commonService.getExistingUoms();
+	 var modalInstance = $modal.open({
+		templateUrl : 'editItemQtyAndUom.html',
+		controller  : 'EditItemQtyAndUomCtrl',
+		backdrop: 'static',
+        backdropClick: true,
+        dialogFade: false,
+        keyboard: true,
+        scope : $scope,
+        resolve : {
+        	itemToEdit : function (){
+        		return $scope.itemToEdit;
+        	}
+        }
+	 });
+   };
+   $scope.showCustomerInfo = function showCustomerInfo(selPo){
+	   //$scope.exUoms = commonService.getExistingUoms();
+		 var modalInstance = $modal.open({
+			templateUrl : 'views/templates/customer-info.html',
+			controller  : 'ShowCustomerInfoCtrl',
+			backdrop: 'static',
+	        backdropClick: true,
+	        dialogFade: false,
+	        keyboard: true,
+	        scope : $scope,
+	        resolve : {
+	        	po : function (){
+	        		return selPo;
+	        	}
+	        }
+		 });
+   };
+});
+app.controller('ShowCustomerInfoCtrl',function($scope,po,$modalInstance){
+	$scope.customerInfo = {};
+	$scope.customerInfo.customer = po.customer;
+	$scope.customerInfo.billingAddress = po.billingAddress;
+	$scope.customerInfo.shippingAddress = po.shippingAddress;
+	$scope.cancel = function () {
+	    $modalInstance.dismiss('cancel');
+	  };
+});
+app.controller('EditItemQtyAndUomCtrl',function($scope,itemToEdit,LineItem,$modalInstance,commonService){
+	$scope.itemToEdit = itemToEdit;
+	$scope.maxAllowed = $scope.itemToEdit.lineItemQuantity;
+	$scope.exUoms = commonService.getExistingUoms();
+	$scope.selectedUom = itemToEdit.uom;
+	 $scope.saveChanges = function saveChanges() {
+		 if($scope.selectedUom){
+			 if($scope.itemToEdit.lineItemQuantity && $scope.itemToEdit.lineItemQuantity > 0 && $scope.itemToEdit.lineItemQuantity <= $scope.maxAllowed){
+				 LineItem.prototype$updateAttributes(
+						   { id: $scope.itemToEdit.id }, 
+						   { lineItemQuantity: $scope.itemToEdit.lineItemQuantity, uomId : $scope.selectedUom.id }
+						 );
+				 $modalInstance.close();
+			 } else {
+				 alert("Please provide valid quantity. Allowed Range (1 - "+$scope.maxAllowed+")");
+			 }
+		 } else {
+			 alert("Please select uom.");
+		 }
+	  };
+	  $scope.cancel = function () {
+	    $modalInstance.dismiss('cancel');
+	  };
 });

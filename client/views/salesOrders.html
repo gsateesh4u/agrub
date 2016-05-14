@@ -7,6 +7,16 @@
 					  {{'tbl_head_SO' | xlat}}
 					</header>
 					<div class="panel-body table-responsive">
+					<table width="100%" style="margin-bottom:5px">
+							<tr>
+								<td align="left">
+									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
+								</td>
+								<td align="right">
+									<button class="btn btn-primary" ng-disabled="disableAssignPOButton()" ng-click="assignSOsToVendor()" align="right">Assign Vendor</button>
+								</td>
+							</tr>
+						</table> 
 						<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="soCollection" st-table="sos">
 							<thead>
 							<tr>
@@ -16,6 +26,7 @@
 									<th st-sort="deliveryTime"><i class="glyphicon glyphicon-filter"></i>deliver Time</th>
 									<th st-sort="orderStatus.name"><i class="glyphicon glyphicon-filter"></i>Status</th>
 									<th width="50px">Actions</th>
+									<th>Assign</th>
 								</tr>
 								<tr>
 									<th>
@@ -25,6 +36,7 @@
 										<input st-search="id" placeholder="search for order number" class="input-sm form-control" type="search"/>
 									</th>
 									<th></th><th></th><th></th><th></th>
+									<th style="vertical-align: middle;text-align: center;"><input type="checkbox" ng-model="all" ng-click="selectAllOrders()" /></th>
 								</tr>
 							</thead>
 							<tbody ng-show="!isLoading">
@@ -43,6 +55,9 @@
 									<td align="center">
 										<span class="sprite sprite-edit" title="Edit Order" style="cursor:pointer" ng-click="showOrderDetails(row)"></span>&nbsp;&nbsp;&nbsp;
 										<span class="sprite sprite-delete" title="Delete Order" style="cursor:pointer"></span>
+									</td>
+									<td style="vertical-align: middle;text-align: center;">
+										<input type="checkbox" ng-model="row.selected" />
 									</td>
 							</tr>
 							<tr ng-if="sos.length == 0">
