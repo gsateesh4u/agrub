@@ -26,40 +26,51 @@ module.exports = function(Order) {
 			cb(err);
 		}else{
 			//loopback.getCurrentContext().set("accessToken",accessToken);
-			for(var i = 0;i<orders.length;i++){
-				if(orders[i].lineItems && orders[i].lineItems.length > 0){
-					validOrders.push(orders[i]);
+			try{
+				for(var i = 0;i<orders.length;i++){
+					if(orders[i].lineItems && orders[i].lineItems.length > 0){
+						validOrders.push(orders[i]);
+					}
 				}
-			}
-			var len = validOrders.length;
-			var newOrders = [];
-			OrderStatus.findOne({where:{name:'PO'}}).then(function (orderSt){
-				for(var i=0;i<validOrders.length;i++){
-					var tempOrder = validOrders[i];
-					tempOrder.orderStatusId = orderSt.id;
-					tempOrder.userId = accessToken.userId;
-					Order.create(tempOrder).then(function(newOrder){
-						newOrders.push(newOrder);
-						if(--len == 0){
-							var allLineItems = [];
-							newOrders.forEach(function(ex,j){
-								validOrders[j].lineItems.forEach(function(ex1,j1){
-									ex1.orderId = ex.id;
-									validIds.push(ex.id);
-									allLineItems.push(ex1);
-								});
-							});
-							allLineItems.forEach(function(ex,j){
-									LineItem.create(ex).then(function(newLineItem){
+				var len = validOrders.length;
+				var newOrders = [];
+				OrderStatus.findOne({where:{name:'PO'}}).then(function (orderSt){
+					for(var i=0;i<validOrders.length;i++){
+						var tempOrder = validOrders[i];
+						tempOrder.orderStatusId = orderSt.id;
+						tempOrder.userId = accessToken.userId;
+						Order.create(tempOrder).then(function(newOrder){
+							newOrders.push(newOrder);
+							if(--len == 0){
+								var allLineItems = [];
+								newOrders.forEach(function(ex,j){
+									validOrders[j].lineItems.forEach(function(ex1,j1){
+										ex1.orderId = ex.id;
+										validIds.push(ex.id);
+										ex1.custUpdatedDate = null;
+										allLineItems.push(ex1);
 									});
-							});
-							Order.find({ where: {id: {inq:validIds}},include:[{lineItems:'item'},'orderStatus','customer']}).then(function(data){
-								cb(null,data);
-							});
-						}
-					});
-				}
-			});
+								});
+								var lineItemsLength = allLineItems.length;
+								var calls = [];
+								allLineItems.forEach(function(ex,j){
+										LineItem.create(ex).then(function(newLineItem){
+											console.log(newLineItem);
+											if(--lineItemsLength == 0){
+												Order.find({ where: {id: {inq:validIds}},include:[{lineItems:'item'},'orderStatus','customer']}).then(function(data){
+													console.log(data);
+													cb(null,data);
+												});
+											}
+										});
+								});
+							}
+						});
+					}
+				});
+			}catch(err){
+				cb(err);
+			}
 		}
 	}
 	Order.remoteMethod(

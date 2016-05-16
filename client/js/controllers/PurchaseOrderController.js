@@ -32,7 +32,7 @@ app.controller('PurchaseOrderController', function($scope,Order,commonService, O
 		   row.filter(function(r) {
 			  if (r.isSelected) {
 				  flag = true;
-				  $scope.selPO = row;
+				  $scope.selPO = r;
 			  }
 		   });
 		   if(!flag){
@@ -40,7 +40,7 @@ app.controller('PurchaseOrderController', function($scope,Order,commonService, O
 		   }
 		 }, true);
 	$scope.showPO = function showPO(){
-		if($scope.selPO!=null){
+		if(!$scope.selPO!=null){
 			Order.findOne({
 				filter: { include: ['customer',{lineItems:[{item:'itemCategory'},'uom']},'orderStatus','user'] ,
 					where:{id: $scope.selPO.id}

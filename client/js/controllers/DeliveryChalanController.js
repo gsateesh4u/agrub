@@ -1,109 +1,57 @@
-app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, Email, $filter){
+app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, OrderTracking, commonService, Email, $filter){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
-	OrderStatus.findOne({filter: {where : {name : 'DC'}}}).$promise.then(function(poStatus){
-		Order.find({
-			filter: { include: ['customer','lineItems','orderStatus','user'] ,
-				where:{orderStatusId: poStatus.id}
-		}
-		}).$promise
-			.then(function(response) { 
-			  $scope.dcCollection = [].concat(response);
-			  if($scope.dcCollection.length==0){
-					 $scope.error = "No data found!!!";
-				 }
-				 $scope.isLoading = false;
-		  },function( errorMessage ) {
-			  $scope.error = "Error has occurred while loading delivery Chalans!";
-			  $scope.isLoading = false;
-	   });
-	});
-   $scope.showOrderDetails = function showOrderDetails(ord){
-	$scope.foundOrder = ord;
-   Order.findById({id:ord.id,
-		filter: {include:[{salesOrderLines:'item'},'orderStatus']}
-	}).$promise
-		.then(function(response) { 
-		  if(response.length==0){
-				 $scope.subError = "No data found!!!";
-			 }
-			 else{
-				$scope.selectedOrder = response;
-				$scope.salesOrders = response.salesOrders;
-			 }
-			 $scope.isSubLoading = false;
-	  },function( errorMessage ) {
-		  $scope.subError = "Error has occurred while loading order details!";
-		  $scope.isSubLoading = false;
-   });
-   }
-   $scope.acceptSO = function(so){
-		/*SalesOrder.deliveryChalan.create(
-		{id:so.id},
-		{
-			salesOrderId:so.id,
-			customerId: so.customerId
-		});*/
-		DeliveryChalan.create({
-			salesOrderId:so.id,
-			customerId: so.customerId,
-			deliveryChalanStatusId: 1
-		});
-		SalesOrder.prototype$updateAttributes(
-		   { id: so.id }, 
-		   { salesOrderStatusId: '2' }
-		 );
-		 so.salesOrderStatusId = 2;
-		 so.salesOrderStatus = SalesOrderStatus.findById({id:2});
-		 angular.forEach($scope.salesOrders, function (tempSO) {
-			 if(tempSO.id == so.id){
-				 tempSO.salesOrderStatusId = 2;
-				 tempSO.salesOrderStatus = so.salesOrderStatus;
-			 }
-		  });
-		 var partial = false;
-		 angular.forEach($scope.salesOrders, function (tempSO) {
-			 if(tempSO.salesOrderStatusId!=2 && tempSO.id!=so.id){
-				partial = true;
-			 }
-		  });
-		  if(partial){
-			Order.prototype$updateAttributes(
-			   { id: so.orderId }, 
-			   { orderStatusId: '3' }
-			 );
-			 $scope.foundOrder.orderStatusId = 3;
-			 //$scope.foundOrder.orderStatus = OrderStatus.findById({id:'3'});
-		  } else {
-			Order.prototype$updateAttributes(
-			   { id: so.orderId }, 
-			   { orderStatusId: '2' }
-			 );
-			 $scope.foundOrder.orderStatusId = 2;
-			 //$scope.foundOrder.orderStatus = OrderStatus.findById({id:'2'});
-		  }
-		   Order.findById({id:so.orderId,
-			filter: {include:[{salesOrders:['salesOrderStatus',{salesOrderLines:'item'}]}]}
+	$scope.init = function init(){
+		OrderStatus.findOne({filter: {where : {name : 'DC'}}}).$promise.then(function(poStatus){
+			Order.find({
+				filter: { include: ['customer','lineItems','orderStatus','user'] ,
+					where:{orderStatusId: poStatus.id}
+			}
 			}).$promise
 				.then(function(response) { 
-				  if(response.length==0){
-						 $scope.subError = "No data found!!!";
+				  $scope.dcCollection = [].concat(response);
+				  if($scope.dcCollection.length==0){
+						 $scope.error = "No data found!!!";
 					 }
-					 else{
-						$scope.selectedOrder = response;
-						$scope.salesOrders = response.salesOrders;
-						$scope.selectedSalesOrder = so;
-						$scope.selectedSalesOrder.deliveryDate = so.deliveryDate;
-					 }
-					 $scope.isSubLoading = false;
+					 $scope.isLoading = false;
 			  },function( errorMessage ) {
-				  $scope.subError = "Error has occurred while loading order details!";
-				  $scope.isSubLoading = false;
+				  $scope.error = "Error has occurred while loading delivery Chalans!";
+				  $scope.isLoading = false;
 		   });
-   }
-   $scope.cancel = function resetSelectedOrder(){
-		$scope.selectedOrder = null;
-		$scope.salesOrders = null;
-   }
+		});
+	}
+	$scope.init();
+
+	$scope.markAsDelivered = function markAsDelivered(){
+		if($scope.selDC){
+			 OrderStatus.findOne({filter: {where : {name : 'OFD'}}}).$promise.then(function(dcStatus){
+				   Order.prototype$updateAttributes(
+						   { id: $scope.selDC.id }, 
+						   { orderStatusId: dcStatus.id }
+						 );
+				   var orderTracking = {
+						   userId : commonService.getCurrentUser().id,
+						   orderId : $scope.selDC.id,
+						   orderStatusId : dcStatus.id,
+						   timestamp : new Date()
+				   };
+				   OrderTracking.create(orderTracking).$promise.then(function(data){
+					   $scope.init();
+				   });
+			   });
+		}
+	};
+   $scope.$watch('dcs', function(row) {
+	   var flag = false;
+	   row.filter(function(r) {
+		  if (r.isSelected) {
+			  flag = true;
+			  $scope.selDC = r;
+		  }
+	   });
+	   if(!flag){
+		  $scope.selDC = null;
+	   }
+	 }, true);
 });

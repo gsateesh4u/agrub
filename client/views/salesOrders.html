@@ -13,7 +13,8 @@
 									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
 								</td>
 								<td align="right">
-									<button class="btn btn-primary" ng-disabled="disableAssignPOButton()" ng-click="assignSOsToVendor()" align="right">Assign Vendor</button>
+									<!-- <button class="btn btn-primary" ng-disabled="disableAssignPOButton()" ng-click="assignSOsToVendor()" align="right">Assign Vendor</button> -->
+									<button class="btn btn-primary" ng-disabled="!selSO" ng-click="assigSOToVendor()" align="right">Assign Vendor</button>
 								</td>
 							</tr>
 						</table> 
@@ -26,7 +27,7 @@
 									<th st-sort="deliveryTime"><i class="glyphicon glyphicon-filter"></i>deliver Time</th>
 									<th st-sort="orderStatus.name"><i class="glyphicon glyphicon-filter"></i>Status</th>
 									<th width="50px">Actions</th>
-									<th>Assign</th>
+									<!-- <th>Assign</th> -->
 								</tr>
 								<tr>
 									<th>
@@ -36,7 +37,7 @@
 										<input st-search="id" placeholder="search for order number" class="input-sm form-control" type="search"/>
 									</th>
 									<th></th><th></th><th></th><th></th>
-									<th style="vertical-align: middle;text-align: center;"><input type="checkbox" ng-model="all" ng-click="selectAllOrders()" /></th>
+									<!-- <th style="vertical-align: middle;text-align: center;"><input type="checkbox" ng-model="all" ng-click="selectAllOrders()" /></th> -->
 								</tr>
 							</thead>
 							<tbody ng-show="!isLoading">
@@ -56,102 +57,51 @@
 										<span class="sprite sprite-edit" title="Edit Order" style="cursor:pointer" ng-click="showOrderDetails(row)"></span>&nbsp;&nbsp;&nbsp;
 										<span class="sprite sprite-delete" title="Delete Order" style="cursor:pointer"></span>
 									</td>
-									<td style="vertical-align: middle;text-align: center;">
+									<!-- <td style="vertical-align: middle;text-align: center;">
 										<input type="checkbox" ng-model="row.selected" />
-									</td>
+									</td> -->
 							</tr>
 							<tr ng-if="sos.length == 0">
-						   		<td colspan="6" class="text-center">{{error}}</td>
+						   		<td colspan="5" class="text-center">{{error}}</td>
 							</tr>
 							</tbody>
 							<tbody ng-show="isLoading">
 							<tr>
-								<td colspan="6" class="text-center"><img src="./css/images/loading.gif"/></td>
+								<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
 							</tr>
 							</tbody>
 							<tfoot>
 							<tr ng-show="!isLoading && sos.length != 0">
-								<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="6">
+								<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
 								</td>
 							</tr>
 							</tfoot>
 						</table>
 			</div>
-			<!-- Order details-->
-			<div class="row" ng-show="selectedOrder">
-				<div class="col-md-12">
-					<header class="panel-heading">
-						Order:: <b>{{selectedOrder.id}}</b>
-					</header>
-				</div>
-				<div class="col-md-12">
-					<!--<div class="col-md-12" ng-if="selectedOrder"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Hubs&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>-->
-					<form name="orderForm" class="css-form" novalidate>
-						<div>
-						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
-							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="error" ng-bind-html="error"></div>
-							<div class="col-md-12">
-								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
-							</div>
-							<div class="col-md-12">
-							<div class="form-group col-xs-3" ng-class="{ 'has-error': orderForm.selectedSalesOrder.$invalid }">
-								<label>Sales Orders <font color="red">*</font> :</label> 
-								<select name="selectedSalesOrder" class="form-control" name="selectedSalesOrder" ng-model="selectedSalesOrder" required class="form-control" ng-options="salesOrder.deliveryDate for salesOrder in salesOrders track by salesOrder.id">
-								</select>
-							</div>
-							<div class="form-group col-xs-3" ng-if="selectedSalesOrder">
-								<label>Delivery Date :</label> 
-								<input type="text" class="form-control" ng-disabled="true" value="{{selectedSalesOrder.deliveryDate}}"/> 
-							</div>
-							<div class="form-group col-xs-3" ng-if="selectedSalesOrder">
-								<label>Delivery Time :</label> 
-								<input type="text" class="form-control" ng-disabled="true" value="{{selectedSalesOrder.deliveryTime}}"/> 
-							</div>
-							<div class="form-group col-xs-3" ng-if="selectedSalesOrder">
-								<label>Status :</label> 
-								<input type="text" class="form-control label-warning" ng-disabled="true" value="{{selectedSalesOrder.salesOrderStatus.name}}"/>
-							</div>
-							<div class="col-xs-12">
-							<section class="panel" ng-if="selectedSalesOrder">
-								<header class="panel-heading">
-								  {{'tbl_head_items' | xlat}}
-								</header>
-								<div class="panel-body table-responsive">
-									<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="selectedSalesOrder.salesOrderLines" st-table="soCollection">
-										<thead>
-										<tr>
-												<th>Item</th>
-												<th>Quantity</th>
-											</tr>
-										</thead>
-										<tbody>
-										<tr st-select-row="row" ng-repeat="row in soCollection">
-												<td>{{row.item.name}}</td>
-												<td>{{row.soLineItemsQuantity}}&nbsp;{{row.item.unit}}</td>
-										</tr>
-										<tr ng-if="selectedSalesOrder.salesOrderLines.length == 0">
-											<td colspan="6" class="text-center">No Items</td>
-										</tr>
-										</tbody>
-										<tfoot>
-										<tr ng-show="selectedSalesOrder.salesOrderLines.length != 0">
-											<td class="text-center" st-pagination="" st-items-by-page="10" colspan="6">
-											</td>
-										</tr>
-										</tfoot>
-									</table>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-primary" ng-if="selectedSalesOrder.salesOrderStatusId=='1'" ng-click="acceptSO(selectedSalesOrder)" ng-disabled="orderForm.$invalid">Accept</button>
-							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-						</div>
-					</form>
-				</div>
-              </div>
-              <!-- row end -->
 		</section>
 	</div>
 		</div>
 </section>
+<script type="text/ng-template" id="assignVendorsmodal.html">
+<div class="modal-content">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true" ng-click="cancel()">&times;</button>
+		<h4 class="modal-title">
+			Select Vendor
+		</h4>
+	</div>
+	<div class="modal-body" style="margin-bottom: 20%">
+		<div class="form-group col-xs-6">
+			<label>Vendor <font color="red">*</font> :</label> 
+			<select name="selectedVendor" class="form-control"  ng-model="selectedVendor" required class="form-control" ng-options="(vendor.firstname + ' ' + vendor.lastname) for vendor in vendors track by vendor.id">
+			</select>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="assignSelctedVendor()" ng-disabled="!selectedVendor">Assign</button>
+		<button type="button" class="btn btn-warning" data-dismiss="modal"
+			ng-click="cancel()">Close</button>
+	</div>
+</div>
+</script>
