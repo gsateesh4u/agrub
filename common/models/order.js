@@ -55,10 +55,8 @@ module.exports = function(Order) {
 								var calls = [];
 								allLineItems.forEach(function(ex,j){
 										LineItem.create(ex).then(function(newLineItem){
-											console.log(newLineItem);
 											if(--lineItemsLength == 0){
 												Order.find({ where: {id: {inq:validIds}},include:[{lineItems:'item'},'orderStatus','customer']}).then(function(data){
-													console.log(data);
 													cb(null,data);
 												});
 											}
