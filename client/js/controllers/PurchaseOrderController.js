@@ -82,7 +82,7 @@ app.controller('PurchaseOrderController', function($scope,Order,commonService, O
 	 $scope.itemToEdit = item;
 	 //$scope.exUoms = commonService.getExistingUoms();
 	 var modalInstance = $modal.open({
-		templateUrl : 'editItemQtyAndUom.html',
+		templateUrl : 'views/templates/edit-item-quantity-and-uom.html',
 		controller  : 'EditItemQtyAndUomCtrl',
 		backdrop: 'static',
         backdropClick: true,
@@ -96,8 +96,7 @@ app.controller('PurchaseOrderController', function($scope,Order,commonService, O
         }
 	 });
    };
-   $scope.showCustomerInfo = function showCustomerInfo(selPo){
-	   //$scope.exUoms = commonService.getExistingUoms();
+   $scope.showCustomerInfo = function showCustomerInfo(orderObj){
 		 var modalInstance = $modal.open({
 			templateUrl : 'views/templates/customer-info.html',
 			controller  : 'ShowCustomerInfoCtrl',
@@ -107,18 +106,18 @@ app.controller('PurchaseOrderController', function($scope,Order,commonService, O
 	        keyboard: true,
 	        scope : $scope,
 	        resolve : {
-	        	po : function (){
-	        		return selPo;
+	        	order : function (){
+	        		return orderObj;
 	        	}
 	        }
 		 });
    };
 });
-app.controller('ShowCustomerInfoCtrl',function($scope,po,$modalInstance){
+app.controller('ShowCustomerInfoCtrl',function($scope,order,$modalInstance){
 	$scope.customerInfo = {};
-	$scope.customerInfo.customer = po.customer;
-	$scope.customerInfo.billingAddress = po.billingAddress;
-	$scope.customerInfo.shippingAddress = po.shippingAddress;
+	$scope.customerInfo.customer = order.customer;
+	$scope.customerInfo.billingAddress = order.billingAddress;
+	$scope.customerInfo.shippingAddress = order.shippingAddress;
 	$scope.cancel = function () {
 	    $modalInstance.dismiss('cancel');
 	  };
@@ -135,6 +134,7 @@ app.controller('EditItemQtyAndUomCtrl',function($scope,itemToEdit,LineItem,$moda
 						   { id: $scope.itemToEdit.id }, 
 						   { lineItemQuantity: $scope.itemToEdit.lineItemQuantity, uomId : $scope.selectedUom.id }
 						 );
+				 itemToEdit.uom = $scope.selectedUom;
 				 $modalInstance.close();
 			 } else {
 				 alert("Please provide valid quantity. Allowed Range (1 - "+$scope.maxAllowed+")");

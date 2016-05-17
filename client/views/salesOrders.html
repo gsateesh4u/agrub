@@ -2,7 +2,7 @@
 		<!-- Main row -->
 		<div class="row">
 			<div class="col-md-12">
-				<section class="panel">
+				<section class="panel" ng-show="!showEditOrderForm">
 					<header class="panel-heading">
 					  {{'tbl_head_SO' | xlat}}
 					</header>
@@ -14,6 +14,8 @@
 								</td>
 								<td align="right">
 									<!-- <button class="btn btn-primary" ng-disabled="disableAssignPOButton()" ng-click="assignSOsToVendor()" align="right">Assign Vendor</button> -->
+									<button class="btn btn-primary" ng-disabled="!selSO" ng-click="showCustomerInfo(selSO)" align="right">Customer Info</button>
+									<button class="btn btn-primary" ng-disabled="!selSO" ng-click="editOrder()" align="right">Edit Order</button>
 									<button class="btn btn-primary" ng-disabled="!selSO" ng-click="assigSOToVendor()" align="right">Assign Vendor</button>
 								</td>
 							</tr>
@@ -79,6 +81,66 @@
 						</table>
 			</div>
 		</section>
+		<!-- Edit Order start-->
+		<section class="panel" ng-show="showEditOrderForm">
+			<header class="panel-heading">
+			  <div class="row">
+			  	<div class="col-md-4"><span>Order <b>#{{selectedOrder.id}}</b></span></div>
+			  	<div class="col-md-8" style="text-align: right;">
+			  		<button class="btn btn-primary" ng-click="showCustomerInfo(selectedOrder)">Customer Info</button>&nbsp;&nbsp;&nbsp;
+			  		<button class="btn btn-warning" ng-click="backToMainMenu()">Cancel</button>
+			  	</div>
+			  </div>
+			</header>
+			<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+			<div class="panel-body table-responsive">
+				<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="selectedOrder.lineItems" st-table="lineItemsCollection">
+					<thead>
+					<tr>
+							<th st-sort="name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
+							<th st-sort="itemCategory.name"><i class="glyphicon glyphicon-filter"></i>Category</th>
+							<th>Quantity</th>
+							<th>UOM</th>
+							<th>Actions</th>
+						</tr>
+						<tr>
+							<th>
+								<input st-search="name" placeholder="search for item" class="input-sm form-control" type="search"/>
+							</th>
+							<th></th>
+							<th></th><th></th><th></th>
+						</tr>
+					</thead>
+					<tbody ng-show="!isLoading">
+					<tr st-select-row="row" ng-repeat="row in lineItemsCollection">
+							<td>{{row.item.name}}</td>
+							<td>{{row.item.itemCategory.name}}</td>
+							<td>{{row.lineItemQuantity}}</td>
+							<td>{{row.uom.name}}</td>
+							<td align="center">
+								<span class="sprite sprite-edit" title="Edit Item" style="cursor:pointer" ng-click="editItemQtyAndUom(row)"></span>&nbsp;&nbsp;&nbsp;
+								<span class="sprite sprite-delete" title="Delete Item" style="cursor:pointer"></span>
+							</td>
+					</tr>
+					<tr ng-if="lineItemsCollection.length == 0">
+						<td colspan="5" class="text-center">{{error}}</td>
+					</tr>
+					</tbody>
+					<tbody ng-show="isLoading">
+					<tr>
+						<td colspan="5" class="text-center"><img src="./css/images/loading.gif"/></td>
+					</tr>
+					</tbody>
+					<tfoot>
+					<tr ng-show="!isLoading && lineItemsCollection.length != 0">
+						<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="5">
+						</td>
+					</tr>
+					</tfoot>
+				</table>
+			</div>
+		</section>
+		<!-- Edit Order end -->
 	</div>
 		</div>
 </section>

@@ -40,24 +40,24 @@ app.controller('SalesOrderController', function($rootScope, $scope,Order, OrderS
 	  return flag;
    }; 
    $scope.showOrderDetails = function showOrderDetails(ord){
-	$scope.foundOrder = ord;
-   Order.findById({id:ord.id,
-		filter: {include:[{salesOrderLines:'item'},'orderStatus']}
-	}).$promise
-		.then(function(response) { 
-		  if(response.length==0){
-				 $scope.subError = "No data found!!!";
-			 }
-			 else{
-				$scope.selectedOrder = response;
-				$scope.salesOrders = response.salesOrders;
-			 }
-			 $scope.isSubLoading = false;
-	  },function( errorMessage ) {
-		  $scope.subError = "Error has occurred while loading order details!";
-		  $scope.isSubLoading = false;
-   });
-   }
+	   $scope.foundOrder = ord;
+	   Order.findById({id:ord.id,
+			filter: {include:[{salesOrderLines:'item'},'orderStatus']}
+		}).$promise
+			.then(function(response) { 
+			  if(response.length==0){
+					 $scope.subError = "No data found!!!";
+				 }
+				 else{
+					$scope.selectedOrder = response;
+					$scope.salesOrders = response.salesOrders;
+				 }
+				 $scope.isSubLoading = false;
+		  },function( errorMessage ) {
+			  $scope.subError = "Error has occurred while loading order details!";
+			  $scope.isSubLoading = false;
+	   });
+   };
    $scope.cancel = function resetSelectedOrder(){
 		$scope.selectedOrder = null;
 		$scope.salesOrders = null;
@@ -109,6 +109,57 @@ app.controller('SalesOrderController', function($rootScope, $scope,Order, OrderS
 		  $scope.selSO = null;
 	   }
 	 }, true);
+   $scope.showCustomerInfo = function showCustomerInfo(orderObj){
+		 var modalInstance = $modal.open({
+			templateUrl : 'views/templates/customer-info.html',
+			controller  : 'ShowCustomerInfoCtrl',
+			backdrop: 'static',
+	        backdropClick: true,
+	        dialogFade: false,
+	        keyboard: true,
+	        scope : $scope,
+	        resolve : {
+	        	order : function (){
+	        		return orderObj;
+	        	}
+	        }
+		 });
+   };
+   $scope.editOrder = function editOrder(){
+		if(!$scope.selSO!=null){
+			Order.findOne({
+				filter: { include: ['customer',{lineItems:[{item:'itemCategory'},'uom']},'orderStatus','user'] ,
+					where:{id: $scope.selSO.id}
+				}}).$promise.then(function(fullSO){
+					if(fullSO){
+						$scope.showEditOrderForm = true;
+						$scope.selectedOrder = fullSO;
+					}
+			});
+		}
+	};
+	$scope.editItemQtyAndUom = function editItemQtyAndUom(item){
+		 $scope.itemToEdit = item;
+		 var modalInstance = $modal.open({
+			templateUrl : 'views/templates/edit-item-quantity-and-uom.html',
+			controller  : 'EditItemQtyAndUomCtrl',
+			backdrop: 'static',
+	        backdropClick: true,
+	        dialogFade: false,
+	        keyboard: true,
+	        scope : $scope,
+	        resolve : {
+	        	itemToEdit : function (){
+	        		return $scope.itemToEdit;
+	        	}
+	        }
+		 });
+	   };
+	   $scope.backToMainMenu = function backToMainMenu(){
+			$scope.showEditOrderForm = false;
+			$scope.selSO = null;
+			$scope.selectedOrder = null;
+		};
 });
 app.controller('AssignVendorsCtrl',function($scope,vendors,so,$modalInstance,Order,OrderStatus,OrderTracking, $rootScope){
 	$scope.vendors = vendors;
