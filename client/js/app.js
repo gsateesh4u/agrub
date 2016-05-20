@@ -3,6 +3,10 @@ var app = angular
     'ui.router','lbServices','ngCookies','angular.filter',
     'ui.bootstrap','smart-table','xlat','blockUI','angularFileUpload','ngSanitize','ui.bootstrap.datetimepicker'
   ])
+  //remove weeknumbers from calendar
+  .config(function(datepickerConfig) {
+      datepickerConfig.showWeeks =  false;
+    })
   //configure pagination template for smart-table
 	.config(function(stConfig) {
       stConfig.pagination.template = './views/templates/smart-table/pagination.html';

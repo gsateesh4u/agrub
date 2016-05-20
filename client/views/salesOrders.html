@@ -2,7 +2,7 @@
 		<!-- Main row -->
 		<div class="row">
 			<div class="col-md-12">
-				<section class="panel" ng-show="!showEditOrderForm">
+				<section class="panel" ng-show="showPage == 'main'">
 					<header class="panel-heading">
 					  {{'tbl_head_SO' | xlat}}
 					</header>
@@ -13,7 +13,7 @@
 									<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
 								</td>
 								<td align="right">
-									<!-- <button class="btn btn-primary" ng-disabled="disableAssignPOButton()" ng-click="assignSOsToVendor()" align="right">Assign Vendor</button> -->
+									<button class="btn btn-primary" ng-click="showConsolidatedView()" align="right">Consolidated SO</button>
 									<button class="btn btn-primary" ng-disabled="!selSO" ng-click="showCustomerInfo(selSO)" align="right">Customer Info</button>
 									<button class="btn btn-primary" ng-disabled="!selSO" ng-click="editOrder()" align="right">Edit Order</button>
 									<button class="btn btn-primary" ng-disabled="!selSO" ng-click="assigSOToVendor()" align="right">Assign Vendor</button>
@@ -82,7 +82,7 @@
 			</div>
 		</section>
 		<!-- Edit Order start-->
-		<section class="panel" ng-show="showEditOrderForm">
+		<section class="panel" ng-show="showPage == 'editOrder'">
 			<header class="panel-heading">
 			  <div class="row">
 			  	<div class="col-md-4"><span>Order <b>#{{selectedOrder.id}}</b></span></div>
@@ -141,6 +141,84 @@
 			</div>
 		</section>
 		<!-- Edit Order end -->
+		<!-- Assign PO start-->
+		<section class="panel" ng-show="showPage == 'supplier'">
+			<header class="panel-heading">
+			  <div class="row">
+			  	<div class="col-md-4"><span>Assign Vendor</span></div>
+			  	<div class="col-md-8" style="text-align: right;">
+			  		<button class="btn btn-warning" ng-click="backToMainMenu()">Cancel</button>
+			  	</div>
+			  </div>
+			</header>
+			<div class="row" style="padding-top: 10px">
+				<div class="col-xs-12">
+					<div class="form-group col-xs-3">
+						<label>Hub <font color="red">*</font> :</label> 
+						<select name="selectedHub" class="form-control"  ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id">
+						</select>
+					</div>
+					<div class="form-group col-xs-3">
+						<label>Deliver Date <font color="red">*</font> :</label> 
+						<input type="text" class="form-control" required datetime-picker="yyyy-MM-dd" ng-model="dates.start" is-open="open.start" enable-time="false" ng-focus="openCalendar($event, 'start')"/>
+					</div>
+					<div class="col-xs-2">
+						<button class="btn btn-primary" ng-disabled="!selectedHub" ng-click="getAllItems()" style="margin-top: 25px;">Retrieve Items</button>
+					</div>
+					<div class="col-xs-4">
+						<button class="btn btn-primary" ng-click="showSuppliers()" style="float: right;margin-top: 25px;">Assign Supplier</button>
+					</div>
+				</div>
+			</div>
+			<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+			<div class="panel-body table-responsive">
+				<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="lineItems" st-table="linesCollection">
+					<thead>
+					<tr>
+							<th st-sort="item.name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
+							<th st-sort="item.itemCategory.name"><i class="glyphicon glyphicon-filter"></i>Category</th>
+							<th>Quantity</th>
+							<th>UOM</th>
+							<th width="50px">Select</th>
+						</tr>
+						<tr>
+							<th>
+								<input st-search="item.name" placeholder="search for item" class="input-sm form-control" type="search"/>
+							</th>
+							<th></th>
+							<th></th><th></th>
+							<th><input type="checkbox" style="margin-bottom: -20px;margin-left: 10px;" ng-model="all" ng-click="selectAllItems()" /></th>
+						</tr>
+					</thead>
+					<tbody ng-show="!isLoading">
+					<tr ng-repeat="row in linesCollection">
+							<td>{{row.item.name}}</td>
+							<td>{{row.item.itemCategory.name}}</td>
+							<td>{{row.lineItemQuantity}}</td>
+							<td>{{row.uom.name}}</td>
+							<td>
+								<input type="checkbox" style="margin-bottom: -20px;margin-left: 10px;" ng-model="row.selected" />
+							</td>
+					</tr>
+					<tr ng-if="linesCollection.length == 0">
+						<td colspan="4" class="text-center">{{error}}</td>
+					</tr>
+					</tbody>
+					<tbody ng-show="isLoading">
+					<tr>
+						<td colspan="4" class="text-center"><img src="./css/images/loading.gif"/></td>
+					</tr>
+					</tbody>
+					<tfoot>
+					<tr ng-show="!isLoading && linesCollection.length != 0">
+						<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="4">
+						</td>
+					</tr>
+					</tfoot>
+				</table>
+			</div>
+		</section>
+		<!-- Assign PO end -->
 	</div>
 		</div>
 </section>
@@ -162,6 +240,77 @@
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-primary" ng-click="assignSelctedVendor()" ng-disabled="!selectedVendor">Assign</button>
+		<button type="button" class="btn btn-warning" data-dismiss="modal"
+			ng-click="cancel()">Close</button>
+	</div>
+</div>
+</script>
+<script type="text/ng-template" id="consolidatedView.html">
+<div class="modal-content">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true" ng-click="cancel()">&times;</button>
+		<h4 class="modal-title">
+			Assign Vendor
+		</h4>
+	</div>
+	<div class="modal-body" style="margin-bottom: 20%">
+		
+		<div class="col-xs-12">
+			<table width="100%">
+				<tr>
+					<td><label>Deliver Date <font color="red">*</font> :</label></td>
+					<td><input type="text" class="form-control" required datetime-picker="yyyy-MM-dd" ng-model="dates.start" is-open="open.start" enable-time="false" ng-focus="openCalendar($event, 'start')"/></td>
+					<td align="right"><button class="btn btn-primary" ng-click="getAllItems('deliveryDate')">Retrieve Items</button></td>
+				</tr>
+			</table>
+		</div>
+		<div class="row">
+			<div class="panel-body table-responsive">
+				<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="lineItems" st-table="linesCollection">
+					<thead>
+					<tr>
+							<th st-sort="item.name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
+							<th st-sort="item.itemCategory.name"><i class="glyphicon glyphicon-filter"></i>Category</th>
+							<th>Quantity</th>
+							<th>UOM</th>
+						</tr>
+						<tr>
+							<th>
+								<input st-search="item.name" placeholder="search for item" class="input-sm form-control" type="search"/>
+							</th>
+							<th></th>
+							<th></th><th></th>
+						</tr>
+					</thead>
+					<tbody ng-show="!isLoading">
+					<tr ng-repeat="row in linesCollection">
+							<td>{{row.item.name}}</td>
+							<td>{{row.item.itemCategory.name}}</td>
+							<td>{{row.lineItemQuantity}}</td>
+							<td>{{row.uom.name}}</td>
+					</tr>
+					<tr ng-if="linesCollection.length == 0">
+						<td colspan="4" class="text-center">{{error}}</td>
+					</tr>
+					</tbody>
+					<tbody ng-show="isLoading">
+					<tr>
+						<td colspan="4" class="text-center"><img src="./css/images/loading.gif"/></td>
+					</tr>
+					</tbody>
+					<tfoot>
+					<tr ng-show="!isLoading && linesCollection.length != 0">
+						<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="4">
+						</td>
+					</tr>
+					</tfoot>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary">Assign</button>
 		<button type="button" class="btn btn-warning" data-dismiss="modal"
 			ng-click="cancel()">Close</button>
 	</div>
