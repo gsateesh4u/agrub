@@ -5,7 +5,12 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "isDefault": {
+      "type": "boolean",
+      "required": false
+    }
+  },
   "validations": [],
   "relations": {
 	"customer": {

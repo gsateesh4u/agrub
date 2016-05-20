@@ -10,7 +10,12 @@ User.profile = function(cb) {
 };
 User.m_profile = function(userId, cb) {
 	User.findById(userId,{
-	  include:['hubs','roles','customers'],
+	  include:['hubs'
+		        ,'roles'
+						, {relation:'customers',
+              scope:{include: ['shippingAddresses','billingAddresses']}
+              }
+					],
 	}, cb);
 };
 User.remoteMethod(
