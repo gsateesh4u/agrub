@@ -166,7 +166,7 @@
 						<button class="btn btn-primary" ng-disabled="!selectedHub" ng-click="getAllItems()" style="margin-top: 25px;">Retrieve Items</button>
 					</div>
 					<div class="col-xs-4">
-						<button class="btn btn-primary" ng-click="showSuppliers()" style="float: right;margin-top: 25px;">Assign Supplier</button>
+						<button class="btn btn-primary" ng-disabled="disableAssignSupplier()" ng-click="showSuppliers()" style="float: right;margin-top: 25px;">Assign Supplier</button>
 					</div>
 				</div>
 			</div>
@@ -255,57 +255,18 @@
 		</h4>
 	</div>
 	<div class="modal-body" style="margin-bottom: 20%">
-		
-		<div class="col-xs-12">
-			<table width="100%">
-				<tr>
-					<td><label>Deliver Date <font color="red">*</font> :</label></td>
-					<td><input type="text" class="form-control" required datetime-picker="yyyy-MM-dd" ng-model="dates.start" is-open="open.start" enable-time="false" ng-focus="openCalendar($event, 'start')"/></td>
-					<td align="right"><button class="btn btn-primary" ng-click="getAllItems('deliveryDate')">Retrieve Items</button></td>
-				</tr>
-			</table>
-		</div>
 		<div class="row">
-			<div class="panel-body table-responsive">
-				<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="lineItems" st-table="linesCollection">
-					<thead>
-					<tr>
-							<th st-sort="item.name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Item</th>
-							<th st-sort="item.itemCategory.name"><i class="glyphicon glyphicon-filter"></i>Category</th>
-							<th>Quantity</th>
-							<th>UOM</th>
-						</tr>
-						<tr>
-							<th>
-								<input st-search="item.name" placeholder="search for item" class="input-sm form-control" type="search"/>
-							</th>
-							<th></th>
-							<th></th><th></th>
-						</tr>
-					</thead>
-					<tbody ng-show="!isLoading">
-					<tr ng-repeat="row in linesCollection">
-							<td>{{row.item.name}}</td>
-							<td>{{row.item.itemCategory.name}}</td>
-							<td>{{row.lineItemQuantity}}</td>
-							<td>{{row.uom.name}}</td>
-					</tr>
-					<tr ng-if="linesCollection.length == 0">
-						<td colspan="4" class="text-center">{{error}}</td>
-					</tr>
-					</tbody>
-					<tbody ng-show="isLoading">
-					<tr>
-						<td colspan="4" class="text-center"><img src="./css/images/loading.gif"/></td>
-					</tr>
-					</tbody>
-					<tfoot>
-					<tr ng-show="!isLoading && linesCollection.length != 0">
-						<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="4">
-						</td>
-					</tr>
-					</tfoot>
-				</table>
+			<div class="col-xs-12">
+				<div class="form-group col-xs-6">
+					<label>Supplier <font color="red">*</font> :</label> 
+					<select name="supplier" class="form-control"  ng-model="suppler" required class="form-control" ng-options="vendor.name for vendor in vendors track by vendor.id">
+					</select>
+				</div>
+				<div class="form-group col-xs-6">
+					<label>Warehouse Vendor <font color="red">*</font> :</label> 
+					<select name="receiver" class="form-control"  ng-model="receiver" required class="form-control" ng-options="vendor.name for vendor in vendors track by vendor.id">
+					</select>
+				</div>
 			</div>
 		</div>
 	</div>

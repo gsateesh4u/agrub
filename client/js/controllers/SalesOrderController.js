@@ -212,19 +212,54 @@ app
 					};
 
 					$scope.showConsolidatedView = function() {
-						/*
-						 * var modalInstance = $modal.open({ templateUrl :
-						 * 'consolidatedView.html', controller :
-						 * 'ConsolidatedViewCtrl', backdrop: 'static',
-						 * backdropClick: true, dialogFade: false, keyboard:
-						 * true, scope : $scope, resolve : { sos : function (){
-						 * return $scope.soCollection; } } });
-						 */
 						Hub.find().$promise.then(function(response){
 							$scope.hubs = [].concat(response);
 							$scope.showPage = 'supplier';
 						});
 						
+					};
+					$scope.disableAssignSupplier = function(){
+						var flag = true;
+						angular.forEach($scope.lineItems,function(item){
+							if(item.selected){
+								flag = false;
+							}
+						});
+						return flag;
+					};
+					$scope.showSuppliers = function showSuppliers(){
+						Vendor.find({
+							filter : {
+								where : {
+									hubId : $scope.selectedHub.id
+								}
+							}
+						}).$promise.then(function(response){
+							$scope.vendors = [].concat(response);
+							var modalInstance = $modal.open({ 
+								 templateUrl : 'consolidatedView.html', 
+								 controller :  'ConsolidatedViewCtrl', 
+								 backdrop: 'static',
+								 backdropClick: true, 
+								 dialogFade: false, 
+								 keyboard:  true, 
+								 scope : $scope, 
+								 resolve : { 
+									 lineItems : function (){
+										 	return $scope.lineItems; 
+										 	},
+									 vendors : function (){
+										 return $scope.vendors;
+									 },
+									 deliveryDate : function (){
+										 return $scope.dates.start;
+									 },
+									 selectedHub : function (){
+										 return $scope.selectedHub;
+									 }
+								 	} 
+							 });
+						});
 					};
 					$scope.selectAllItems = function selectAllItems(){
 						angular.forEach($scope.lineItems,function(item){
@@ -294,79 +329,11 @@ app
 							return flag;
 						}
 					}
-					;
-				});
-app.controller('ConsolidatedViewCtrl', function($scope, sos, $modalInstance,
+});
+app.controller('ConsolidatedViewCtrl', function($scope, lineItems, vendors, deliveryDate,selectedHub, $modalInstance,
 		$filter, LineItem, Order, OrderStatus, OrderTracking, $rootScope) {
-	$scope.sos = sos;
-	$scope.dates = {
-		today : new Date(),
-		start : new Date(),
-		end : new Date()
-	};
-	$scope.open = {
-		start : false,
-		end : false
-	};
-	$scope.openCalendar = function(e, date) {
-		e.preventDefault();
-		e.stopPropagation();
-		$scope.open[date] = true;
-	};
-	$scope.getAllItems = function(date) {
-		$scope.lineItems = [];
-		var lineItemIds = [];
-		angular.forEach($scope.sos, function(so, i) {
-			var dt1 = $filter('date')(so.deliveryDate, "yyyy-MM-dd");
-			var dt2 = $filter('date')($scope.dates.start, "yyyy-MM-dd");
-			if (dt1 === dt2) {
-				angular.forEach(so.lineItems, function(tLineItem, itr) {
-					lineItemIds.push(tLineItem.id);
-				});
-			}
-
-		});
-		if (lineItemIds.length > 0) {
-
-		} else {
-			alert("No orders found for the selected delivery date");
-		}
-		LineItem.find({
-			filter : {
-				include : [ {
-					item : 'itemCategory'
-				}, 'uom' ],
-				where : {
-					id : {
-						inq : lineItemIds
-					}
-				}
-			}
-		}).$promise.then(function(response) {
-			var exLineItems = [].concat(response);
-			angular.forEach(exLineItems, function(ex) {
-				if (!isItemExist(ex)) {
-					$scope.lineItems.push(ex);
-				}
-			});
-		});
-	};
-	function isItemExist(exLineItem) {
-		if ($scope.lineItems.length == 0) {
-			return false;
-		} else {
-			var flag = false;
-			angular.forEach($scope.lineItems, function(lineItem, itr) {
-				if (exLineItem.item.id === lineItem.item.id) {
-					lineItem.lineItemQuantity = lineItem.lineItemQuantity
-							+ exLineItem.lineItemQuantity;
-					flag = true;
-				}
-			});
-			return flag;
-		}
-	}
-	;
+	$scope.lineItems = lineItems;
+	$scope.vendors = vendors;
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
