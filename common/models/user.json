@@ -63,6 +63,11 @@
       "foreignKey": "principalId",
       "through": "RoleMapping"
     },
+    "vendors": {
+        "type": "hasMany",
+        "model": "vendor",
+        "through": "VendorUserMap"
+      },
     "roleMappings": {
       "type": "hasMany",
       "model": "RoleMapping",

@@ -234,12 +234,17 @@
 	<div class="modal-body" style="margin-bottom: 20%">
 		<div class="form-group col-xs-6">
 			<label>Vendor <font color="red">*</font> :</label> 
-			<select name="selectedVendor" class="form-control"  ng-model="selectedVendor" required class="form-control" ng-options="(vendor.firstname + ' ' + vendor.lastname) for vendor in vendors track by vendor.id">
+			<select name="selectedVendor" class="form-control"  ng-model="selectedVendor" required class="form-control" ng-options="vendor.name for vendor in vendors track by vendor.id"  ng-change="populateUsers()">
+			</select>
+		</div>
+		<div class="form-group col-xs-6">
+			<label>User <font color="red">*</font> :</label> 
+			<select name="selectedUser" class="form-control"  ng-model="selectedUser" required class="form-control" ng-options="(user.firstname + ' ' + user.lastname) for user in users track by user.id">
 			</select>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-primary" ng-click="assignSelctedVendor()" ng-disabled="!selectedVendor">Assign</button>
+		<button class="btn btn-primary" ng-click="assignSelctedVendor()" ng-disabled="(!selectedVendor || !selectedUser)">Assign</button>
 		<button type="button" class="btn btn-warning" data-dismiss="modal"
 			ng-click="cancel()">Close</button>
 	</div>

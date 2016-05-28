@@ -54,6 +54,11 @@
       "model": "DeliveryChalan",
       "foreignKey": ""
     },
+    "users": {
+	    "type": "hasMany",
+	    "model": "user",
+	    "through": "VendorUserMap"
+	  },
     "purchaseOrders": {
       "type": "hasMany",
       "model": "PurchaseOrder",

@@ -20823,6 +20823,92 @@ module.factory(
           method: "GET"
         },
 
+        // INTERNAL. Use Vendor.users.findById() instead.
+        "::findById::Vendor::users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Vendor.users.destroyById() instead.
+        "::destroyById::Vendor::users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Vendor.users.updateById() instead.
+        "::updateById::Vendor::users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Vendor.users.link() instead.
+        "::link::Vendor::users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/rel/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Vendor.users.unlink() instead.
+        "::unlink::Vendor::users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/rel/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Vendor.users.exists() instead.
+        "::exists::Vendor::users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/rel/:fk",
+          method: "HEAD"
+        },
+
+        // INTERNAL. Use Vendor.users() instead.
+        "::get::Vendor::users": {
+          isArray: true,
+          url: urlBase + "/Vendors/:id/users",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Vendor.users.create() instead.
+        "::create::Vendor::users": {
+          url: urlBase + "/Vendors/:id/users",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Vendor.users.createMany() instead.
+        "::createMany::Vendor::users": {
+          isArray: true,
+          url: urlBase + "/Vendors/:id/users",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Vendor.users.destroyAll() instead.
+        "::delete::Vendor::users": {
+          url: urlBase + "/Vendors/:id/users",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Vendor.users.count() instead.
+        "::count::Vendor::users": {
+          url: urlBase + "/Vendors/:id/users/count",
+          method: "GET"
+        },
+
         // INTERNAL. Use DailyMktPrice.user() instead.
         "::get::DailyMktPrice::user": {
           url: urlBase + "/DailyMktPrices/:id/user",
@@ -20856,6 +20942,12 @@ module.factory(
         // INTERNAL. Use OrderTracking.user() instead.
         "::get::OrderTracking::user": {
           url: urlBase + "/OrderTrackings/:id/user",
+          method: "GET"
+        },
+
+        // INTERNAL. Use VendorUserMap.user() instead.
+        "::get::VendorUserMap::user": {
+          url: urlBase + "/VendorUserMaps/:id/user",
           method: "GET"
         },
 
@@ -24588,6 +24680,60 @@ module.factory(
           method: "PUT"
         },
 
+        // INTERNAL. Use Vendor.users.findById() instead.
+        "prototype$__findById__users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Vendor.users.destroyById() instead.
+        "prototype$__destroyById__users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Vendor.users.updateById() instead.
+        "prototype$__updateById__users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Vendor.users.link() instead.
+        "prototype$__link__users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/rel/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use Vendor.users.unlink() instead.
+        "prototype$__unlink__users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/rel/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Vendor.users.exists() instead.
+        "prototype$__exists__users": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/Vendors/:id/users/rel/:fk",
+          method: "HEAD"
+        },
+
         // INTERNAL. Use Vendor.purchaseOrders() instead.
         "prototype$__get__purchaseOrders": {
           isArray: true,
@@ -24610,6 +24756,31 @@ module.factory(
         // INTERNAL. Use Vendor.purchaseOrders.count() instead.
         "prototype$__count__purchaseOrders": {
           url: urlBase + "/Vendors/:id/purchaseOrders/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Vendor.users() instead.
+        "prototype$__get__users": {
+          isArray: true,
+          url: urlBase + "/Vendors/:id/users",
+          method: "GET"
+        },
+
+        // INTERNAL. Use Vendor.users.create() instead.
+        "prototype$__create__users": {
+          url: urlBase + "/Vendors/:id/users",
+          method: "POST"
+        },
+
+        // INTERNAL. Use Vendor.users.destroyAll() instead.
+        "prototype$__delete__users": {
+          url: urlBase + "/Vendors/:id/users",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use Vendor.users.count() instead.
+        "prototype$__count__users": {
+          url: urlBase + "/Vendors/:id/users/count",
           method: "GET"
         },
 
@@ -25099,6 +25270,12 @@ module.factory(
           url: urlBase + "/PurchaseOrders/:id/vendor",
           method: "GET"
         },
+
+        // INTERNAL. Use VendorUserMap.vendor() instead.
+        "::get::VendorUserMap::vendor": {
+          url: urlBase + "/VendorUserMaps/:id/vendor",
+          method: "GET"
+        },
       }
     );
 
@@ -25576,6 +25753,416 @@ module.factory(
         R.purchaseOrders.updateById = function() {
           var TargetResource = $injector.get("PurchaseOrder");
           var action = TargetResource["::updateById::Vendor::purchaseOrders"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
+     * @name lbServices.Vendor.users
+     * @header lbServices.Vendor.users
+     * @object
+     * @description
+     *
+     * The object `Vendor.users` groups methods
+     * manipulating `User` instances related to `Vendor`.
+     *
+     * Call {@link lbServices.Vendor#users Vendor.users()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor#users
+         * @methodOf lbServices.Vendor
+         *
+         * @description
+         *
+         * Queries users of Vendor.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.users = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::get::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#count
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Counts users of Vendor.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.users.count = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::count::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#create
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Creates a new instance in users of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.users.create = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::create::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#createMany
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Creates a new instance in users of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.users.createMany = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::createMany::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#destroyAll
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Deletes all users of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.users.destroyAll = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::delete::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#destroyById
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Delete a related item by id for users.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for users
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.users.destroyById = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::destroyById::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#exists
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Check the existence of users relation to an item by id.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for users
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.users.exists = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::exists::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#findById
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Find a related item by id for users.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for users
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.users.findById = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::findById::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#link
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Add a related item by id for users.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for users
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.users.link = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::link::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#unlink
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Remove the users relation to an item by id.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for users
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.users.unlink = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::unlink::Vendor::users"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Vendor.users#updateById
+         * @methodOf lbServices.Vendor.users
+         *
+         * @description
+         *
+         * Update a related item by id for users.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for users
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.users.updateById = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::updateById::Vendor::users"];
           return action.apply(R, arguments);
         };
 
@@ -36387,6 +36974,682 @@ module.factory(
         R.orderStatus = function() {
           var TargetResource = $injector.get("OrderStatus");
           var action = TargetResource["::get::OrderTracking::orderStatus"];
+          return action.apply(R, arguments);
+        };
+
+    return R;
+  }]);
+
+/**
+ * @ngdoc object
+ * @name lbServices.VendorUserMap
+ * @header lbServices.VendorUserMap
+ * @object
+ *
+ * @description
+ *
+ * A $resource object for interacting with the `VendorUserMap` model.
+ *
+ * ## Example
+ *
+ * See
+ * {@link http://docs.angularjs.org/api/ngResource.$resource#example $resource}
+ * for an example of using this object.
+ *
+ */
+module.factory(
+  "VendorUserMap",
+  ['LoopBackResource', 'LoopBackAuth', '$injector', function(Resource, LoopBackAuth, $injector) {
+    var R = Resource(
+      urlBase + "/VendorUserMaps/:id",
+      { 'id': '@id' },
+      {
+
+        // INTERNAL. Use VendorUserMap.user() instead.
+        "prototype$__get__user": {
+          url: urlBase + "/VendorUserMaps/:id/user",
+          method: "GET"
+        },
+
+        // INTERNAL. Use VendorUserMap.vendor() instead.
+        "prototype$__get__vendor": {
+          url: urlBase + "/VendorUserMaps/:id/vendor",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#create
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        "create": {
+          url: urlBase + "/VendorUserMaps",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#createMany
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Create a new instance of the model and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        "createMany": {
+          isArray: true,
+          url: urlBase + "/VendorUserMaps",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#upsert
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        "upsert": {
+          url: urlBase + "/VendorUserMaps",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#exists
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Check whether a model instance exists in the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `exists` – `{boolean=}` - 
+         */
+        "exists": {
+          url: urlBase + "/VendorUserMaps/:id/exists",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#findById
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Find a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         *  - `filter` – `{object=}` - Filter defining fields and include
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        "findById": {
+          url: urlBase + "/VendorUserMaps/:id",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#find
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Find all instances of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        "find": {
+          isArray: true,
+          url: urlBase + "/VendorUserMaps",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#findOne
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Find first instance of the model matched by filter from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `filter` – `{object=}` - Filter defining fields, where, include, order, offset, and limit
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        "findOne": {
+          url: urlBase + "/VendorUserMaps/findOne",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#updateAll
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * The number of instances updated
+         */
+        "updateAll": {
+          url: urlBase + "/VendorUserMaps/update",
+          method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#deleteById
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        "deleteById": {
+          url: urlBase + "/VendorUserMaps/:id",
+          method: "DELETE"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#count
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Count instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        "count": {
+          url: urlBase + "/VendorUserMaps/count",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#prototype$updateAttributes
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Update attributes for a model instance and persist it into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        "prototype$updateAttributes": {
+          url: urlBase + "/VendorUserMaps/:id",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#createChangeStream
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Create a change stream.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `changes` – `{ReadableStream=}` - 
+         */
+        "createChangeStream": {
+          url: urlBase + "/VendorUserMaps/change-stream",
+          method: "POST"
+        },
+      }
+    );
+
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#updateOrCreate
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Update an existing model instance or insert a new one into the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        R["updateOrCreate"] = R["upsert"];
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#update
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Update instances of the model matched by where from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * The number of instances updated
+         */
+        R["update"] = R["updateAll"];
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#destroyById
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        R["destroyById"] = R["deleteById"];
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#removeById
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Delete a model instance by id from the data source.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - Model id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `VendorUserMap` object.)
+         * </em>
+         */
+        R["removeById"] = R["deleteById"];
+
+
+    /**
+    * @ngdoc property
+    * @name lbServices.VendorUserMap#modelName
+    * @propertyOf lbServices.VendorUserMap
+    * @description
+    * The name of the model represented by this $resource,
+    * i.e. `VendorUserMap`.
+    */
+    R.modelName = "VendorUserMap";
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#user
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Fetches belongsTo relation user.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `User` object.)
+         * </em>
+         */
+        R.user = function() {
+          var TargetResource = $injector.get("User");
+          var action = TargetResource["::get::VendorUserMap::user"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.VendorUserMap#vendor
+         * @methodOf lbServices.VendorUserMap
+         *
+         * @description
+         *
+         * Fetches belongsTo relation vendor.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Vendor` object.)
+         * </em>
+         */
+        R.vendor = function() {
+          var TargetResource = $injector.get("Vendor");
+          var action = TargetResource["::get::VendorUserMap::vendor"];
           return action.apply(R, arguments);
         };
 

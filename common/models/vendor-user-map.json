@@ -1,0 +1,24 @@
+{
+  "name": "VendorUserMap",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": ""
+    },
+    "vendor": {
+      "type": "belongsTo",
+      "model": "Vendor",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

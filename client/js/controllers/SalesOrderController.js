@@ -112,11 +112,16 @@ app
 						});
 					};
 					$scope.assigSOToVendor = function assigSOToVendor() {
-						Hub.whvendors({
-							hubId : $scope.selSO.customer.hubId
+						Vendor.find({
+							filter : {
+								include : ['users'],
+								where : {
+									hubId : $scope.selSO.customer.hubId
+								}
+							}
 						}).$promise.then(function(response) {
-							if (response && response.vendors) {
-								$scope.vendors = response.vendors;
+							if (response && response.length>0) {
+								$scope.vendors = [].concat(response);
 								var modalInstance = $modal.open({
 									templateUrl : 'assignVendorsmodal.html',
 									controller : 'AssignVendorsCtrl',
@@ -342,30 +347,38 @@ app.controller('AssignVendorsCtrl', function($scope, vendors, so,
 		$modalInstance, Order, OrderStatus, OrderTracking, $rootScope) {
 	$scope.vendors = vendors;
 	$scope.so = so;
+	$scope.populateUsers = function populateUsers(){
+		$scope.users = [].concat($scope.selectedVendor.users);
+	};
 	$scope.assignSelctedVendor = function assignSelctedVendor() {
-		OrderStatus.findOne({
-			filter : {
-				where : {
-					name : 'DC'
+		if($scope.selectedVendor && $scope.selectedUser){
+			OrderStatus.findOne({
+				filter : {
+					where : {
+						name : 'DC'
+					}
 				}
-			}
-		}).$promise.then(function(dcStatus) {
-			Order.prototype$updateAttributes({
-				id : $scope.so.id
-			}, {
-				orderStatusId : dcStatus.id
+			}).$promise.then(function(dcStatus) {
+				Order.prototype$updateAttributes({
+					id : $scope.so.id
+				}, {
+					orderStatusId : dcStatus.id
+				});
+				var orderTracking = {
+					userId : $scope.selectedUser.id,
+					orderId : $scope.so.id,
+					orderStatusId : dcStatus.id,
+					timestamp : new Date()
+				};
+				OrderTracking.create(orderTracking).$promise.then(function(data) {
+					$modalInstance.dismiss('cancel');
+					$rootScope.reLoadSOs();
+				});
 			});
-			var orderTracking = {
-				userId : $scope.selectedVendor.id,
-				orderId : $scope.so.id,
-				orderStatusId : dcStatus.id,
-				timestamp : new Date()
-			};
-			OrderTracking.create(orderTracking).$promise.then(function(data) {
-				$modalInstance.dismiss('cancel');
-				$rootScope.reLoadSOs();
-			});
-		});
+		} else {
+			alert("Please select vendor and user");
+		}
+		
 	};
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');

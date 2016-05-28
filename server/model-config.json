@@ -151,5 +151,9 @@
   "OrderTracking": {
     "dataSource": "db",
     "public": true
+  },
+  "VendorUserMap": {
+	"dataSource": "db",
+	"public": true
   }
 }
