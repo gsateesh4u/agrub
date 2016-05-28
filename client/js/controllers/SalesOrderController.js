@@ -233,38 +233,48 @@ app
 						return flag;
 					};
 					$scope.showSuppliers = function showSuppliers(){
-						Vendor.find({
-							filter : {
-								where : {
-									hubId : $scope.selectedHub.id
-								}
+						var selItems = [];
+						angular.forEach($scope.lineItems,function(item,i){
+							if(item.selected){
+								selItems.push(item);
 							}
-						}).$promise.then(function(response){
-							$scope.vendors = [].concat(response);
-							var modalInstance = $modal.open({ 
-								 templateUrl : 'consolidatedView.html', 
-								 controller :  'ConsolidatedViewCtrl', 
-								 backdrop: 'static',
-								 backdropClick: true, 
-								 dialogFade: false, 
-								 keyboard:  true, 
-								 scope : $scope, 
-								 resolve : { 
-									 lineItems : function (){
-										 	return $scope.lineItems; 
-										 	},
-									 vendors : function (){
-										 return $scope.vendors;
-									 },
-									 deliveryDate : function (){
-										 return $scope.dates.start;
-									 },
-									 selectedHub : function (){
-										 return $scope.selectedHub;
-									 }
-								 	} 
-							 });
 						});
+						if(selItems && selItems.length>0){
+							Vendor.find({
+								filter : {
+									where : {
+										hubId : $scope.selectedHub.id
+									}
+								}
+							}).$promise.then(function(response){
+								$scope.vendors = [].concat(response);
+								var modalInstance = $modal.open({ 
+									 templateUrl : 'consolidatedView.html', 
+									 controller :  'ConsolidatedViewCtrl', 
+									 backdrop: 'static',
+									 backdropClick: true, 
+									 dialogFade: false, 
+									 keyboard:  true, 
+									 scope : $scope, 
+									 resolve : { 
+										 lineItems : function (){
+											 	return selItems; 
+											 	},
+										 vendors : function (){
+											 return $scope.vendors;
+										 },
+										 deliveryDate : function (){
+											 return $scope.dates.start;
+										 },
+										 selectedHub : function (){
+											 return $scope.selectedHub;
+										 }
+									 	} 
+								 });
+							});
+						}else {
+							alert("Please select atleast one item to assign");
+						}
 					};
 					$scope.selectAllItems = function selectAllItems(){
 						angular.forEach($scope.lineItems,function(item){
@@ -336,9 +346,37 @@ app
 					}
 });
 app.controller('ConsolidatedViewCtrl', function($scope, lineItems, vendors, deliveryDate,selectedHub, $modalInstance,
-		$filter, LineItem, Order, OrderStatus, OrderTracking, $rootScope) {
+		$filter, LineItem, Order, PurchaseOrder,PurchaseOrderLine, commonService, OrderStatus, OrderTracking, $rootScope) {
 	$scope.lineItems = lineItems;
 	$scope.vendors = vendors;
+	$scope.assignPO =  function assignPO(){
+		 if(commonService.getCurrentUser() == null || commonService.getCurrentUser().id == null){
+			   alert("Not a valid user");
+		   }else{
+			   var po = {
+					deliveryDate : deliveryDate,
+					generatedDate : new Date(),
+					supplierId : $scope.supplier.id,
+					receiverId : $scope.receiver.id,
+					userId : commonService.getCurrentUser().id
+			   };
+			   PurchaseOrder.create(po).$promise.then(function(newPo){
+				   angular.forEach($scope.lineItems,function(it,i){
+					  var lineIt = {
+						quantity : it.lineItemQuantity,
+						comments : '',
+						purchaseOrderId : newPo.id,
+						uomId : it.uomId,
+						itemId : it.item.id
+					  } ;
+					  PurchaseOrderLine.create(lineIt).$promise.then(function(data){
+						  
+					  });
+					  $modalInstance.dismiss('cancel');
+				   });
+			   });
+		   }
+	};
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};

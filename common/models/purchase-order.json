@@ -17,11 +17,16 @@
   },
   "validations": [],
   "relations": {
-    "vendor": {
+    "supplier": {
       "type": "belongsTo",
       "model": "Vendor",
       "foreignKey": ""
     },
+    "receiver": {
+        "type": "belongsTo",
+        "model": "Vendor",
+        "foreignKey": ""
+      },
     "user": {
       "type": "belongsTo",
       "model": "user",
