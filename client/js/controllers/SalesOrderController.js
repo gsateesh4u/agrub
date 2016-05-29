@@ -1,7 +1,7 @@
 app
 		.controller(
 				'SalesOrderController',
-				function($rootScope, $scope, Order, OrderStatus, Hub, Email,LineItem, Vendor,
+				function($rootScope, $scope, Order, OrderStatus, PurchaseOrder, Hub, Email,LineItem, Vendor,
 						$filter, $modal) {
 					$scope.rowCollection = [];
 					$scope.itemsByPage = 10;
@@ -26,6 +26,7 @@ app
 							}
 						}).$promise
 								.then(function(poStatus) {
+									$scope.soStatus = poStatus;
 									Order.find({
 										filter : {
 											include : [ 'customer',
@@ -221,7 +222,14 @@ app
 							$scope.hubs = [].concat(response);
 							$scope.showPage = 'supplier';
 						});
-						
+						$scope.deliveryDates = [];
+						angular.forEach($scope.soCollection,function(so){
+							 if(so.orderStatusId === $scope.soStatus.id){
+								 if($scope.deliveryDates.indexOf(so.deliveryDate) === -1){
+									 $scope.deliveryDates.push(so.deliveryDate); 
+								 }
+							 }
+						});
 					};
 					$scope.disableAssignSupplier = function(){
 						var flag = true;
@@ -264,7 +272,7 @@ app
 											 return $scope.vendors;
 										 },
 										 deliveryDate : function (){
-											 return $scope.dates.start;
+											 return $scope.selectedDt;
 										 },
 										 selectedHub : function (){
 											 return $scope.selectedHub;
@@ -289,10 +297,11 @@ app
 					$scope.getAllItems = function() {
 						$scope.lineItems = [];
 						var lineItemIds = [];
+						$scope.all = false;
 						angular.forEach($scope.soCollection, function(so, i) {
 							var dt1 = $filter('date')(so.deliveryDate,
 									"yyyy-MM-dd");
-							var dt2 = $filter('date')($scope.dates.start,
+							var dt2 = $filter('date')($scope.selectedDt,
 									"yyyy-MM-dd");
 							if (dt1 === dt2 && so.customer.hubId === $scope.selectedHub.id) {
 								angular.forEach(so.lineItems, function(
@@ -320,6 +329,32 @@ app
 									if (!isItemExist(ex)) {
 										$scope.lineItems.push(ex);
 									}
+								});
+								PurchaseOrder.find({
+									filter : {
+										include : ['purchaseOrderLines'],
+										where : {
+											deliveryDate : $scope.selectedDt
+										}
+									}
+								}).$promise.then(function(pos){
+									var exPos = [].concat(pos);
+									angular.forEach(exPos,function(po){
+										angular.forEach(po.purchaseOrderLines,function(poLineItem){
+											angular.forEach($scope.lineItems,function(tempLineItem){
+												if(tempLineItem.item.id === poLineItem.itemId){
+													tempLineItem.lineItemQuantity = tempLineItem.lineItemQuantity - poLineItem.quantity; 
+												}
+											});
+										});
+									});
+									$scope.lineItems2 = [].concat($scope.lineItems);
+									$scope.lineItems = [];
+									angular.forEach($scope.lineItems2,function(t){
+										if(t.lineItemQuantity > 0 ){
+											$scope.lineItems.push(t);
+										}
+									});
 								});
 							});
 						} else {
@@ -372,6 +407,7 @@ app.controller('ConsolidatedViewCtrl', function($scope, lineItems, vendors, deli
 					  PurchaseOrderLine.create(lineIt).$promise.then(function(data){
 						  
 					  });
+					  $scope.getAllItems();
 					  $modalInstance.dismiss('cancel');
 				   });
 			   });
