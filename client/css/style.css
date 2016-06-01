@@ -4324,3 +4324,6 @@ legend.scheduler-border {
     border-bottom:none;
     margin-bottom: 0px;
 }
+.having-error{
+	border-color: #a94442 !important;
+}

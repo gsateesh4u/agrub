@@ -1,7 +1,7 @@
 app
 		.controller(
 				'SalesOrderController',
-				function($rootScope, $scope, Order, OrderStatus, PurchaseOrder, Hub, Email,LineItem, Vendor,
+				function($rootScope, $scope, Order, OrderStatus, PurchaseOrder, Hub, Email, Uom, LineItem, Vendor,
 						$filter, $modal) {
 					$scope.rowCollection = [];
 					$scope.itemsByPage = 10;
@@ -45,6 +45,9 @@ app
 															$scope.error = "No data found!!!";
 														}
 														$scope.isLoading = false;
+														/*Uom.find().$promise.then(function(uoms){
+															$scope.uoms = [].concat(uoms);
+														});*/
 													},
 													function(errorMessage) {
 														$scope.error = "Error has occurred while loading sales orders!";
@@ -220,6 +223,9 @@ app
 					$scope.showConsolidatedView = function() {
 						Hub.find().$promise.then(function(response){
 							$scope.hubs = [].concat(response);
+							if($scope.hubs && $scope.hubs.length > 0){
+								$scope.selectedHub = $scope.hubs[0];
+							}
 							$scope.showPage = 'supplier';
 						});
 						$scope.deliveryDates = [];
@@ -233,12 +239,20 @@ app
 					};
 					$scope.disableAssignSupplier = function(){
 						var flag = true;
+						var isValidQty = true;
 						angular.forEach($scope.lineItems,function(item){
 							if(item.selected){
+								if(!item.assignQty || item.assignQty <= 0 || item.assignQty > item.lineItemQuantity){
+									isValidQty = false;
+								}
 								flag = false;
 							}
 						});
-						return flag;
+						if(flag === false && isValidQty === true){
+							return false;
+						}else{
+							return true;
+						}
 					};
 					$scope.showSuppliers = function showSuppliers(){
 						var selItems = [];
@@ -294,6 +308,17 @@ app
 						e.stopPropagation();
 						$scope.open[date] = true;
 					};
+					$scope.getBoarderColor = function getBoarderColor(available, assignQty){
+						if(assignQty && assignQty > 0){
+							if(assignQty > available){
+								return "having-error";
+							}else{
+								return '';
+							}
+						}else{
+							return "having-error";
+						}
+					};
 					$scope.getAllItems = function() {
 						$scope.lineItems = [];
 						var lineItemIds = [];
@@ -339,19 +364,28 @@ app
 									}
 								}).$promise.then(function(pos){
 									var exPos = [].concat(pos);
-									angular.forEach(exPos,function(po){
-										angular.forEach(po.purchaseOrderLines,function(poLineItem){
-											angular.forEach($scope.lineItems,function(tempLineItem){
-												if(tempLineItem.item.id === poLineItem.itemId){
-													tempLineItem.lineItemQuantity = tempLineItem.lineItemQuantity - poLineItem.quantity; 
-												}
+									if(exPos && exPos.length > 0){
+										angular.forEach(exPos,function(po){
+											angular.forEach(po.purchaseOrderLines,function(poLineItem){
+												angular.forEach($scope.lineItems,function(tempLineItem){
+													tempLineItem.totalQty = tempLineItem.lineItemQuantity;
+													if(tempLineItem.item.id === poLineItem.itemId){
+														tempLineItem.lineItemQuantity = tempLineItem.lineItemQuantity - poLineItem.quantity; 
+													}
+												});
 											});
 										});
-									});
+									}else{
+										angular.forEach($scope.lineItems,function(tempLineItem){
+												tempLineItem.totalQty = tempLineItem.lineItemQuantity;
+										});
+									}
+									
 									$scope.lineItems2 = [].concat($scope.lineItems);
 									$scope.lineItems = [];
 									angular.forEach($scope.lineItems2,function(t){
 										if(t.lineItemQuantity > 0 ){
+											t.assignQty = t.lineItemQuantity;
 											$scope.lineItems.push(t);
 										}
 									});
@@ -398,7 +432,7 @@ app.controller('ConsolidatedViewCtrl', function($scope, lineItems, vendors, deli
 			   PurchaseOrder.create(po).$promise.then(function(newPo){
 				   angular.forEach($scope.lineItems,function(it,i){
 					  var lineIt = {
-						quantity : it.lineItemQuantity,
+						quantity : it.assignQty,
 						comments : '',
 						purchaseOrderId : newPo.id,
 						uomId : it.uomId,
