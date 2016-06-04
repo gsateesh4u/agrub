@@ -51,20 +51,15 @@ app.get('/api/m/Hubs/:hubId/ItemCategories', passport.authenticate('mca-backend-
 
 app.get('/api/m/Customers/:customerId/DeliveryChalans', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
      var customerId = req.params.customerId;
-      app.models.DeliveryChalan.find(
-       {
-       include:[{'salesOrder':{'salesOrderLines':'item'}},'deliveryChalanStatus'],
-
-              where: {customerId:parseInt(customerId)}
-            },
-      function(err, deliveryChalans){
-           if (err) { res.send(err);
-           }
-           if ( deliveryChalans ) {
-             res.status(200).send(deliveryChalans);
-           }
-         }
-    );
+     app.models.Customer.deliveryChallans(req.user.id,
+    	      function(err, deliveryChalans){
+		         if (err) { res.send(err);
+		         }
+		         if ( deliveryChalans ) {
+		           res.status(200).send(deliveryChalans);
+		         }
+		       }
+		  );
   }
 );
 
@@ -72,7 +67,9 @@ app.get('/api/m/Customers/:customerId/DeliveryChalans', passport.authenticate('m
 app.get('/api/m/Customers/:customerId/Orders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
      var customerId = req.params.customerId;
       app.models.Order.find(
-       { where: {customerId:parseInt(customerId)}
+       { 
+    	   include:['orderStatus','customer',{lineItems:'item'}],
+    	   where: {customerId:parseInt(customerId)}
        },
       function(err, orders){
            if (err) { res.send(err);
@@ -85,7 +82,7 @@ app.get('/api/m/Customers/:customerId/Orders', passport.authenticate('mca-backen
   }
 );
 
-app.get('/api/m/Orders/fullOrders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
+/*app.get('/api/m/Customers/Orders/fullOrders', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
       app.models.Order.fullOrders(
       function(err, orders){
            if (err) { res.send(err);
@@ -96,7 +93,7 @@ app.get('/api/m/Orders/fullOrders', passport.authenticate('mca-backend-strategy'
          }
     );
   }
-);
+);*/
 
 app.post('/api/m/Orders/placeOrder',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
       app.models.Order.placeOrder(req.body,

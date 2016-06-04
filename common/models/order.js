@@ -70,7 +70,12 @@ module.exports = function(Order) {
 				cb(err);
 			}
 		}
-	}
+	};
+	Order.fullOrders = function(customerId, cb){
+		Order.find({
+			include:['orderStatus','customer',{lineItems:'item'}],
+		},cb);
+	};
 	Order.remoteMethod(
         'placeOrder', 
         {
@@ -79,4 +84,10 @@ module.exports = function(Order) {
           http: {path:'/placeOrder', verb: 'post'}
         }
     );
+	Order.remoteMethod(
+			'fullOrders',
+			{
+				 returns: {arg: 'orders', type: 'array'},
+		         http: {path:'/fullOrders', verb: 'get'}
+			});
 };
