@@ -96,17 +96,16 @@ app.get('/api/m/Customers/:customerId/Orders', passport.authenticate('mca-backen
 );*/
 
 app.post('/api/m/Orders/placeOrder',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
-      app.models.Order.placeOrder(req.body,
-      function(err, order){
-           if (err) { res.send(err);
-           }
-           if ( order ) {
-             res.status(200).send(order);
-           }
+    app.models.Order.m_placeOrder(req.user.id, req.body,
+    function(err, order){
+         if (err) { res.send(err);
          }
-    );
-  }
-);
+         if ( order ) {
+           res.status(200).send(order);
+         }
+       }
+  );
+});
 
 app.post('/api/m/DeliveryChalans/updateSO',passport.authenticate('mca-backend-strategy', {session: false}), function(req, res){
       app.models.DeliveryChalan.updateSO(req.body,
