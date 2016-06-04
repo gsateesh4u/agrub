@@ -51,7 +51,7 @@ app.get('/api/m/Hubs/:hubId/ItemCategories', passport.authenticate('mca-backend-
 
 app.get('/api/m/Customers/:customerId/DeliveryChalans', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
      var customerId = req.params.customerId;
-     app.models.Customer.deliveryChallans(req.user.id,
+     app.models.Customer.deliveryChallans(customerId,
     	      function(err, deliveryChalans){
 		         if (err) { res.send(err);
 		         }

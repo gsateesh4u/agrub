@@ -1,6 +1,6 @@
 module.exports = function(Customer) {
 
-	Customer.deliveryChallans = function(cb){
+	Customer.deliveryChallans = function(customerId, cb){
 		var app = Customer.app;
 		var Order = app.models.Order;
 		Order.find({
