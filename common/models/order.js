@@ -123,9 +123,9 @@ module.exports = function(Order) {
 			}
 		}
 	};
-	Order.fullOrders = function(customerId, cb){
+	Order.fullOrders = function(cb){
 		Order.find({
-			include:['orderStatus','customer',{lineItems:'item'}],
+			include:['orderStatus','customer',{lineItems:'item'}]
 		},cb);
 	};
 	Order.remoteMethod(
