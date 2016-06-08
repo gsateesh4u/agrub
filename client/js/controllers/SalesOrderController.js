@@ -1,8 +1,8 @@
 app
 		.controller(
 				'SalesOrderController',
-				function($rootScope, $scope, Order, OrderStatus, PurchaseOrder, Hub, Email, Uom, LineItem, Vendor,
-						$filter, $modal) {
+				function($rootScope, $scope, Order, OrderStatus, PurchaseOrder, Hub, Email, Uom, 
+						LineItem, Vendor, TransportOperator, $filter, $modal) {
 					$scope.rowCollection = [];
 					$scope.itemsByPage = 10;
 					$scope.isLoading = true;
@@ -113,6 +113,32 @@ app
 							hubId : $scope.soCollection
 						}).$promise.then(function(users) {
 							alert(angular.toJson(users));
+						});
+					};
+					$scope.assigSOTO = function assigSOTO(){
+						TransportOperator.find({
+							where : {
+									hubId : $scope.selSO.customer.hubId
+								}
+						}).$promise.then(function(tos){
+							$scope.transportOperators = [].concat(tos);
+							var modalInstance = $modal.open({
+								templateUrl : 'assignTOmodal.html',
+								controller : 'AssignTOCtrl',
+								backdrop : 'static',
+								backdropClick : true,
+								dialogFade : false,
+								keyboard : true,
+								scope : $scope,
+								resolve : {
+									transportOperators : function() {
+										return $scope.transportOperators;
+									},
+									so : function() {
+										return $scope.selSO;
+									}
+								}
+							});
 						});
 					};
 					$scope.assigSOToVendor = function assigSOToVendor() {
@@ -485,6 +511,27 @@ app.controller('AssignVendorsCtrl', function($scope, vendors, so,
 			});
 		} else {
 			alert("Please select vendor and user");
+		}
+		
+	};
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
+});
+app.controller('AssignTOCtrl', function($scope, transportOperators, so,
+		$modalInstance, Order, $rootScope) {
+	$scope.transportOperators = transportOperators;
+	$scope.so = so;
+	$scope.assignSelctedTO = function assignSelctedTO() {
+		if($scope.selectedTO){
+			Order.prototype$updateAttributes({
+				id : $scope.so.id
+			}, {
+				transportOperatorId : $scope.selectedTO.id
+			});
+			$modalInstance.dismiss('cancel');
+		} else {
+			alert("Please select transport operator");
 		}
 		
 	};
