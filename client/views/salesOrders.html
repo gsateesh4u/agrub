@@ -28,8 +28,9 @@
 									<th st-sort="name"><i class="glyphicon glyphicon-filter"></i>Order Id</th>
 									<th st-sort="deliveryDate"><i class="glyphicon glyphicon-filter"></i>delivery Date</th>
 									<th st-sort="deliveryTime"><i class="glyphicon glyphicon-filter"></i>deliver Time</th>
+									<th>Transport Operator</th>
 									<th st-sort="orderStatus.name"><i class="glyphicon glyphicon-filter"></i>Status</th>
-									<th width="50px">Actions</th>
+									<!-- <th width="50px">Actions</th> -->
 									<!-- <th>Assign</th> -->
 								</tr>
 								<tr>
@@ -49,6 +50,7 @@
 									<td>{{row.id}}</td>
 									<td>{{row.deliveryDate | date:'yyyy-MM-dd'}}</td>
 									<td>{{row.deliveryTime}}</td>
+									<td>{{row.transportOperator.name}}
 									<td align="center">
 										<span class="label label-pill label-primary" ng-if="row.orderStatus.name=='PO'">New</span>
 										<span class="label label-pill label-info" ng-if="row.orderStatus.name=='SO'">Accepted</span>
@@ -56,10 +58,10 @@
 										<span class="label label-pill label-success" ng-if="row.orderStatus.name=='OFD'">Delivered</span>
 										<span class="label label-pill label-default" ng-if="row.orderStatus.name=='END'">Closed</span>
 									</td>
-									<td align="center">
+									<!-- <td align="center">
 										<span class="sprite sprite-edit" title="Edit Order" style="cursor:pointer" ng-click="showOrderDetails(row)"></span>&nbsp;&nbsp;&nbsp;
 										<span class="sprite sprite-delete" title="Delete Order" style="cursor:pointer"></span>
-									</td>
+									</td> -->
 									<!-- <td style="vertical-align: middle;text-align: center;">
 										<input type="checkbox" ng-model="row.selected" />
 									</td> -->

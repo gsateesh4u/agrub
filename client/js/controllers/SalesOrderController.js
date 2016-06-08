@@ -31,7 +31,7 @@ app
 										filter : {
 											include : [ 'customer',
 													'lineItems', 'orderStatus',
-													'user' ],
+													'user' ,'transportOperator'],
 											where : {
 												orderStatusId : poStatus.id
 											}
