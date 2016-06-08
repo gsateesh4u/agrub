@@ -2,28 +2,26 @@ module.exports = function(Customer) {
 
 	Customer.deliveryChallans = function(customerId, cb){
 		var app = Customer.app;
-		var Order = app.models.Order;
-		Order.find({
-			include:['orderStatus','customer',{lineItems:'item'}],
-			where: {customerId:customerId}
-		}).then(function(dcs){
-			var deliveryChallans = [];
-			if(dcs && dcs.length > 0){
-				dcs.forEach(function(dc,itr){
-					if(dc.orderStatus.name === 'DC' || dc.orderStatus.name === 'OFD'){
-						deliveryChallans.push(dc);
-					}
-				});
-			}
-			cb(null,deliveryChallans);
+		//var Order = app.models.Order;
+		app.models.OrderStatus.find({
+			where: {name:'OFD'}
+			
+		}).then(function(orderStatus){
+			console.log(orderStatus[0].id);
+			app.models.Order.find({
+				where: {and: [ {customerId:customerId}, {orderStatusId : orderStatus[0].id} ] }, include:['orderStatus','customer',{lineItems:'item'}]
+				
+			}).then(function(dcs){
+				cb(null,dcs);
+			});
 		});
 	};
 	Customer.remoteMethod(
 	        'deliveryChallans', 
 	        {
-	          accepts: {arg: 'customerId', type: 'string'},
+	          accepts: {arg: 'customerId', type: 'number'},
 	          returns: {arg: 'deliveryChallans', type: 'array'},
-	          http: {path:'/:customerId/deliveryChallans', verb: 'post'}
+	          http: {path:'/:customerId/deliveryChallans', verb: 'get'}
 	        }
 	    );
 };

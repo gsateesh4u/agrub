@@ -123,6 +123,26 @@ module.exports = function(Order) {
 			}
 		}
 	};
+	Order.updateDC = function(dc,cb){
+		var app = Order.app;
+		var LineItem = app.models.LineItem;
+		var lineItems = dc.lineItems;
+		if(lineItems && lineItems.length > 0){
+			for(var i = 0;i<lineItems.length;i++){
+				LineItem.update({id:lineItems[i].id},{custUpdatedItemQuantity : lineItems[i].custUpdatedItemQuantity,
+					custUpdatedDate : lineItems[i].custUpdatedDate},function(err,lineIt){
+						if(err){
+							cb(err);
+						}
+					});
+			}
+			cb(null,dc);
+		}else{
+			var err = new Error('Bad request');
+			err.statusCode = 400;
+			cb(err);
+		}
+	};
 	Order.fullOrders = function(cb){
 		Order.find({
 			include:['orderStatus','customer',{lineItems:'item'}]
@@ -136,6 +156,14 @@ module.exports = function(Order) {
           http: {path:'/placeOrder', verb: 'post'}
         }
     );
+	Order.remoteMethod(
+	        'updateDC', 
+	        {
+	          accepts: {arg: 'dc', type: 'object'},
+	          returns: {arg: 'deliveryChallan', type: 'object'},
+	          http: {path:'/updateDC', verb: 'put'}
+	        }
+	    );
 	Order.remoteMethod(
 			'fullOrders',
 			{

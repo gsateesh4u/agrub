@@ -42,6 +42,11 @@
         "model": "user",
         "foreignKey": ""
       },
+    "transportOperator": {
+      "type": "belongsTo",
+      "model": "TransportOperator",
+      "foreignKey": ""
+    },
     "orderStatus": {
       "type": "belongsTo",
       "model": "OrderStatus",
