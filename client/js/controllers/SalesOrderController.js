@@ -346,6 +346,7 @@ app
 						}
 					};
 					$scope.getAllItems = function() {
+						$scope.isLoading = true;
 						$scope.lineItems = [];
 						var lineItemIds = [];
 						$scope.all = false;
@@ -415,9 +416,11 @@ app
 											$scope.lineItems.push(t);
 										}
 									});
+									$scope.isLoading = false;
 								});
 							});
 						} else {
+							$scope.isLoading = false;
 							alert("No orders found for the selected delivery date");
 						}
 					};
