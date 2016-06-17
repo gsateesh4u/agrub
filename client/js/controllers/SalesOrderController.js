@@ -79,7 +79,7 @@ app
 							id : ord.id,
 							filter : {
 								include : [ {
-									salesOrderLines : 'item'
+									lineItems : 'item'
 								}, 'orderStatus' ]
 							}
 						}).$promise

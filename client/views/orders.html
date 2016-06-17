@@ -37,8 +37,9 @@
 										<span class="label label-pill label-primary" ng-if="row.orderStatus.name=='PO'">New</span>
 										<span class="label label-pill label-info" ng-if="row.orderStatus.name=='SO'">Accepted</span>
 										<span class="label label-pill label-warning" ng-if="row.orderStatus.name=='DC'">At WH</span>
-										<span class="label label-pill label-success" ng-if="row.orderStatus.name=='OFD'">Delivered</span>
-										<span class="label label-pill label-default" ng-if="row.orderStatus.name=='END'">Closed</span>
+										<span class="label label-pill label-info" ng-if="row.orderStatus.name=='OFD'">OFD</span>
+										<span class="label label-pill label-success" ng-if="row.orderStatus.name=='DELIVERED'">Delivered</span>
+										<span class="label label-pill label-default" ng-if="row.orderStatus.name=='END'">END</span>
 									</td>
 									<td align="center">
 										<span class="sprite sprite-edit" title="Edit Order" style="cursor:pointer" ng-click="showOrderDetails(row)"></span>&nbsp;&nbsp;&nbsp;

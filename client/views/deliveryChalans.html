@@ -14,7 +14,7 @@
 									</td>
 									<td align="right">
 										<!-- <button class="btn btn-primary" ng-disabled="!selDC" ng-click="showCustomerInfo(selDC)" align="right">Customer Info</button> -->
-										<button class="btn btn-primary" ng-disabled="!selDC" ng-click="markAsDelivered()" align="right">Mark As Delivered</button>
+										<!-- <button class="btn btn-primary" ng-disabled="!selDC" ng-click="markAsDelivered()" align="right">Mark As Delivered</button> -->
 									</td>
 								</tr>
 							</table> 
@@ -39,7 +39,7 @@
 								</tr>
 							</thead>
 							<tbody ng-show="!isLoading">
-							<tr st-select-row="row" ng-repeat="row in dcs">
+							<tr ng-repeat="row in dcs">
 									<td>{{row.customer.name}}</td>
 									<td>{{row.id}}</td>
 									<td>{{row.deliveryDate | date:'yyyy-MM-dd'}}</td>
@@ -48,12 +48,14 @@
 										<span class="label label-pill label-primary" ng-if="row.orderStatus.name=='PO'">New</span>
 										<span class="label label-pill label-info" ng-if="row.orderStatus.name=='SO'">Accepted</span>
 										<span class="label label-pill label-warning" ng-if="row.orderStatus.name=='DC'">At WH</span>
-										<span class="label label-pill label-success" ng-if="row.orderStatus.name=='OFD'">Delivered</span>
-										<span class="label label-pill label-default" ng-if="row.orderStatus.name=='END'">Closed</span>
+										<span class="label label-pill label-info" ng-if="row.orderStatus.name=='OFD'">OFD</span>
+										<span class="label label-pill label-success" ng-if="row.orderStatus.name=='DELIVERED'">Delivered</span>
+										<span class="label label-pill label-default" ng-if="row.orderStatus.name=='END'">END</span>
 									</td>
 									<td align="center">
-										<span class="sprite sprite-edit" title="Edit Order" style="cursor:pointer" ng-click="showOrderDetails(row)"></span>&nbsp;&nbsp;&nbsp;
-										<span class="sprite sprite-delete" title="Delete Order" style="cursor:pointer"></span>
+										<button class="btn btn-primary" ng-click="markAsDelivered(row)" style="line-height: 1">Out For Delivery</button>
+										<!-- <span class="sprite sprite-edit" title="Edit Order" style="cursor:pointer" ng-click="showOrderDetails(row)"></span>&nbsp;&nbsp;&nbsp;
+										<span class="sprite sprite-delete" title="Delete Order" style="cursor:pointer"></span> -->
 									</td>
 							</tr>
 							<tr ng-if="dcs.length == 0">

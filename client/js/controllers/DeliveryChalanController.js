@@ -23,16 +23,16 @@ app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, O
 	}
 	$scope.init();
 
-	$scope.markAsDelivered = function markAsDelivered(){
-		if($scope.selDC){
+	$scope.markAsDelivered = function markAsDelivered(order){
+		if(order){
 			 OrderStatus.findOne({filter: {where : {name : 'OFD'}}}).$promise.then(function(dcStatus){
 				   Order.prototype$updateAttributes(
-						   { id: $scope.selDC.id }, 
+						   { id: order.id }, 
 						   { orderStatusId: dcStatus.id }
 						 );
 				   var orderTracking = {
 						   userId : commonService.getCurrentUser().id,
-						   orderId : $scope.selDC.id,
+						   orderId : order.id,
 						   orderStatusId : dcStatus.id,
 						   timestamp : new Date()
 				   };
@@ -42,7 +42,7 @@ app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, O
 			   });
 		}
 	};
-   $scope.$watch('dcs', function(row) {
+   /*$scope.$watch('dcs', function(row) {
 	   var flag = false;
 	   row.filter(function(r) {
 		  if (r.isSelected) {
@@ -53,5 +53,5 @@ app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, O
 	   if(!flag){
 		  $scope.selDC = null;
 	   }
-	 }, true);
+	 }, true);*/
 });

@@ -45,6 +45,12 @@ var app = angular
         controller: 'DeliveryChalanController',
         authenticate: true
       })
+      .state('deliveredOrders', {
+          url: '/deliveredOrders',
+          templateUrl: 'views/deliveredOrders.html',
+          controller: 'DeliveredOrdersController',
+          authenticate: true
+        })
       .state('users', {
         url: '/users',
         templateUrl: 'views/users.html',

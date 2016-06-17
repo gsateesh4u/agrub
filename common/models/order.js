@@ -125,6 +125,7 @@ module.exports = function(Order) {
 	};
 	Order.updateDC = function(dc,cb){
 		var app = Order.app;
+		var OrderStatus = app.models.OrderStatus;
 		var LineItem = app.models.LineItem;
 		var lineItems = dc.lineItems;
 		if(lineItems && lineItems.length > 0){
@@ -136,6 +137,11 @@ module.exports = function(Order) {
 						}
 					});
 			}
+			OrderStatus.findOne({where:{name:'DELIVERED'}}).then(function (orderSt){
+				Order.update({id:dc.id},{orderStatusId : orderSt.id}, function(err,ord){
+					
+				});
+			});
 			cb(null,dc);
 		}else{
 			var err = new Error('Bad request');
