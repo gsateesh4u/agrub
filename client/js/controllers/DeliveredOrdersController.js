@@ -1,4 +1,4 @@
-app.controller('DeliveredOrdersController', function($scope,Order, OrderStatus, commonService, Email, $filter){
+app.controller('DeliveredOrdersController', function($scope,Order, OrderStatus, commonService, Email, $filter, $modal){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
@@ -34,7 +34,53 @@ app.controller('DeliveredOrdersController', function($scope,Order, OrderStatus, 
 			$scope.selectedDO = foundOrd;
 		});
 	};
+	$scope.viewInvoice = function viewInvoice(ord){
+		Order.findById({
+			id : ord.id,
+			filter : {
+				include : [ {lineItems:[{item:'itemCategory'},'uom']}, 'orderStatus','customer']
+			}
+		}).$promise.then(function(foundOrd){
+			var modalInstance = $modal.open({
+				templateUrl : 'invoice.html',
+				controller : 'InvoiceCtrl',
+				backdrop : 'static',
+				windowClass: 'large',
+				backdropClick : true,
+				dialogFade : false,
+				keyboard : true,
+				scope : $scope,
+				resolve : {
+					order : function() {
+						return foundOrd;
+					}
+				}
+			});
+		});
+	};
 	$scope.backToMainMenu = function backToMainMenu(){
 		$scope.viewOrder = false;
+	};
+});
+app.controller('InvoiceCtrl', function($scope, order,
+		$modalInstance, Order, $rootScope) {
+	$scope.order = order;
+	angular.forEach($scope.order.lineItems, function(lineItem, itr){
+		if(!lineItem.custUpdatedItemQuantity || lineItem.custUpdatedItemQuantity == null || lineItem.custUpdatedItemQuantity === 0){
+			lineItem.custUpdatedItemQuantity = lineItem.lineItemQuantity;
+		}
+	});
+	$scope.PrintPartOfPage = function PrintPartOfPage(dvprintid) {
+	      var prtContent = document.getElementById(dvprintid);
+	      var popupWin = window.open('', '_blank', '');
+	        popupWin.document.open();
+	        popupWin.document.write('<html><title>::Preview::</title><link rel="stylesheet" type="text/css" href="css/invoice.css" />'+
+	        		'<link href="css/bootstrap.css" rel="stylesheet"></head><body onload="window.print()">')
+	        popupWin.document.write(prtContent.innerHTML);
+	        popupWin.document.write('</html>');
+	        popupWin.document.close();
+	 };
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
 	};
 });

@@ -4327,3 +4327,6 @@ legend.scheduler-border {
 .having-error{
 	border-color: #a94442 !important;
 }
+.large .modal-dialog {
+    width: 70%; /* respsonsive width */
+}

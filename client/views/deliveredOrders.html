@@ -137,3 +137,185 @@
 	</div>
 		</div>
 </section>
+<script type="text/ng-template" id="invoice.html">
+<div class="modal-content" id="invoiceContent">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true" ng-click="cancel()">&times;</button>
+		<h4 class="modal-title">Invoice</h4>
+	</div>
+	<div class="modal-body">
+		<div class="row branding">
+			<div class="col-xs-6">
+				<div>
+					<label for="invoice-number">Order # {{order.id}}</label>
+				</div>
+			</div>
+			<div class="col-xs-6>
+        		<img ng-hide="
+				logoRemoved" id="company_logo" ng-src="images/metaware_logo.png"
+				alt="your image" width="300" src=""></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="col-xs-6">
+					<fieldset class="scheduler-border"
+						style="margin: 5px; padding: 10px; border: 1px solid gray;">
+						<legend class="scheduler-border">Billing Address</legend>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Name
+								:</label> {{order.billingAddress.name}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Address1
+								:</label> {{order.billingAddress.address1}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Address2
+								:</label> {{order.billingAddress.address2}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Address3
+								:</label> {{order.billingAddress.address3}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">City
+								:</label> {{order.billingAddress.city}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">State
+								:</label> {{order.billingAddress.state}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Country
+								:</label> {{order.billingAddress.country}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Zip
+								:</label> {{order.billingAddress.zip}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Phone
+								:</label> {{order.billingAddress.phone}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Alternate
+								Phone :</label> {{order.billingAddress.altPhone}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Email
+								:</label> {{order.billingAddress.email}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Fax
+								:</label> {{order.billingAddress.fax}}
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-xs-6">
+					<fieldset class="scheduler-border"
+						style="margin: 5px; padding: 10px; border: 1px solid gray;">
+						<legend class="scheduler-border">Shipping Address</legend>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Name
+								:</label> {{order.shippingAddress.name}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Address1
+								:</label> {{order.shippingAddress.address1}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Address2
+								:</label> {{order.shippingAddress.address2}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Address3
+								:</label> {{order.shippingAddress.address3}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">City
+								:</label> {{order.shippingAddress.city}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">State
+								:</label> {{order.shippingAddress.state}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Country
+								:</label> {{order.shippingAddress.country}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Zip
+								:</label> {{order.shippingAddress.zip}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Phone
+								:</label> {{order.shippingAddress.phone}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Alternate
+								Phone :</label> {{order.shippingAddress.altPhone}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Email
+								:</label> {{order.shippingAddress.email}}
+						</div>
+						<div class="control-group">
+							<label class="control-label input-label" for="startTime">Fax
+								:</label> {{order.shippingAddress.fax}}
+						</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12">
+			<div
+				style="text-align: center; font-weight: 700; font-size: larger; margin-top: 2%;">
+				Order Items</div>
+		</div>
+		<div class="items-table col-xs-12"
+			style="padding-left: 30px; padding-right: 30px;padding-bottom: 30px;">
+			<div class="row header">
+				<div class="col-xs-4">Item</div>
+				<div class="col-xs-2">UOM</div>
+				<div class="col-xs-2">Quantity</div>
+				<div class="col-xs-2 ng-binding">Cost ₹</div>
+				<div class="col-xs-2 text-right">Total</div>
+			</div>
+			<!-- ngRepeat: item in invoice.items -->
+			<div class="row invoice-item ng-scope"
+				ng-repeat="lineItem in order.lineItems"
+				ng-animate="&#39;slide-down&#39;">
+
+				<div class="col-xs-4">{{lineItem.item.name}}</div>
+				<div class="col-xs-2">{{lineItem.custUpdatedItemQuantity}}</div>
+				<div class="col-xs-2">{{lineItem.uom.name}}</div>
+				<div class="col-xs-2">₹{{lineItem.item.price}}</div>
+				<div class="col-xs-2 text-right ng-binding">
+					₹{{lineItem.item.price * lineItem.custUpdatedItemQuantity}}</div>
+			</div>
+			<!-- end ngRepeat: item in invoice.items -->
+
+			<div class="row">
+				<div class="col-xs-10 text-right">Sub Total</div>
+				<div class="col-xs-2 text-right ng-binding">₹99.50</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-10 text-right">
+					Tax(%): <input ng-model="invoice.tax" ng-validate="number"
+						style="width: 43px" class="ng-pristine ng-untouched ng-valid">
+				</div>
+				<div class="col-xs-2 text-right ng-binding">₹12.94</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-10 text-right">Grand Total:</div>
+				<div class="col-xs-2 text-right ng-binding">₹112.44</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" ng-click="PrintPartOfPage('invoiceContent');">Print</button>
+		<button type="button" class="btn btn-warning" data-dismiss="modal"	ng-click="cancel()">Close</button>
+	</div>
+</div>
+</script>
