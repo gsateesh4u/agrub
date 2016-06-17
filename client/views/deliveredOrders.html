@@ -142,7 +142,10 @@
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal"
 			aria-hidden="true" ng-click="cancel()">&times;</button>
-		<h4 class="modal-title">Invoice</h4>
+		<h4 class="modal-title">
+			<img id="company" alt="1010 Labs" width="50" height="50" src="css/images/square-logo.jpg"/>
+			Invoice
+		</h4>
 	</div>
 	<div class="modal-body">
 		<div class="row branding">
@@ -151,10 +154,11 @@
 					<label for="invoice-number">Order # {{order.id}}</label>
 				</div>
 			</div>
-			<div class="col-xs-6>
-        		<img ng-hide="
-				logoRemoved" id="company_logo" ng-src="images/metaware_logo.png"
-				alt="your image" width="300" src=""></div>
+			<div class="col-xs-6">
+				<div>
+					<label for="invoice-number">Customer : {{order.customer.name}}</label>
+				</div>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
