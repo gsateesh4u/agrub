@@ -279,6 +279,7 @@
 		</div>
 		<div class="items-table col-xs-12"
 			style="padding-left: 30px; padding-right: 30px;padding-bottom: 30px;">
+			<form name="invoiceForm" class="css-form" novalidate>
 			<div class="row header">
 				<div class="col-xs-4">Item</div>
 				<div class="col-xs-2">Quantity</div>
@@ -294,31 +295,29 @@
 				<div class="col-xs-4">{{lineItem.item.name}}</div>
 				<div class="col-xs-2">{{lineItem.custUpdatedItemQuantity}}</div>
 				<div class="col-xs-2">{{lineItem.uom.name}}</div>
-				<div class="col-xs-2">₹{{lineItem.item.price}}</div>
+				<div class="col-xs-2"><input class="form-control" ng-class="getBoarderColor(lineItem.itemPrice)" style="margin-top: 4px;" required type="number" max="10000" min="1" ng-model="lineItem.itemPrice"/></div>
 				<div class="col-xs-2 text-right ng-binding">
-					₹{{lineItem.item.price * lineItem.custUpdatedItemQuantity}}</div>
+					₹{{lineItem.itemPrice * lineItem.custUpdatedItemQuantity}}</div>
 			</div>
 			<!-- end ngRepeat: item in invoice.items -->
 
 			<div class="row">
 				<div class="col-xs-10 text-right">Sub Total</div>
-				<div class="col-xs-2 text-right ng-binding">₹99.50</div>
+				<div class="col-xs-2 text-right ng-binding">₹{{getSubTotal();}}</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-10 text-right">
-					Tax(%): <input ng-model="invoice.tax" ng-validate="number"
-						style="width: 43px" class="ng-pristine">
-				</div>
-				<div class="col-xs-2 text-right ng-binding">₹12.94</div>
+				<div class="col-xs-10 text-right">Tax(2%):</div>
+				<div class="col-xs-2 text-right">₹ {{getTax();}}</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-10 text-right">Grand Total:</div>
-				<div class="col-xs-2 text-right ng-binding">₹112.44</div>
+				<div class="col-xs-2 text-right">₹{{getTotal();}}</div>
 			</div>
+		</form>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn btn-primary" ng-click="PrintPartOfPage('invoiceContent');">Print</button>
+		<button class="btn btn-primary" ng-disabled="invoiceForm.$invalid" ng-click="PrintPartOfPage('invoiceContent');">Print</button>
 		<button type="button" class="btn btn-warning" data-dismiss="modal"	ng-click="cancel()">Close</button>
 	</div>
 </div>

@@ -80,6 +80,30 @@ app.controller('InvoiceCtrl', function($scope, order,
 	        popupWin.document.write('</html>');
 	        popupWin.document.close();
 	 };
+	 $scope.getSubTotal = function getSubTotal(){
+		 var total = 0;
+			angular.forEach($scope.order.lineItems, function(lineItem,itr){
+				if(lineItem.itemPrice){
+					total = total + (lineItem.itemPrice * lineItem.custUpdatedItemQuantity);
+				}
+			});
+			$scope.subTotal = total;
+			return total;
+	 };
+	 $scope.getTax = function getTax(){
+		 $scope.tax = ($scope.subTotal)/(50);
+		 return $scope.tax;
+	 };
+	 $scope.getTotal = function getTotal(){
+		return $scope.subTotal + $scope.tax;
+	 };
+	 $scope.getBoarderColor = function getBoarderColor(price){
+			if(price && price > 0 && price <= 10000){
+					return "";
+			}else{
+				return "having-error";
+			}
+		};
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};

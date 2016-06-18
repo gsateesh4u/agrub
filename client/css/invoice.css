@@ -40,9 +40,9 @@
 .items-table .row:nth-child(even) {
   background:#f9f9f9;
 }
-.items-table input {
+/* .items-table input {
   line-height:1.5em;
-}
+} */
 .actions {
   padding-top:1em;
 }
@@ -93,7 +93,7 @@ input, textarea{
 
 .table-striped > tbody > tr:nth-child(2n+1) > td input{
     background-color: #F9F9F9;
-    border: 1px solid #F9F9F9;
+    border: 1px solid blue;
 }
 
 
