@@ -444,7 +444,7 @@ app
 					}
 });
 app.controller('ConsolidatedViewCtrl', function($scope, lineItems, vendors, deliveryDate,selectedHub, $modalInstance,
-		$filter, LineItem, Order, PurchaseOrder,PurchaseOrderLine, commonService, OrderStatus, OrderTracking, $rootScope) {
+		$filter, LineItem, Order, Email, PurchaseOrder,PurchaseOrderLine, commonService, OrderStatus, OrderTracking, $rootScope) {
 	$scope.lineItems = lineItems;
 	$scope.vendors = vendors;
 	$scope.assignPO =  function assignPO(){
@@ -470,9 +470,59 @@ app.controller('ConsolidatedViewCtrl', function($scope, lineItems, vendors, deli
 					  PurchaseOrderLine.create(lineIt).$promise.then(function(data){
 						  
 					  });
-					  $scope.getAllItems();
-					  $modalInstance.dismiss('cancel');
 				   });
+				   var opts = {
+						   from : 'agrubcare@gmail.com',
+							to : $scope.supplier.email,
+							subject : 'Purchase Order #'+newPo.id,
+							text : 'Purchase Order',
+							html : 'Hi '+$scope.supplier.name+', \n A new Purchase Order with id <b>#'+newPo.id
+							+ '</b> has been generated. Please deliver goods to <b> '+ $scope.receiver.name +'</b>. at '+
+							'\n Name : <b>'+$scope.receiver.name+'</b>\n'+
+							'\n Address1 : <b>'+$scope.receiver.address1+'</b>\n'+
+							'\n Address2 : <b>'+$scope.receiver.address2+'</b>\n'+
+							'\n City : <b>'+$scope.receiver.city+'</b>\n'+
+							'\n State : <b>'+$scope.receiver.state+'</b>\n'+
+							'\n Phone : <b>'+$scope.receiver.phone+'</b>\n'
+					}
+				   $http({
+					    method: 'POST',
+					    url: '/api/Orders/sendEmail',
+					    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					    transformRequest: function(obj) {
+					        var str = [];
+					        for(var p in obj)
+					        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					        return str.join("&");
+					    },
+					    data: {options:JSON.stringify(opts)}
+					}).success(function(dt){
+					   
+				   });
+				   opts = {
+						   from : 'agrubcare@gmail.com',
+							to : $scope.receiver.email,
+							subject : 'Purchase Order #'+newPo.id,
+							text : 'Purchase Order',
+							html : 'Hi '+$scope.receiver.name+', \n A new Purchase Order with id <b>#'+newPo.id
+							+ '</b> has been generated. Please collect goods from <b> '+ $scope.supplier
+					}
+				   $http({
+					    method: 'POST',
+					    url: '/api/Orders/sendEmail',
+					    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					    transformRequest: function(obj) {
+					        var str = [];
+					        for(var p in obj)
+					        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					        return str.join("&");
+					    },
+					    data: {options:JSON.stringify(opts)}
+					}).success(function(dt){
+					   
+				   });
+				$scope.getAllItems();
+				$modalInstance.dismiss('cancel');
 			   });
 		   }
 	};
@@ -522,7 +572,7 @@ app.controller('AssignVendorsCtrl', function($scope, vendors, so,
 	};
 });
 app.controller('AssignTOCtrl', function($scope, transportOperators, so,
-		$modalInstance, Order, $rootScope) {
+		$modalInstance, Order, Email, $rootScope) {
 	$scope.transportOperators = transportOperators;
 	$scope.so = so;
 	$scope.assignSelctedTO = function assignSelctedTO() {
@@ -532,6 +582,34 @@ app.controller('AssignTOCtrl', function($scope, transportOperators, so,
 			}, {
 				transportOperatorId : $scope.selectedTO.id
 			});
+			var opts = {
+					   from : 'agrubcare@gmail.com',
+						to : $scope.selectedTO.email,
+						subject : 'Delivery Challan #'+$scope.so.id,
+						text : 'Delivery Challan',
+						html : 'Hi '+$scope.selectedTO.name+', \n A new Delivey Challan with id <b>#'+$scope.so.id
+						+ '</b> has been generated. Please deliver goods to <b> '+ $scope.so.shippingAddress.name +'</b>. at '+
+						'\n Name : <b>'+$scope.so.shippingAddress.name+'</b>\n'+
+						'\n Address1 : <b>'+$scope.so.shippingAddress.address1+'</b>\n'+
+						'\n Address2 : <b>'+$scope.so.shippingAddress.address2+'</b>\n'+
+						'\n City : <b>'+$scope.so.shippingAddress.city+'</b>\n'+
+						'\n State : <b>'+$scope.so.shippingAddress.state+'</b>\n'+
+						'\n Phone : <b>'+$scope.so.shippingAddress.phone+'</b>\n'
+				}
+			$http({
+			    method: 'POST',
+			    url: '/api/Orders/sendEmail',
+			    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			    transformRequest: function(obj) {
+			        var str = [];
+			        for(var p in obj)
+			        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+			    },
+			    data: {options:JSON.stringify(opts)}
+			}).success(function(dt){
+			   
+		   });
 			$modalInstance.dismiss('cancel');
 		} else {
 			alert("Please select transport operator");

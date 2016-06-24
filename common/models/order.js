@@ -14,6 +14,8 @@ module.exports = function(Order) {
 	});
 	Order.m_placeOrder= function(userId, orders, cb) {
 		var app = Order.app;
+		var Email = app.models.Email;
+		var User = app.models.User;
 		var OrderStatus = app.models.OrderStatus;
 		var LineItem = app.models.LineItem;
 		var validOrders = [];
@@ -55,6 +57,15 @@ module.exports = function(Order) {
 											}
 										});
 								});
+								User.findOne({where:{id:userId}}).then(function (usr){
+									var options = {
+											to : usr.email,
+											subject : 'Order(s) Received',
+											text : 'New Order',
+											html : 'Hi '+usr.firstName+', \n Thanks you for placing order with us. Your Order(s) received. We will notify you once we review and confirm your order.' 
+									}
+									Email.sendCustomEmail(options,cb);
+								});
 							}
 						});
 					}
@@ -68,6 +79,8 @@ module.exports = function(Order) {
 		var app = Order.app;
 		var OrderStatus = app.models.OrderStatus;
 		var LineItem = app.models.LineItem;
+		var Email = app.models.Email;
+		var User = app.models.User;
 		var validOrders = [];
 		var validIds = [];
 		var ctx = loopback.getCurrentContext();
@@ -77,6 +90,7 @@ module.exports = function(Order) {
 			err.statusCode = 403;
 			cb(err);
 		}else{
+			var userId = accessToken.userId;
 			//loopback.getCurrentContext().set("accessToken",accessToken);
 			try{
 				for(var i = 0;i<orders.length;i++){
@@ -114,6 +128,15 @@ module.exports = function(Order) {
 											}
 										});
 								});
+								User.findOne({where:{id:userId}}).then(function (usr){
+									var options = {
+											to : usr.email,
+											subject : 'Order(s) Received',
+											text : 'New Order',
+											html : 'Hi '+usr.firstName+', \n Thanks you for placing order with us. Your Order(s) received. We will notify you once we review and confirm your order.' 
+									}
+									Email.sendCustomEmail(options,cb);
+								});
 							}
 						});
 					}
@@ -149,6 +172,12 @@ module.exports = function(Order) {
 			cb(err);
 		}
 	};
+	Order.sendEmail = function(options,cb){
+		console.log(options);
+		var app = Order.app;
+		var Email = app.models.Email;
+		Email.sendCustomEmail(options,cb);
+	};
 	Order.fullOrders = function(cb){
 		Order.find({
 			include:['orderStatus','customer',{lineItems:'item'}]
@@ -175,5 +204,12 @@ module.exports = function(Order) {
 			{
 				 returns: {arg: 'orders', type: 'array'},
 		         http: {path:'/fullOrders', verb: 'get'}
+			});
+	Order.remoteMethod(
+			'sendEmail',
+			{
+				 accepts: {arg: 'options', type: 'object'},
+				 returns: {arg: 'status', type: 'string'},
+		         http: {path:'/sendEmail', verb: 'post'}
 			});
 };

@@ -3727,6 +3727,12 @@ module.factory(
           url: urlBase + "/DailyMktPricesHistory/:id/item",
           method: "GET"
         },
+
+        // INTERNAL. Use PurchaseOrderLine.item() instead.
+        "::get::PurchaseOrderLine::item": {
+          url: urlBase + "/PurchaseOrderLines/:id/item",
+          method: "GET"
+        },
       }
     );
 
@@ -5279,6 +5285,12 @@ module.factory(
           method: "GET"
         },
 
+        // INTERNAL. Use Order.transportOperator() instead.
+        "prototype$__get__transportOperator": {
+          url: urlBase + "/Orders/:id/transportOperator",
+          method: "GET"
+        },
+
         /**
          * @ngdoc method
          * @name lbServices.Order#prototype$__get__billingAddess
@@ -6122,6 +6134,119 @@ module.factory(
           method: "POST"
         },
 
+        /**
+         * @ngdoc method
+         * @name lbServices.Order#updateDC
+         * @methodOf lbServices.Order
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `dc` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `deliveryChallan` – `{object=}` - 
+         */
+        "updateDC": {
+          url: urlBase + "/Orders/updateDC",
+          method: "PUT"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Order#fullOrders
+         * @methodOf lbServices.Order
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `orders` – `{*=}` - 
+         */
+        "fullOrders": {
+          url: urlBase + "/Orders/fullOrders",
+          method: "GET"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Order#sendEmail
+         * @methodOf lbServices.Order
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *   This method does not accept any parameters.
+         *   Supply an empty object or omit this argument altogether.
+         *
+         * @param {Object} postData Request data.
+         *
+         *  - `options` – `{object=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `status` – `{string=}` - 
+         */
+        "sendEmail": {
+          url: urlBase + "/Orders/sendEmail",
+          method: "POST"
+        },
+
         // INTERNAL. Use LineItem.order() instead.
         "::get::LineItem::order": {
           url: urlBase + "/LineItems/:id/order",
@@ -6276,6 +6401,65 @@ module.factory(
         // INTERNAL. Use User.orders.count() instead.
         "::count::user::orders": {
           url: urlBase + "/users/:id/orders/count",
+          method: "GET"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.findById() instead.
+        "::findById::TransportOperator::deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/TransportOperators/:id/deliveryChalans/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.destroyById() instead.
+        "::destroyById::TransportOperator::deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/TransportOperators/:id/deliveryChalans/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.updateById() instead.
+        "::updateById::TransportOperator::deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/TransportOperators/:id/deliveryChalans/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans() instead.
+        "::get::TransportOperator::deliveryChalans": {
+          isArray: true,
+          url: urlBase + "/TransportOperators/:id/deliveryChalans",
+          method: "GET"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.create() instead.
+        "::create::TransportOperator::deliveryChalans": {
+          url: urlBase + "/TransportOperators/:id/deliveryChalans",
+          method: "POST"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.createMany() instead.
+        "::createMany::TransportOperator::deliveryChalans": {
+          isArray: true,
+          url: urlBase + "/TransportOperators/:id/deliveryChalans",
+          method: "POST"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.destroyAll() instead.
+        "::delete::TransportOperator::deliveryChalans": {
+          url: urlBase + "/TransportOperators/:id/deliveryChalans",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.count() instead.
+        "::count::TransportOperator::deliveryChalans": {
+          url: urlBase + "/TransportOperators/:id/deliveryChalans/count",
           method: "GET"
         },
 
@@ -7028,6 +7212,42 @@ module.factory(
         R.user = function() {
           var TargetResource = $injector.get("User");
           var action = TargetResource["::get::Order::user"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Order#transportOperator
+         * @methodOf lbServices.Order
+         *
+         * @description
+         *
+         * Fetches belongsTo relation transportOperator.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `TransportOperator` object.)
+         * </em>
+         */
+        R.transportOperator = function() {
+          var TargetResource = $injector.get("TransportOperator");
+          var action = TargetResource["::get::Order::transportOperator"];
           return action.apply(R, arguments);
         };
     /**
@@ -9487,6 +9707,40 @@ module.factory(
         "createChangeStream": {
           url: urlBase + "/Customers/change-stream",
           method: "POST"
+        },
+
+        /**
+         * @ngdoc method
+         * @name lbServices.Customer#deliveryChallans
+         * @methodOf lbServices.Customer
+         *
+         * @description
+         *
+         * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `customerId` – `{number=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `deliveryChallans` – `{*=}` - 
+         */
+        "deliveryChallans": {
+          url: urlBase + "/Customers/:customerId/deliveryChallans",
+          method: "GET"
         },
 
         // INTERNAL. Use Order.customer() instead.
@@ -25265,9 +25519,15 @@ module.factory(
           method: "GET"
         },
 
-        // INTERNAL. Use PurchaseOrder.vendor() instead.
-        "::get::PurchaseOrder::vendor": {
-          url: urlBase + "/PurchaseOrders/:id/vendor",
+        // INTERNAL. Use PurchaseOrder.supplier() instead.
+        "::get::PurchaseOrder::supplier": {
+          url: urlBase + "/PurchaseOrders/:id/supplier",
+          method: "GET"
+        },
+
+        // INTERNAL. Use PurchaseOrder.receiver() instead.
+        "::get::PurchaseOrder::receiver": {
+          url: urlBase + "/PurchaseOrders/:id/receiver",
           method: "GET"
         },
 
@@ -26200,6 +26460,58 @@ module.factory(
           method: "GET"
         },
 
+        // INTERNAL. Use TransportOperator.deliveryChalans.findById() instead.
+        "prototype$__findById__deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/TransportOperators/:id/deliveryChalans/:fk",
+          method: "GET"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.destroyById() instead.
+        "prototype$__destroyById__deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/TransportOperators/:id/deliveryChalans/:fk",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.updateById() instead.
+        "prototype$__updateById__deliveryChalans": {
+          params: {
+          'fk': '@fk'
+          },
+          url: urlBase + "/TransportOperators/:id/deliveryChalans/:fk",
+          method: "PUT"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans() instead.
+        "prototype$__get__deliveryChalans": {
+          isArray: true,
+          url: urlBase + "/TransportOperators/:id/deliveryChalans",
+          method: "GET"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.create() instead.
+        "prototype$__create__deliveryChalans": {
+          url: urlBase + "/TransportOperators/:id/deliveryChalans",
+          method: "POST"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.destroyAll() instead.
+        "prototype$__delete__deliveryChalans": {
+          url: urlBase + "/TransportOperators/:id/deliveryChalans",
+          method: "DELETE"
+        },
+
+        // INTERNAL. Use TransportOperator.deliveryChalans.count() instead.
+        "prototype$__count__deliveryChalans": {
+          url: urlBase + "/TransportOperators/:id/deliveryChalans/count",
+          method: "GET"
+        },
+
         /**
          * @ngdoc method
          * @name lbServices.TransportOperator#create
@@ -26622,6 +26934,12 @@ module.factory(
           method: "POST"
         },
 
+        // INTERNAL. Use Order.transportOperator() instead.
+        "::get::Order::transportOperator": {
+          url: urlBase + "/Orders/:id/transportOperator",
+          method: "GET"
+        },
+
         // INTERNAL. Use Hub.transportOperators.findById() instead.
         "::findById::Hub::transportOperators": {
           params: {
@@ -26856,6 +27174,307 @@ module.factory(
         R.hub = function() {
           var TargetResource = $injector.get("Hub");
           var action = TargetResource["::get::TransportOperator::hub"];
+          return action.apply(R, arguments);
+        };
+    /**
+     * @ngdoc object
+     * @name lbServices.TransportOperator.deliveryChalans
+     * @header lbServices.TransportOperator.deliveryChalans
+     * @object
+     * @description
+     *
+     * The object `TransportOperator.deliveryChalans` groups methods
+     * manipulating `Order` instances related to `TransportOperator`.
+     *
+     * Call {@link lbServices.TransportOperator#deliveryChalans TransportOperator.deliveryChalans()}
+     * to query all related instances.
+     */
+
+
+        /**
+         * @ngdoc method
+         * @name lbServices.TransportOperator#deliveryChalans
+         * @methodOf lbServices.TransportOperator
+         *
+         * @description
+         *
+         * Queries deliveryChalans of TransportOperator.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `filter` – `{object=}` - 
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Order` object.)
+         * </em>
+         */
+        R.deliveryChalans = function() {
+          var TargetResource = $injector.get("Order");
+          var action = TargetResource["::get::TransportOperator::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.TransportOperator.deliveryChalans#count
+         * @methodOf lbServices.TransportOperator.deliveryChalans
+         *
+         * @description
+         *
+         * Counts deliveryChalans of TransportOperator.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `where` – `{object=}` - Criteria to match model instances
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * Data properties:
+         *
+         *  - `count` – `{number=}` - 
+         */
+        R.deliveryChalans.count = function() {
+          var TargetResource = $injector.get("Order");
+          var action = TargetResource["::count::TransportOperator::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.TransportOperator.deliveryChalans#create
+         * @methodOf lbServices.TransportOperator.deliveryChalans
+         *
+         * @description
+         *
+         * Creates a new instance in deliveryChalans of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Order` object.)
+         * </em>
+         */
+        R.deliveryChalans.create = function() {
+          var TargetResource = $injector.get("Order");
+          var action = TargetResource["::create::TransportOperator::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.TransportOperator.deliveryChalans#createMany
+         * @methodOf lbServices.TransportOperator.deliveryChalans
+         *
+         * @description
+         *
+         * Creates a new instance in deliveryChalans of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Array.<Object>,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Array.<Object>} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Order` object.)
+         * </em>
+         */
+        R.deliveryChalans.createMany = function() {
+          var TargetResource = $injector.get("Order");
+          var action = TargetResource["::createMany::TransportOperator::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.TransportOperator.deliveryChalans#destroyAll
+         * @methodOf lbServices.TransportOperator.deliveryChalans
+         *
+         * @description
+         *
+         * Deletes all deliveryChalans of this model.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.deliveryChalans.destroyAll = function() {
+          var TargetResource = $injector.get("Order");
+          var action = TargetResource["::delete::TransportOperator::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.TransportOperator.deliveryChalans#destroyById
+         * @methodOf lbServices.TransportOperator.deliveryChalans
+         *
+         * @description
+         *
+         * Delete a related item by id for deliveryChalans.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for deliveryChalans
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * This method returns no data.
+         */
+        R.deliveryChalans.destroyById = function() {
+          var TargetResource = $injector.get("Order");
+          var action = TargetResource["::destroyById::TransportOperator::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.TransportOperator.deliveryChalans#findById
+         * @methodOf lbServices.TransportOperator.deliveryChalans
+         *
+         * @description
+         *
+         * Find a related item by id for deliveryChalans.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for deliveryChalans
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Order` object.)
+         * </em>
+         */
+        R.deliveryChalans.findById = function() {
+          var TargetResource = $injector.get("Order");
+          var action = TargetResource["::findById::TransportOperator::deliveryChalans"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.TransportOperator.deliveryChalans#updateById
+         * @methodOf lbServices.TransportOperator.deliveryChalans
+         *
+         * @description
+         *
+         * Update a related item by id for deliveryChalans.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `fk` – `{*}` - Foreign key for deliveryChalans
+         *
+         * @param {Object} postData Request data.
+         *
+         * This method expects a subset of model properties as request parameters.
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Order` object.)
+         * </em>
+         */
+        R.deliveryChalans.updateById = function() {
+          var TargetResource = $injector.get("Order");
+          var action = TargetResource["::updateById::TransportOperator::deliveryChalans"];
           return action.apply(R, arguments);
         };
 
@@ -34399,9 +35018,15 @@ module.factory(
       { 'id': '@id' },
       {
 
-        // INTERNAL. Use PurchaseOrder.vendor() instead.
-        "prototype$__get__vendor": {
-          url: urlBase + "/PurchaseOrders/:id/vendor",
+        // INTERNAL. Use PurchaseOrder.supplier() instead.
+        "prototype$__get__supplier": {
+          url: urlBase + "/PurchaseOrders/:id/supplier",
+          method: "GET"
+        },
+
+        // INTERNAL. Use PurchaseOrder.receiver() instead.
+        "prototype$__get__receiver": {
+          url: urlBase + "/PurchaseOrders/:id/receiver",
           method: "GET"
         },
 
@@ -35153,12 +35778,12 @@ module.factory(
 
         /**
          * @ngdoc method
-         * @name lbServices.PurchaseOrder#vendor
+         * @name lbServices.PurchaseOrder#supplier
          * @methodOf lbServices.PurchaseOrder
          *
          * @description
          *
-         * Fetches belongsTo relation vendor.
+         * Fetches belongsTo relation supplier.
          *
          * @param {Object=} parameters Request parameters.
          *
@@ -35181,9 +35806,45 @@ module.factory(
          * This usually means the response is a `Vendor` object.)
          * </em>
          */
-        R.vendor = function() {
+        R.supplier = function() {
           var TargetResource = $injector.get("Vendor");
-          var action = TargetResource["::get::PurchaseOrder::vendor"];
+          var action = TargetResource["::get::PurchaseOrder::supplier"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.PurchaseOrder#receiver
+         * @methodOf lbServices.PurchaseOrder
+         *
+         * @description
+         *
+         * Fetches belongsTo relation receiver.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Vendor` object.)
+         * </em>
+         */
+        R.receiver = function() {
+          var TargetResource = $injector.get("Vendor");
+          var action = TargetResource["::get::PurchaseOrder::receiver"];
           return action.apply(R, arguments);
         };
 
@@ -35561,6 +36222,12 @@ module.factory(
         // INTERNAL. Use PurchaseOrderLine.uom() instead.
         "prototype$__get__uom": {
           url: urlBase + "/PurchaseOrderLines/:id/uom",
+          method: "GET"
+        },
+
+        // INTERNAL. Use PurchaseOrderLine.item() instead.
+        "prototype$__get__item": {
+          url: urlBase + "/PurchaseOrderLines/:id/item",
           method: "GET"
         },
 
@@ -36256,6 +36923,42 @@ module.factory(
         R.uom = function() {
           var TargetResource = $injector.get("Uom");
           var action = TargetResource["::get::PurchaseOrderLine::uom"];
+          return action.apply(R, arguments);
+        };
+
+        /**
+         * @ngdoc method
+         * @name lbServices.PurchaseOrderLine#item
+         * @methodOf lbServices.PurchaseOrderLine
+         *
+         * @description
+         *
+         * Fetches belongsTo relation item.
+         *
+         * @param {Object=} parameters Request parameters.
+         *
+         *  - `id` – `{*}` - PersistedModel id
+         *
+         *  - `refresh` – `{boolean=}` - 
+         *
+         * @param {function(Object,Object)=} successCb
+         *   Success callback with two arguments: `value`, `responseHeaders`.
+         *
+         * @param {function(Object)=} errorCb Error callback with one argument:
+         *   `httpResponse`.
+         *
+         * @returns {Object} An empty reference that will be
+         *   populated with the actual data once the response is returned
+         *   from the server.
+         *
+         * <em>
+         * (The remote method definition does not provide any description.
+         * This usually means the response is a `Item` object.)
+         * </em>
+         */
+        R.item = function() {
+          var TargetResource = $injector.get("Item");
+          var action = TargetResource["::get::PurchaseOrderLine::item"];
           return action.apply(R, arguments);
         };
 

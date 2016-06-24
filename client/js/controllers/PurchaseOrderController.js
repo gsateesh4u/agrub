@@ -1,4 +1,4 @@
-app.controller('PurchaseOrderController', function($scope,Order,commonService, OrderStatus, OrderTracking, Email, $filter, $modal){
+app.controller('PurchaseOrderController', function($http, $scope,Order,commonService, OrderStatus, OrderTracking, Email, $filter, $modal){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
@@ -66,6 +66,28 @@ app.controller('PurchaseOrderController', function($scope,Order,commonService, O
 					   timestamp : new Date()
 			   };
 			   OrderTracking.create(orderTracking).$promise.then(function(data){
+				   var opts = {
+						   'from' : 'agrubcare@gmail.com',
+							'to' : $scope.selectedPO.customer.email,
+							'subject' : 'Order #'+$scope.selectedPO.id+' Confirmed',
+							'text' : 'Order Confirmed',
+							'html' : 'Hi '+$scope.selectedPO.customer.name+', \n Your Order with id <b>#'+$scope.selectedPO.id+ '</b> has been confirmed. We will notify you once its ready for delivery.' 
+					};
+				   $http({
+					    method: 'POST',
+					    url: '/api/Orders/sendEmail',
+					    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					    transformRequest: function(obj) {
+					        var str = [];
+					        for(var p in obj)
+					        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					        return str.join("&");
+					    },
+					    data: {options:JSON.stringify(opts)}
+					}).success(function(dt){
+					   
+				   });
+				   
 				   $scope.showPOForm = false;
 					$scope.selPO = null;
 					$scope.selectedPO = null;
