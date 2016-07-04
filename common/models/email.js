@@ -1,7 +1,6 @@
 module.exports = function(Email) {
 
-	Email.sendCustomEmail = function(options,cb){
-		console.log(options);
+	Email.sendCustomEmail = function(options){
 		Email.send({
 			to : options.to,
 			from : 'agrubcare@gmail.com',
@@ -11,6 +10,6 @@ module.exports = function(Email) {
 		},function(err,mail){
 			console.log('Email sent to '+options.to);
 		});
-		return cb(null,'success');
+		//return cb(null,'success');
 	}
 };

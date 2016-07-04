@@ -16,8 +16,11 @@ module.exports = function(Order) {
 		var app = Order.app;
 		var Email = app.models.Email;
 		var User = app.models.User;
+		var Customer = app.models.Customer;
+		var HubUserMap = app.models.HubUserMap;
 		var OrderStatus = app.models.OrderStatus;
 		var LineItem = app.models.LineItem;
+		var customerId;
 		var validOrders = [];
 		var validIds = [];
 			//loopback.getCurrentContext().set("accessToken",accessToken);
@@ -25,6 +28,7 @@ module.exports = function(Order) {
 				for(var i = 0;i<orders.length;i++){
 					if(orders[i].lineItems && orders[i].lineItems.length > 0){
 						validOrders.push(orders[i]);
+						customerId = orders[i].customerId;
 					}
 				}
 				var len = validOrders.length;
@@ -57,14 +61,42 @@ module.exports = function(Order) {
 											}
 										});
 								});
+								var mailList = [];
+								Customer.findOne({where:{id:customerId}}).then(function (cust){
+									HubUserMap.find({ where: {hubId: cust.hubId},include:[{user:'roles'}]}).then(function(usermaps){
+										if(usermaps.length > 0){
+											usermaps.forEach(function(usermap,itr){
+												usermap = usermap.toJSON();
+												if(usermap.user.roles.length>0){
+													usermap.user.roles.forEach(function(role,jtr){
+														if(role.name === 'HUBADMIN' || role.name === 'HUBOWNER'){
+															mailList.push(usermap.user);
+														}
+													});
+												}
+											});
+										}
+										if(mailList.length > 0){
+											mailList.forEach(function(person){
+												var options = {
+														to : person.email,
+														subject : 'Order(s) Received',
+														text : 'New Order',
+														html : 'Hi '+person.firstname+', \n New order has been received from customer '+cust.name+'.' 
+												}
+												Email.sendCustomEmail(options);
+											});
+										}
+									});
+								});
 								User.findOne({where:{id:userId}}).then(function (usr){
 									var options = {
 											to : usr.email,
 											subject : 'Order(s) Received',
 											text : 'New Order',
-											html : 'Hi '+usr.firstName+', \n Thanks you for placing order with us. Your Order(s) received. We will notify you once we review and confirm your order.' 
+											html : 'Hi '+usr.firstname+', \n Thanks you for placing order with us. Your Order(s) received. We will notify you once we review and confirm your order.' 
 									}
-									Email.sendCustomEmail(options,cb);
+									Email.sendCustomEmail(options);
 								});
 							}
 						});
@@ -80,8 +112,11 @@ module.exports = function(Order) {
 		var OrderStatus = app.models.OrderStatus;
 		var LineItem = app.models.LineItem;
 		var Email = app.models.Email;
+		var Customer = app.models.Customer;
+		var HubUserMap = app.models.HubUserMap;
 		var User = app.models.User;
 		var validOrders = [];
+		var customerId;
 		var validIds = [];
 		var ctx = loopback.getCurrentContext();
 		var accessToken = ctx.get('accessToken');
@@ -96,6 +131,7 @@ module.exports = function(Order) {
 				for(var i = 0;i<orders.length;i++){
 					if(orders[i].lineItems && orders[i].lineItems.length > 0){
 						validOrders.push(orders[i]);
+						customerId = orders[i].customerId;
 					}
 				}
 				var len = validOrders.length;
@@ -128,14 +164,42 @@ module.exports = function(Order) {
 											}
 										});
 								});
+								var mailList = [];
+								Customer.findOne({where:{id:customerId}}).then(function (cust){
+									HubUserMap.find({ where: {hubId: cust.hubId},include:[{user:'roles'}]}).then(function(usermaps){
+										if(usermaps.length > 0){
+											usermaps.forEach(function(usermap,itr){
+												usermap = usermap.toJSON();
+												if(usermap.user.roles.length>0){
+													usermap.user.roles.forEach(function(role,jtr){
+														if(role.name === 'HUBADMIN' || role.name === 'HUBOWNER'){
+															mailList.push(usermap.user);
+														}
+													});
+												}
+											});
+										}
+										if(mailList.length > 0){
+											mailList.forEach(function(person){
+												var options = {
+														to : person.email,
+														subject : 'Order(s) Received',
+														text : 'New Order',
+														html : 'Hi '+person.firstname+', \n New order has been received from customer '+cust.name+'.' 
+												}
+												Email.sendCustomEmail(options);
+											});
+										}
+									});
+								});
 								User.findOne({where:{id:userId}}).then(function (usr){
 									var options = {
 											to : usr.email,
 											subject : 'Order(s) Received',
 											text : 'New Order',
-											html : 'Hi '+usr.firstName+', \n Thanks you for placing order with us. Your Order(s) received. We will notify you once we review and confirm your order.' 
+											html : 'Hi '+usr.firstname+', \n Thanks you for placing order with us. Your Order(s) received. We will notify you once we review and confirm your order.' 
 									}
-									Email.sendCustomEmail(options,cb);
+									Email.sendCustomEmail(options);
 								});
 							}
 						});
@@ -176,7 +240,8 @@ module.exports = function(Order) {
 		console.log(options);
 		var app = Order.app;
 		var Email = app.models.Email;
-		Email.sendCustomEmail(options,cb);
+		Email.sendCustomEmail(options);
+		cb(null,"success");
 	};
 	Order.fullOrders = function(cb){
 		Order.find({
