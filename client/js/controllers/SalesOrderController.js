@@ -443,7 +443,7 @@ app
 						}
 					}
 });
-app.controller('ConsolidatedViewCtrl', function($scope, lineItems, vendors, deliveryDate,selectedHub, $modalInstance,
+app.controller('ConsolidatedViewCtrl', function($scope,$http, lineItems, vendors, deliveryDate,selectedHub, $modalInstance,
 		$filter, LineItem, Order, Email, PurchaseOrder,PurchaseOrderLine, commonService, OrderStatus, OrderTracking, $rootScope) {
 	$scope.lineItems = lineItems;
 	$scope.vendors = vendors;
@@ -571,7 +571,7 @@ app.controller('AssignVendorsCtrl', function($scope, vendors, so,
 		$modalInstance.dismiss('cancel');
 	};
 });
-app.controller('AssignTOCtrl', function($scope, transportOperators, so,
+app.controller('AssignTOCtrl', function($scope,$http, transportOperators, so,
 		$modalInstance, Order, Email, $rootScope) {
 	$scope.transportOperators = transportOperators;
 	$scope.so = so;
