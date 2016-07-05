@@ -237,11 +237,10 @@ module.exports = function(Order) {
 		}
 	};
 	Order.sendEmail = function(options,cb){
-		console.log(options);
 		var app = Order.app;
 		var Email = app.models.Email;
-		Email.sendCustomEmail(options);
 		cb(null,"success");
+		Email.sendCustomEmail(options);
 	};
 	Order.fullOrders = function(cb){
 		Order.find({
