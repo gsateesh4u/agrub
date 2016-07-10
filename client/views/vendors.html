@@ -1,0 +1,151 @@
+<section class="content">
+		<!-- Main row -->
+		<div class="row">
+			<div class="col-md-12">
+				<section class="panel">
+					<header class="panel-heading">
+					  {{'menu_vendors' | xlat}}
+					</header>
+					<div class="panel-body table-responsive">
+						<table width="100%" style="margin-bottom:5px">
+							<tr>
+								<td align="right">
+									<button class="btn btn-primary" ng-click="showVendorDetails(tempVendor,'Add')" align="right">Add Vendor</button>
+								</td>
+							</tr>
+						</table> 
+						<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle"  st-safe-src="vendorCollection" st-table="vendorsCollection">
+							<thead>
+							<tr>
+									<th st-sort="name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Name</th>
+									<th>City</th>
+									<th>State</th>
+									<th>Phone</th>
+									<th st-sort="email"><i class="glyphicon glyphicon-filter"></i>Email</th>
+									<th st-sort="hub.name" st-sort-default="default"><i class="glyphicon glyphicon-filter"></i>Hub</th>
+									<th width="50px">Actions</th>
+								</tr>
+								<tr>
+									<th>
+										<input st-search="name" placeholder="search for name" class="input-sm form-control" type="search"/>
+									</th>
+									<th></th>
+									<th></th>
+									<th></th>
+									<th>
+										<input st-search="email" placeholder="search for email" class="input-sm form-control" type="search"/>
+									</th>
+									<th>
+										<input st-search="hub.name" placeholder="search for hub" class="input-sm form-control" type="search"/>
+									</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody ng-show="!isLoading">
+							<tr ng-repeat="row in vendorsCollection">
+									<td>{{row.name}}</td>
+									<td>{{row.city}}</td>
+									<td>{{row.state}}</td>
+									<td>{{row.phone}}</td>
+									<td>{{row.email}}</td>
+									<td>{{row.hub.name}}</td>
+									<td align="center">
+										<span class="sprite sprite-edit" title="Edit Vendor" style="cursor:pointer" ng-click="showVendorDetails(row,'Update')"></span>&nbsp;&nbsp;&nbsp;
+										<span class="sprite sprite-delete" title="Delete Vendor" style="cursor:pointer" ng-click="deleteVendor(row)"></span>
+									</td>
+							</tr>
+							<tr ng-if="vendorsCollection.length == 0">
+						   		<td colspan="7" class="text-center">{{error}}</td>
+							</tr>
+							</tbody>
+							<tbody ng-show="isLoading">
+							<tr>
+								<td colspan="7" class="text-center"><img src="./css/images/loading.gif"/></td>
+							</tr>
+							</tbody>
+							<tfoot>
+							<tr ng-show="!isLoading && vendorsCollection.length != 0">
+								<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="7">
+								</td>
+							</tr>
+							</tfoot>
+						</table>
+			</div>
+			<!-- CRUD Vendor-->
+			<div class="row" ng-show="showAddUpdateVendor">
+				<div class="col-md-12">
+					<header class="panel-heading">
+						<b>{{header}} Vendor</b>
+					</header>
+				</div>
+				<div class="col-md-12">
+					<div class="col-md-12" ng-if="isSubLoading"><img src="./css/images/loading.gif"/>&nbsp;&nbsp;Getting Hubs&nbsp;&nbsp;<img src="./css/images/loading.gif"/></div>
+					<form name="vendorForm" class="css-form" novalidate ng-show="!isSubLoading">
+						<div>
+						  <!-- SHOW ERROR/SUCCESS MESSAGES -->
+							<div id="messages" style="color:red;margin-bottom: 15px;" ng-show="subError" ng-bind-html="subError"></div>
+							<div class="col-md-12">
+								<span style="float: right;padding-top: 10px;"><font color="red"><i>*Required fields.</i></font></span>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Hub <font color="red">*</font> :</label> 
+								<select name="selectedHub" class="form-control" name="selectedHub" ng-disabled="header=='Update'" ng-model="selectedHub" required class="form-control" ng-options="hub.name for hub in hubs track by hub.id">
+								</select>
+							</div>
+							<div class="form-group col-xs-6">
+								<label>Name<font color="red">*</font> :</label> <input type="text"
+									ng-model="foundVendor.name" required name="name" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Email<font color="red">*</font> :</label>
+								<input type="email" name="email" required ng-model="foundVendor.email" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Phone<font color="red">*</font> :</label> 
+								<input type="text" name="phone" required ng-model="foundVendor.phone" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Fax :</label> 
+								<input type="text" name="fax" ng-model="foundVendor.fax" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Address1<font color="red">*</font> :</label>
+								<input type="text" name="address1" required ng-model="foundVendor.address1" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Address2 :</label> 
+								<input type="text" name="address2" ng-model="foundVendor.address2" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-4">
+								<label>Address3 :</label> 
+								<input type="text" name="address3" ng-model="foundVendor.address3" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-3">
+								<label>City<font color="red">*</font> :</label> <input type="text"
+									ng-model="foundVendor.city" required name="city" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-3">
+								<label>State<font color="red">*</font> :</label> <input type="text"
+									ng-model="foundVendor.state" required name="state" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-3">
+								<label>Country<font color="red">*</font> :</label> <input type="text"
+									ng-model="foundVendor.country" required name="country" class="form-control"/>
+							</div>
+							<div class="form-group col-xs-3">
+								<label>Zip<font color="red">*</font> :</label> <input type="text"
+									ng-model="foundVendor.zip" required name="zip" class="form-control"/>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-primary" ng-click="addOrUpdateVendor(foundVendor,header)" ng-disabled="vendorForm.$invalid">OK</button>
+							<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+						</div>
+					</form>
+				</div>
+              </div>
+              <!-- row end -->
+		</section>
+	</div>
+		</div>
+</section>

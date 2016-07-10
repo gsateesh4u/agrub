@@ -33,6 +33,18 @@ var app = angular
         controller: 'PurchaseOrderController',
         authenticate: true
       })
+       .state('transportOperators', {
+        url: '/transportOperators',
+        templateUrl: 'views/transport-operators.html',
+        controller: 'TransportOperatorController',
+        authenticate: true
+      })
+      .state('vendors', {
+        url: '/vendors',
+        templateUrl: 'views/vendors.html',
+        controller: 'VendorController',
+        authenticate: true
+      })
        .state('salesOrders', {
         url: '/salesOrders',
         templateUrl: 'views/salesOrders.html',
