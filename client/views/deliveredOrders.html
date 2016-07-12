@@ -42,7 +42,7 @@
 							<tr ng-repeat="row in dos">
 									<td>{{row.customer.name}}</td>
 									<td>{{row.id}}</td>
-									<td>{{row.deliveryDate | date:'yyyy-MM-dd'}}</td>
+									<td>{{row.deliveryDate | date:'yyyy-MM-dd':'UTC'}}</td>
 									<td>{{row.deliveryTime}}</td>
 									<td align="center">
 										<span class="label label-pill label-primary" ng-if="row.orderStatus.name=='PO'">New</span>
@@ -112,7 +112,7 @@
 							<td>{{row.uom.name}}</td>
 							<td>{{row.lineItemQuantity}}</td>
 							<td>{{row.custUpdatedItemQuantity}}</td>
-							<td>{{row.custUpdatedDate | date:'yyyy-MM-dd'}}</td>
+							<td>{{row.custUpdatedDate | date:'yyyy-MM-dd':'UTC'}}</td>
 							
 					</tr>
 					<tr ng-if="poLineItemsCollection.length == 0">

@@ -1,4 +1,4 @@
-app.controller('VendorController', function($scope,Vendor,Hub, $filter){
+app.controller('VendorController', function($scope,Vendor,Hub, User, VendorUserMap, $filter, $modal){
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
 	$scope.showAddUpdateTO = false;
@@ -115,4 +115,102 @@ app.controller('VendorController', function($scope,Vendor,Hub, $filter){
    $scope.cancel = function(){
 	   $scope.showAddUpdateVendor = false;
    };
+   $scope.manageUsers = function manageUsers(){
+	   $scope.vendorUsers = [];
+	   VendorUserMap.find({
+		   filter:{
+				  where:{vendorId: $scope.selVendorId}  
+			   }
+		   }).$promise.then(function(map){
+			   $scope.vendorUsersMap = [].concat(map);
+			   User.find().$promise.then(function(users){
+				   angular.forEach(users,function(user){
+					 var tempMap = {};
+					 var flag = false;
+					 var vUser = {};
+					 angular.forEach($scope.vendorUsersMap, function(mapUser){
+						if(user.id === mapUser.userId){
+							flag = true;
+							vUser = mapUser;
+						} 
+					 });
+					 tempMap.user = user;
+					 tempMap.vendorUser = vUser;
+					 tempMap.selected = flag;
+					 $scope.vendorUsers.push(tempMap);
+				  });
+				  var modalInstance = $modal.open({
+						templateUrl : 'manage-vendor-user-map.html',
+						controller  : 'ManageVendorUserMapCtrl',
+						backdrop: 'static',
+				        backdropClick: true,
+				        dialogFade: false,
+				        keyboard: true,
+				        scope : $scope,
+				        resolve : {
+				        	vendorUsers : function (){
+				        		return $scope.vendorUsers;
+				        	}
+				        }
+					 });
+			   });
+	   });
+   };
+   $scope.$watch('vendorsCollection', function(row) {
+	   var flag = false;
+	   row.filter(function(r) {
+		  if (r.isSelected) {
+			  flag = true;
+			  $scope.selVendorId = r.id;
+			  $scope.selVendorName = r.name;
+			  $scope.selHubId = r.hubId;
+		  }
+	   });
+	   if(!flag){
+			  $scope.selVendorId = null;
+			  $scope.selVendorName = null;
+			  $scope.selHubId = null;
+	   }
+	 }, true);
+});
+app.controller('ManageVendorUserMapCtrl',function($scope,vendorUsers,VendorUserMap,$modalInstance){
+	$scope.vendorUsers = vendorUsers;
+	$scope.updating = false;
+	$scope.updateVendorUserMap = function updateVendorUserMap(){
+		$scope.successMessage = null;
+		var deletedList = [];
+		var addedList = [];
+		$scope.updating = true;
+		angular.forEach($scope.vendorUsers,function(map){
+			if(map.selected === true && !map.vendorUser.userId){
+				//addedList.push(map);
+				var tempMap = {
+						userId : map.user.id,
+						vendorId : $scope.selVendorId
+				};
+				VendorUserMap.create(tempMap).$promise.then(function(data){
+					map.vendorUser = data;
+				});
+			}
+			if(map.selected === false && map.vendorUser.userId){
+				//deletedList.push(map);
+				VendorUserMap.delete({id:map.vendorUser.id}).$promise.then(function(){
+				});
+			}
+			$scope.updating = false;
+		});
+		/*angular.forEach(deletedList, function(del){
+			VendorUserMap.delete({id:del.vendorUser.id}).$promise.then(function(){
+			});
+		});
+		angular.forEach(addedList, function(del){
+			
+		});*/
+		$scope.successMessage = 'Updated Successfully';
+		//$modalInstance.dismiss('cancel');
+		//$scope.manageUsers();
+	};
+	$scope.cancel = function () {
+	    $modalInstance.dismiss('cancel');
+	  };
 });
