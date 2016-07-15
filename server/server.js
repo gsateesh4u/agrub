@@ -48,6 +48,7 @@ app.get('/api/m/Hubs/:hubId/ItemCategories', passport.authenticate('mca-backend-
              res.status(200).send(itemCategories);
            }
          }
+      }   
     );
   }
 );
