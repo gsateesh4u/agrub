@@ -34,21 +34,20 @@ app.get('/api/m/Hubs/:hubId/ItemCategories', passport.authenticate('mca-backend-
       var hubId = req.params.hubId;
       app.models.ItemCategory.find(
        { include:{
-              relation:'items',
+              relation:'items'
+              ,
               scope:{include: {
-              relation:'uom'
-               }
+             relation:'uom'
+           }}
               },where: {hubId:parseInt(hubId)}
             },
       function(err, itemCategories){
            if (err) { res.send(err);
            }
            if ( itemCategories ) {
-             console.log(JSON.stringify(itemCategories));
              res.status(200).send(itemCategories);
            }
          }
-      }   
     );
   }
 );
