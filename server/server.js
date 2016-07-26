@@ -34,7 +34,7 @@ app.get('/api/m/Hubs/:hubId/ItemCategories', passport.authenticate('mca-backend-
       var hubId = req.params.hubId;
       app.models.ItemCategory.find(
        { 
-    	   include:[{item:'uom'}],
+    	   include:[{items:'uom'}],
     	   where: {hubId:parseInt(hubId)}
     	   
         },
