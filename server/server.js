@@ -33,13 +33,11 @@ app.get('/api/TryAgain', passport.authenticate('mca-backend-strategy', {session:
 app.get('/api/m/Hubs/:hubId/ItemCategories', passport.authenticate('mca-backend-strategy', {session: false}),function(req, res){
       var hubId = req.params.hubId;
       app.models.ItemCategory.find(
-       { include:{
-              relation:'items',
-              scope:{include: {
-              relation:'uom'
-               }
-              },where: {hubId:parseInt(hubId)}
-            },
+       { 
+    	   include:[{item:'uom'}],
+    	   where: {hubId:parseInt(hubId)}
+    	   
+        },
       function(err, itemCategories){
            if (err) { res.send(err);
            }
@@ -48,7 +46,6 @@ app.get('/api/m/Hubs/:hubId/ItemCategories', passport.authenticate('mca-backend-
              res.status(200).send(itemCategories);
            }
          }
-      }
     );
   }
 );
