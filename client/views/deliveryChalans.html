@@ -13,6 +13,7 @@
 										<span style="color:red" ng-show="errorMessage">{{errorMessage}}</span>
 									</td>
 									<td align="right">
+										<button class="btn btn-primary" ng-disabled="!selDC" ng-click="assigTO()" align="right">Assign Transport</button>
 										<!-- <button class="btn btn-primary" ng-disabled="!selDC" ng-click="showCustomerInfo(selDC)" align="right">Customer Info</button> -->
 										<!-- <button class="btn btn-primary" ng-disabled="!selDC" ng-click="markAsDelivered()" align="right">Mark As Delivered</button> -->
 									</td>
@@ -39,7 +40,7 @@
 								</tr>
 							</thead>
 							<tbody ng-show="!isLoading">
-							<tr ng-repeat="row in dcs">
+							<tr st-select-row="row" ng-repeat="row in dcs">
 									<td>{{row.customer.name}}</td>
 									<td>{{row.id}}</td>
 									<td>{{row.deliveryDate | date:'yyyy-MM-dd':'UTC'}}</td>

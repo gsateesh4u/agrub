@@ -1,11 +1,11 @@
-app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, OrderTracking, commonService, Email, $filter){
+app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, OrderTracking,TransportOperator, commonService, Email, $filter, $modal){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
 	$scope.init = function init(){
 		OrderStatus.findOne({filter: {where : {name : 'DC'}}}).$promise.then(function(poStatus){
 			Order.find({
-				filter: { include: ['customer','lineItems','orderStatus','user'] ,
+				filter: { include: ['customer','lineItems','orderStatus','user','transportOperator'] ,
 					where:{orderStatusId: poStatus.id}
 			}
 			}).$promise
@@ -42,7 +42,33 @@ app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, O
 			   });
 		}
 	};
-   /*$scope.$watch('dcs', function(row) {
+	$scope.assigTO = function assigTO(){
+		TransportOperator.find({
+			where : {
+					hubId : $scope.selDC.customer.hubId
+				}
+		}).$promise.then(function(tos){
+			$scope.transportOperators = [].concat(tos);
+			var modalInstance = $modal.open({
+				templateUrl : 'views/templates/assignTOmodal.html',
+				controller : 'AssignTOCtrl',
+				backdrop : 'static',
+				backdropClick : true,
+				dialogFade : false,
+				keyboard : true,
+				scope : $scope,
+				resolve : {
+					transportOperators : function() {
+						return $scope.transportOperators;
+					},
+					so : function() {
+						return $scope.selDC;
+					}
+				}
+			});
+		});
+	};
+   $scope.$watch('dcs', function(row) {
 	   var flag = false;
 	   row.filter(function(r) {
 		  if (r.isSelected) {
@@ -53,5 +79,5 @@ app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, O
 	   if(!flag){
 		  $scope.selDC = null;
 	   }
-	 }, true);*/
+	 }, true);
 });

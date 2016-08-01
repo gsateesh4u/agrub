@@ -7,7 +7,6 @@ module.exports = function(Customer) {
 			where: {name:'OFD'}
 			
 		}).then(function(orderStatus){
-			console.log(orderStatus[0].id);
 			app.models.Order.find({
 				where: {and: [ {customerId:customerId}, {orderStatusId : orderStatus[0].id} ] }, include:['orderStatus','customer',{lineItems:'item'}]
 				

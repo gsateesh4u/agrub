@@ -123,7 +123,7 @@ app
 						}).$promise.then(function(tos){
 							$scope.transportOperators = [].concat(tos);
 							var modalInstance = $modal.open({
-								templateUrl : 'assignTOmodal.html',
+								templateUrl : 'views/templates/assignTOmodal.html',
 								controller : 'AssignTOCtrl',
 								backdrop : 'static',
 								backdropClick : true,
@@ -575,6 +575,10 @@ app.controller('AssignTOCtrl', function($scope,$http, transportOperators, so,
 		$modalInstance, Order, Email, $rootScope) {
 	$scope.transportOperators = transportOperators;
 	$scope.so = so;
+	if($scope.so.transportOperatorId !==null && $scope.so.transportOperator){
+		$scope.selectedTO = $scope.so.transportOperator;
+		$scope.selectedTO.id = $scope.so.transportOperatorId;
+	}
 	$scope.assignSelctedTO = function assignSelctedTO() {
 		if($scope.selectedTO){
 			Order.prototype$updateAttributes({
@@ -582,6 +586,8 @@ app.controller('AssignTOCtrl', function($scope,$http, transportOperators, so,
 			}, {
 				transportOperatorId : $scope.selectedTO.id
 			});
+			$scope.so.transportOperator = $scope.selectedTO;
+			$scope.so.transportOperatorId = $scope.selectedTO.id;
 			var opts = {
 					   from : 'agrubcare@gmail.com',
 						to : $scope.selectedTO.email,
