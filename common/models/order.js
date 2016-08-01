@@ -211,24 +211,32 @@ module.exports = function(Order) {
 		}
 	};
 	Order.updateDC = function(dc,cb){
+		var retValues = [];
 		var app = Order.app;
 		var OrderStatus = app.models.OrderStatus;
 		var LineItem = app.models.LineItem;
 		var lineItems = dc.lineItems;
 		if(lineItems && lineItems.length > 0){
+			var len = lineItems.length;
 			for(var i = 0;i<lineItems.length;i++){
-				LineItem.update({id:lineItems[i].id},{custUpdatedItemQuantity : lineItems[i].custUpdatedItemQuantity,
+				/*LineItem.update({id:lineItems[i].id},{custUpdatedItemQuantity : lineItems[i].custUpdatedItemQuantity,
 					custUpdatedDate : lineItems[i].custUpdatedDate},function(err,lineIt){
 						if(err){
 							cb(err);
 						}
+					});*/
+				retValues.push(LineItem.update({id:lineItems[i].id},{custUpdatedItemQuantity : lineItems[i].custUpdatedItemQuantity,
+					custUpdatedDate : lineItems[i].custUpdatedDate}));
+				if(--len == 0){
+					Q.all(retValues).then(function(data){
+						OrderStatus.findOne({where:{name:'DELIVERED'}}).then(function (orderSt){
+							Order.update({id:dc.id},{orderStatusId : orderSt.id}, function(err,ord){
+								
+							});
+						});
 					});
+				}
 			}
-			OrderStatus.findOne({where:{name:'DELIVERED'}}).then(function (orderSt){
-				Order.update({id:dc.id},{orderStatusId : orderSt.id}, function(err,ord){
-					
-				});
-			});
 			cb(null,dc);
 		}else{
 			var err = new Error('Bad request');
