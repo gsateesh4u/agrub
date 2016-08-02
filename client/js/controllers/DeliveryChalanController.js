@@ -50,7 +50,7 @@ app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, O
 		}).$promise.then(function(tos){
 			$scope.transportOperators = [].concat(tos);
 			var modalInstance = $modal.open({
-				templateUrl : 'views/templates/assignTOmodal.html',
+				templateUrl : 'views/templates/assignToModal.html',
 				controller : 'AssignTOCtrl',
 				backdrop : 'static',
 				backdropClick : true,
