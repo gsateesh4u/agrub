@@ -1,7 +1,7 @@
 <section class="content">
 		<!-- Main row -->
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12" ng-show="page=='main'">
 				<section class="panel">
 					<header class="panel-heading">
 					  {{'menu_vendors' | xlat}}
@@ -12,6 +12,7 @@
 								<td align="right">
 									<button class="btn btn-primary" ng-click="showVendorDetails(tempVendor,'Add')" align="right">Add Vendor</button>
 									<button class="btn btn-primary" ng-if="selVendorId" ng-click="manageUsers()" align="right">Manage Users</button>
+									<button class="btn btn-primary" ng-if="selVendorId" ng-click="showOrders()" align="right">Show Orders</button>
 								</td>
 							</tr>
 						</table> 
@@ -146,6 +147,64 @@
 				</div>
               </div>
               <!-- row end -->
+		</section>
+	</div>
+	<div class="col-md-12" ng-show="page=='orders'">
+		<section class="panel">
+			<header class="panel-heading">
+			  Viewing purchase orders of <b>{{selVendorName}}</b>
+			</header>
+			<table width="100%" style="margin-bottom:5px">
+				<tr>
+					<td align="right">
+						<button class="btn btn-primary" ng-click="page='main'" align="right">Back</button>
+					</td>
+				</tr>
+			</table> 
+			<div class="panel-body table-responsive">
+				<table style="background-color:antiquewhite" class="table table-striped table-bordered valignMiddle" st-safe-src="poCollection" st-table="pos">
+					<thead>
+					<tr>
+							<th st-sort="id"><i class="glyphicon glyphicon-filter"></i>PO Id</th>
+							<th st-sort="deliveryDate"><i class="glyphicon glyphicon-filter"></i>delivery Date</th>
+							<th st-sort="generatedDate"><i class="glyphicon glyphicon-filter"></i>generated Date</th>
+							<th width="50px">Actions</th>
+						</tr>
+						<tr>
+							<th>
+								<input st-search="id" placeholder="search for PO Id" class="input-sm form-control" type="search"/>
+							</th>
+							<th>
+							</th>
+							<th></th><th></th>
+						</tr>
+					</thead>
+					<tbody ng-show="!isLoading">
+					<tr ng-repeat="po in pos">
+							<td>{{po.id}}</td>
+							<td>{{po.deliveryDate | date:'yyyy-MM-dd':'UTC'}}</td>
+							<td>{{po.generatedDate | date:'yyyy-MM-dd':'UTC'}}</td>
+							<td align="center">
+								<button class="btn btn-primary" ng-click="viewPoLines(po)" style="line-height: 1">View</button>
+							</td>
+					</tr>
+					<tr ng-if="pos.length == 0">
+				   		<td colspan="4" class="text-center">No orders found</td>
+					</tr>
+					</tbody>
+					<tbody ng-show="isLoading">
+					<tr>
+						<td colspan="4" class="text-center"><img src="./css/images/loading.gif"/></td>
+					</tr>
+					</tbody>
+					<tfoot>
+					<tr ng-show="!isLoading && pos.length != 0">
+						<td class="text-center" st-pagination="" st-items-by-page="itemsByPage" colspan="4">
+						</td>
+					</tr>
+					</tfoot>
+				</table>
+			</div>
 		</section>
 	</div>
 		</div>

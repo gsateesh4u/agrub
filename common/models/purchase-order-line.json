@@ -9,6 +9,18 @@
     "quantity": {
       "type": "number"
     },
+    "receivedDate": {
+        "type": "date"
+     },
+     "packedDate": {
+         "type": "date"
+      },
+    "receivedQty": {
+        "type": "number"
+      },
+    "packedQty": {
+      "type": "number"
+    },
     "comments": {
       "type": "string"
     }

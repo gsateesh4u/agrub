@@ -1,6 +1,7 @@
-app.controller('VendorController', function($scope,Vendor,Hub, User, VendorUserMap, $filter, $modal){
+app.controller('VendorController', function($scope,Vendor,Hub, User, VendorUserMap, PurchaseOrder, $filter, $modal){
 	$scope.itemsByPage = 10;
 	$scope.isLoading = true;
+	$scope.page = 'main';
 	$scope.showAddUpdateTO = false;
 	$scope.tempVendor = {
 		    name: "",
@@ -115,6 +116,23 @@ app.controller('VendorController', function($scope,Vendor,Hub, User, VendorUserM
    $scope.cancel = function(){
 	   $scope.showAddUpdateVendor = false;
    };
+   $scope.showOrders = function showOrders(){
+	   if($scope.selVendorId){
+		   PurchaseOrder.find({
+				filter : {
+					include : ['supplier','receiver',{
+						purchaseOrderLines : [ 'item', 'uom' ]
+					}],
+					where : {
+						supplierId : $scope.selVendorId
+					}
+				}
+			}).$promise.then(function(response){
+				$scope.page = 'orders';  
+				$scope.pos =  response;
+			});
+	   }
+   };
    $scope.manageUsers = function manageUsers(){
 	   $scope.vendorUsers = [];
 	   VendorUserMap.find({
@@ -156,6 +174,23 @@ app.controller('VendorController', function($scope,Vendor,Hub, User, VendorUserM
 			   });
 	   });
    };
+   $scope.viewPoLines = function viewPoLines(selPO){
+	   var modalInstance = $modal.open({
+			templateUrl : 'views/templates/manage-po-lines.html',
+			controller  : 'ManagePOLinesCtrl',
+			backdrop: 'static',
+	        backdropClick: true,
+	        windowClass: 'large',
+	        dialogFade: false,
+	        keyboard: true,
+	        scope : $scope,
+	        resolve : {
+	        	selPO : function (){
+	        		return selPO;
+	        	}
+	        }
+		 });
+   } ;
    $scope.$watch('vendorsCollection', function(row) {
 	   var flag = false;
 	   row.filter(function(r) {
@@ -172,6 +207,12 @@ app.controller('VendorController', function($scope,Vendor,Hub, User, VendorUserM
 			  $scope.selHubId = null;
 	   }
 	 }, true);
+});
+app.controller('ManagePOLinesCtrl',function($scope,selPO,PurchaseOrderLine,$modalInstance){
+	$scope.selPO = selPO;
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
 });
 app.controller('ManageVendorUserMapCtrl',function($scope,vendorUsers,VendorUserMap,$modalInstance){
 	$scope.vendorUsers = vendorUsers;
