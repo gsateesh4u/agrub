@@ -1,6 +1,7 @@
-app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, OrderTracking,TransportOperator, commonService, Email, $filter, $modal){
+app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, OrderTracking,TransportOperator,LineItem, commonService, Email, $filter, $modal){
 	$scope.rowCollection = [];
 	$scope.itemsByPage = 10;
+	$scope.page = 'main';
 	$scope.isLoading = true;
 	$scope.init = function init(){
 		OrderStatus.findOne({filter: {where : {name : 'DC'}}}).$promise.then(function(poStatus){
@@ -80,4 +81,30 @@ app.controller('DeliveryChalanController', function($scope,Order, OrderStatus, O
 		  $scope.selDC = null;
 	   }
 	 }, true);
+   $scope.backToMainMenu = function backToMainMenu(){
+		$scope.page = 'main';
+		//$scope.selDC = null;
+		//$scope.selectedDC = null;
+	};
+   $scope.updateQty = function updateQty(){
+	 if($scope.selDC && $scope.selDC!==null && $scope.selDC!==""){
+		 Order.findOne({
+				filter: { include: ['customer',{lineItems:[{item:'itemCategory'},'uom']},'orderStatus','user'] ,
+					where:{id: $scope.selDC.id}
+				}}).$promise.then(function(fullDC){
+					if(fullDC){
+						$scope.page = 'UpdateDC';
+						$scope.selectedDC = fullDC;
+					}
+			});
+	 }  
+   };
+   $scope.updateSentQty = function updateSentQty(sentQty,item){
+	   if(sentQty!=="" && sentQty!==null && sentQty > 0){
+			LineItem.prototype$updateAttributes(
+			   { id: item.id }, 
+			   { deliveredQuantity: sentQty}
+			 );
+		}
+   };
 });

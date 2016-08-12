@@ -45,6 +45,7 @@ module.exports = function(Order) {
 								newOrders.forEach(function(ex,j){
 									validOrders[j].lineItems.forEach(function(ex1,j1){
 										ex1.orderId = ex.id;
+										ex1.deliveredQuantity = ex.lineItemQuantity;
 										validIds.push(ex.id);
 										ex1.custUpdatedDate = null;
 										allLineItems.push(ex1);
@@ -148,6 +149,7 @@ module.exports = function(Order) {
 								newOrders.forEach(function(ex,j){
 									validOrders[j].lineItems.forEach(function(ex1,j1){
 										ex1.orderId = ex.id;
+										ex1.deliveredQuantity = ex.lineItemQuantity;
 										validIds.push(ex.id);
 										ex1.custUpdatedDate = null;
 										allLineItems.push(ex1);

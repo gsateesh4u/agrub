@@ -29,8 +29,8 @@
 			<tr ng-repeat="row in lineItemsCollection">
 					<td>{{row.item.name}}</td>
 					<td>{{row.quantity}}</td>
-					<td>{{row.receivedQty}}</td>
-					<td>{{row.packedQty}}</td>
+					<td><div ng-model="rcvdQty" contentEditable ng-enter="updateRcvdQty(rcvdQty,row)">{{row.receivedQty}}</div></td>
+					<td><div ng-model="packedQty" contentEditable ng-enter="updatePackedQty(packedQty,row)">{{row.packedQty}}</div></td>
 			</tr>
 			<tr ng-if="lineItemsCollection.length == 0">
 				<td colspan="4" class="text-center">{{error}}</td>

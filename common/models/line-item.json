@@ -11,6 +11,10 @@
       "type": "number",
       "required": false
     },
+    "deliveredQuantity": {
+        "type": "number",
+        "required": false
+      },
     "itemPrice": {
         "type": "number",
         "required": false

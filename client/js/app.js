@@ -280,10 +280,10 @@ var app = angular
            // ctrl.$setViewValue(elm.html());
 			 elm.bind("keydown keypress", function (event) {
 	            if(event.which === 13) {
+	            	elm[0].blur();
 	            	ctrl.$setViewValue(elm.html());
 	                scope.$apply(function (){
 	                    scope.$eval(attrs.ngEnter);
-	                    elm.blur();
 	                });
 	 
 	                event.preventDefault();

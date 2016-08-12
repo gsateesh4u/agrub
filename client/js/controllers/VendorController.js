@@ -210,6 +210,22 @@ app.controller('VendorController', function($scope,Vendor,Hub, User, VendorUserM
 });
 app.controller('ManagePOLinesCtrl',function($scope,selPO,PurchaseOrderLine,$modalInstance){
 	$scope.selPO = selPO;
+	$scope.updateRcvdQty = function updateRcvdQty(qty,poLine){
+		if(qty!==null && qty!==""){
+			PurchaseOrderLine.prototype$updateAttributes(
+					   { id: poLine.id }, 
+					   { receivedQty: qty, receivedDate : new Date()}
+					 );
+		}
+	};
+	$scope.updatePackedQty = function updatePackedQty(qty,poLine){
+		if(qty!==null && qty!==""){
+			PurchaseOrderLine.prototype$updateAttributes(
+					   { id: poLine.id }, 
+					   { packedQty: qty, packedDate : new Date()}
+					 );
+		}
+	};
 	$scope.cancel = function() {
 		$modalInstance.dismiss('cancel');
 	};
