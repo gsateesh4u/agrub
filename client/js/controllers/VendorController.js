@@ -175,6 +175,14 @@ app.controller('VendorController', function($scope,Vendor,Hub, User, VendorUserM
 	   });
    };
    $scope.viewPoLines = function viewPoLines(selPO){
+	   angular.forEach(selPO.purchaseOrderLines, function(lineItem) {
+			if(!lineItem.receivedQty){
+				lineItem.receivedQty = 0;
+			}
+			if(!lineItem.packedQty){
+				lineItem.packedQty = 0;
+			}
+		});
 	   var modalInstance = $modal.open({
 			templateUrl : 'views/templates/manage-po-lines.html',
 			controller  : 'ManagePOLinesCtrl',
@@ -216,7 +224,9 @@ app.controller('ManagePOLinesCtrl',function($scope,selPO,PurchaseOrderLine,$moda
 					   { id: poLine.id }, 
 					   { receivedQty: qty, receivedDate : new Date()}
 					 );
-			poLine.receivedQty = qty;
+			if(poLine.receivedQty){
+				poLine.receivedQty = qty;
+			}
 		}
 	};
 	$scope.updatePackedQty = function updatePackedQty(qty,poLine){
@@ -225,7 +235,9 @@ app.controller('ManagePOLinesCtrl',function($scope,selPO,PurchaseOrderLine,$moda
 					   { id: poLine.id }, 
 					   { packedQty: qty, packedDate : new Date()}
 					 );
-			poLine.packedQty = qty;
+			if(poLine.packedQty){
+				poLine.packedQty = qty;
+			}
 		}
 	};
 	$scope.cancel = function() {
