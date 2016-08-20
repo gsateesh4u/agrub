@@ -17,7 +17,7 @@ xlat.factory('xlatService', function() {
 				'menu_DO':'Delivered Orders','menu_DMP':'Daily Market Prices','menu_Cust_Lock_Periods':'Customer Lock Periods',
 				'menu_Cust_Prices':'Customer Prices','menu_markets':'Markets','menu_tos':'Transport Operators','menu_vendors':'Vendors',
 		    	'copyright':'Copyright \xA9 1010 Labs, 2016','tbl_head_users':'All Users','tbl_head_customers':'All Customers','tbl_head_hubs':'All Hubs','tbl_head_items':'All Items','tbl_head_reports':'Reports',
-		    	'tbl_head_orders':'All Orders','tbl_head_SO' : 'All Sales Orders','tbl_head_PO':'All Purchase Orders',
+		    	'tbl_head_orders':'All Orders','tbl_head_SO' : 'All Sales Orders','tbl_head_PO':'All Customer Orders',
 				'tbl_head_prices':'Pricing','tbl_head_upload_order':'Upload Order','tbl_head_DC':'All Delivery Chalans',
 				'tbl_head_DO':'All Delivered Orders','tbl_head_Markets':'Markets','tbl_tos':'Transport Operators'}
               };

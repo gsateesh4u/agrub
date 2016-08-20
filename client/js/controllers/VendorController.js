@@ -216,6 +216,7 @@ app.controller('ManagePOLinesCtrl',function($scope,selPO,PurchaseOrderLine,$moda
 					   { id: poLine.id }, 
 					   { receivedQty: qty, receivedDate : new Date()}
 					 );
+			poLine.receivedQty = qty;
 		}
 	};
 	$scope.updatePackedQty = function updatePackedQty(qty,poLine){
@@ -224,6 +225,7 @@ app.controller('ManagePOLinesCtrl',function($scope,selPO,PurchaseOrderLine,$moda
 					   { id: poLine.id }, 
 					   { packedQty: qty, packedDate : new Date()}
 					 );
+			poLine.packedQty = qty;
 		}
 	};
 	$scope.cancel = function() {
